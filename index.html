@@ -905,5 +905,150 @@ render();
   <option>5,00,00,000</option>
   <option>10,00,00,000</option>
 </select>
+</body><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property Listing Form</title>
+<style>
+  body { background:#1a1a1a; font-family:Arial,sans-serif; color:#fff; padding:20px; }
+  .form-box { background:#222; padding:20px; border-radius:12px; max-width:520px; margin:auto; }
+  label { display:block; margin-top:15px; margin-bottom:5px; font-weight:bold; }
+  label span { color:red; }
+  input, select {
+    width:100%; padding:12px; border-radius:8px;
+    border:1px solid #b8860b; background:#111; color:#fff;
+    font-size:15px; box-sizing:border-box;
+  }
+  input::placeholder { color:#888; }
+  select { cursor:pointer; }
+  button {
+    margin-top:20px; width:100%; padding:14px;
+    background:#d4a017; color:#000; font-weight:bold;
+    border:none; border-radius:8px; font-size:16px; cursor:pointer;
+  }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+
+<div class="form-box">
+  <h2 style="text-align:center;">Property Listing</h2>
+
+  <!-- Property Category -->
+  <label>Property Category <span>*</span></label>
+  <select id="category" required onchange="showFields()">
+    <option value="">-- Select Category --</option>
+    <option value="zamin">Zamin</option>
+    <option value="yellow">Yellow</option>
+    <option value="agriculture">Agriculture</option>
+    <option value="flat">Flat</option>
+    <option value="rowhouse">Row House</option>
+  </select>
+
+  <!-- ================= ZAMIN / YELLOW / AGRICULTURE ================= -->
+  <div id="landFields" class="hidden">
+    <label>Acre <span>*</span></label>
+    <select id="acre" required>
+      <option value="">-- Select Acre --</option>
+      <!-- JavaScript se 1 se 2000 tak auto fill hoga -->
+    </select>
+  </div>
+
+  <!-- ================= FLAT / ROW HOUSE ================= -->
+  <div id="bhkFields" class="hidden">
+    <label>BHK <span>*</span></label>
+    <select id="bhk" required>
+      <option value="">-- Select BHK --</option>
+      <option>1 BHK</option>
+      <option>2 BHK</option>
+      <option>3 BHK</option>
+      <option>4 BHK</option>
+      <option>5 BHK</option>
+    </select>
+  </div>
+
+  <!-- Deposit Type -->
+  <label>Deposit Type <span>*</span></label>
+  <select id="depositType" required>
+    <option value="">-- Select Deposit Type --</option>
+    <option>Non Refundable</option>
+    <option>Refundable</option>
+  </select>
+
+  <!-- Amount -->
+  <label>Amount (₹) <span>*</span></label>
+  <select id="amount" required>
+    <option value="">-- Select Amount --</option>
+    <option>10,000</option>
+    <option>25,000</option>
+    <option>50,000</option>
+    <option>1,00,000</option>
+    <option>2,00,000</option>
+    <option>5,00,000</option>
+    <option>10,00,000</option>
+    <option>25,00,000</option>
+    <option>50,00,000</option>
+    <option>1,00,00,000</option>
+    <option>5,00,00,000</option>
+    <option>10,00,00,000</option>
+  </select>
+
+  <!-- Owner Ratio -->
+  <label>Owner Ratio <span>*</span></label>
+  <select id="ownerRatio" required>
+    <option value="">-- Select Owner Ratio --</option>
+    <option>10</option><option>20</option><option>30</option><option>40</option>
+    <option>50</option><option>60</option><option>70</option><option>80</option>
+    <option>90</option>
+  </select>
+
+  <!-- Builder Ratio -->
+  <label>Builder Ratio <span>*</span></label>
+  <select id="builderRatio" required>
+    <option value="">-- Select Builder Ratio --</option>
+    <option>10</option><option>20</option><option>30</option><option>40</option>
+    <option>50</option><option>60</option><option>70</option><option>80</option>
+    <option>90</option>
+  </select>
+
+  <button type="submit">Submit Listing</button>
+</div>
+
+<script>
+  // ===== Acre dropdown 1 se 2000 tak auto fill =====
+  const acreSelect = document.getElementById('acre');
+  for (let i = 1; i <= 2000; i++) {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = i + ' Acre';
+    acreSelect.appendChild(opt);
+  }
+
+  // ===== Category ke hisaab se field show/hide =====
+  function showFields() {
+    const cat = document.getElementById('category').value;
+    const landFields = document.getElementById('landFields');
+    const bhkFields = document.getElementById('bhkFields');
+
+    // Pehle sab hide
+    landFields.classList.add('hidden');
+    bhkFields.classList.add('hidden');
+    document.getElementById('acre').required = false;
+    document.getElementById('bhk').required = false;
+
+    if (cat === 'zamin' || cat === 'yellow' || cat === 'agriculture') {
+      landFields.classList.remove('hidden');
+      document.getElementById('acre').required = true;
+    } 
+    else if (cat === 'flat' || cat === 'rowhouse') {
+      bhkFields.classList.remove('hidden');
+      document.getElementById('bhk').required = true;
+    }
+  }
+</script>
+
 </body>
+</html.>
 </html.>
