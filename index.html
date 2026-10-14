@@ -1,154 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAMEEN PROPERTY - Find Your Dream Home</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: #f4f6f9; color: #222; }
 
-<section id="rp-online">
-  <h2>RAMEEN PROPERTY — Admin</h2>
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0b3d2e, #145c44);
+    color: #fff; padding: 18px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .logo { font-size: 24px; font-weight: bold; letter-spacing: 1px; }
+  .logo span { color: #ffd700; }
+  nav a { color: #fff; margin-left: 25px; text-decoration: none; font-weight: 500; transition: 0.3s; }
+  nav a:hover { color: #ffd700; }
 
-  <div id="rp-login">
-    <input id="rp-email" type="email"
-      placeholder="Admin email" autocomplete="username">
-    <input id="rp-password" type="password"
-      placeholder="Admin password" autocomplete="current-password">
-    <button id="rp-login-btn">Admin Login</button>
-  </div>
+  /* HERO */
+  .hero {
+    background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600') center/cover;
+    color: #fff; text-align: center; padding: 100px 20px;
+  }
+  .hero h1 { font-size: 48px; margin-bottom: 15px; }
+  .hero h1 span { color: #ffd700; }
+  .hero p { font-size: 18px; margin-bottom: 30px; opacity: 0.9; }
 
-  <div id="rp-admin" hidden>
-    <h3>Add Property</h3>
-    <input id="rp-title" placeholder="Property title">
-    <select id="rp-type">
-      <option>Plot</option>
-      <option>Flat</option>
-      <option>JV</option>
-      <option>Commercial</option>
+  /* SEARCH BOX */
+  .search-box {
+    background: #fff; padding: 20px; border-radius: 12px;
+    max-width: 900px; margin: 0 auto;
+    display: flex; gap: 12px; flex-wrap: wrap;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  }
+  .search-box input, .search-box select {
+    flex: 1; min-width: 160px; padding: 12px;
+    border: 1px solid #ddd; border-radius: 8px; font-size: 15px;
+  }
+  .search-box button {
+    background: #ffd700; color: #0b3d2e; border: none;
+    padding: 12px 30px; border-radius: 8px;
+    font-weight: bold; cursor: pointer; transition: 0.3s;
+  }
+  .search-box button:hover { background: #ffc107; transform: scale(1.05); }
+
+  /* SECTION TITLE */
+  .section { padding: 60px 40px; }
+  .section-title { text-align: center; font-size: 34px; margin-bottom: 10px; color: #0b3d2e; }
+  .section-sub { text-align: center; color: #666; margin-bottom: 40px; }
+
+  /* PROPERTY GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px; max-width: 1200px; margin: 0 auto;
+  }
+  .card {
+    background: #fff; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: 0.35s; cursor: pointer;
+  }
+  .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.18); }
+  .card img { width: 100%; height: 210px; object-fit: cover; }
+  .card-body { padding: 18px; }
+  .card-body h3 { font-size: 20px; color: #0b3d2e; margin-bottom: 6px; }
+  .card-body .loc { color: #777; font-size: 14px; margin-bottom: 10px; }
+  .card-body .price { color: #e63946; font-size: 22px; font-weight: bold; margin-bottom: 12px; }
+  .features { display: flex; gap: 15px; font-size: 13px; color: #555; margin-bottom: 15px; }
+  .badge {
+    position: absolute; background: #ffd700; color: #0b3d2e;
+    padding: 5px 12px; border-radius: 20px; font-size: 12px;
+    font-weight: bold; margin: 10px; 
+  }
+  .card-wrap { position: relative; }
+  .btn-view {
+    display: block; text-align: center; background: #0b3d2e; color: #fff;
+    padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 500;
+    transition: 0.3s;
+  }
+  .btn-view:hover { background: #145c44; }
+
+  /* SERVICES */
+  .services { background: #fff; padding: 60px 40px; }
+  .service-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px; max-width: 1100px; margin: 0 auto;
+  }
+  .service {
+    text-align: center; padding: 30px 20px;
+    border-radius: 12px; background: #f4f6f9; transition: 0.3s;
+  }
+  .service:hover { background: #0b3d2e; color: #fff; transform: translateY(-5px); }
+  .service .icon { font-size: 42px; margin-bottom: 15px; }
+  .service h3 { margin-bottom: 10px; }
+  .service p { font-size: 14px; opacity: 0.85; }
+
+  /* CONTACT */
+  .contact {
+    background: linear-gradient(135deg, #0b3d2e, #145c44);
+    color: #fff; padding: 60px 40px; text-align: center;
+  }
+  .contact h2 { font-size: 34px; margin-bottom: 15px; }
+  .contact p { margin-bottom: 25px; opacity: 0.9; }
+  .contact-info { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 30px; }
+  .contact-info div { font-size: 16px; }
+  .contact-info strong { color: #ffd700; display: block; margin-bottom: 5px; }
+
+  /* FOOTER */
+  footer { background: #06251c; color: #aaa; text-align: center; padding: 20px; font-size: 14px; }
+
+  @media (max-width: 600px) {
+    header { flex-direction: column; gap: 12px; padding: 15px; }
+    nav a { margin: 0 10px; font-size: 14px; }
+    .hero h1 { font-size: 32px; }
+    .section { padding: 40px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">RAMEEN <span>PROPERTY</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#properties">Properties</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <h1>Find Your <span>Dream Home</span> with RAMEEN PROPERTY</h1>
+  <p>Buy, Sell & Rent properties across Pakistan — Trusted since 2010</p>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 Search by city or area...">
+    <select id="typeFilter">
+      <option value="">All Types</option>
+      <option value="House">House</option>
+      <option value="Plot">Plot</option>
+      <option value="Flat">Flat</option>
+      <option value="Shop">Shop</option>
     </select>
-    <input id="rp-location" placeholder="Location">
-    <input id="rp-price" placeholder="Price / budget">
-    <textarea id="rp-details" placeholder="Property details"></textarea>
-    <button id="rp-add">Publish Listing</button>
-    <button id="rp-logout">Logout</button>
+    <button onclick="searchProperty()">Search</button>
   </div>
-
-  <p id="rp-status" aria-live="polite"></p>
-  <h3>Online Property Listings</h3>
-  <div id="rp-listings"></div>
 </section>
 
-<script type="module">
-import { initializeApp } from
-  "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-import {
-  getAuth, signInWithEmailAndPassword, onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-import {
-  getFirestore, collection, addDoc, getDocs,
-  query, orderBy, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+<!-- PROPERTIES -->
+<section class="section" id="properties">
+  <h2 class="section-title">Featured Properties</h2>
+  <p class="section-sub">Hand-picked listings just for you</p>
+  <div class="grid" id="propertyGrid"></div>
+</section>
 
-// Firebase Console se apni web app ki config yahan daalein.
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID"
-};
+<!-- SERVICES -->
+<section class="services" id="services">
+  <h2 class="section-title">Our Services</h2>
+  <p class="section-sub">Everything you need in real estate</p>
+  <div class="service-grid">
+    <div class="service">
+      <div class="icon">🏠</div>
+      <h3>Buy Property</h3>
+      <p>Verified houses, plots & flats at best market rates.</p>
+    </div>
+    <div class="service">
+      <div class="icon">💰</div>
+      <h3>Sell Property</h3>
+      <p>Get maximum value with our expert valuation & marketing.</p>
+    </div>
+    <div class="service">
+      <div class="icon">🔑</div>
+      <h3>Rent & Lease</h3>
+      <p>Residential & commercial rentals with legal paperwork.</p>
+    </div>
+    <div class="service">
+      <div class="icon">📋</div>
+      <h3>Legal Documentation</h3>
+      <p>Transfer, registry & all property legal assistance.</p>
+    </div>
+  </div>
+</section>
 
-const status = document.getElementById("rp-status");
-const login = document.getElementById("rp-login");
-const admin = document.getElementById("rp-admin");
-const listingBox = document.getElementById("rp-listings");
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <h2>Get In Touch</h2>
+  <p>Ready to buy or sell? Let's talk!</p>
+  <div class="contact-info">
+    <div><strong>📞 Phone</strong>+92 300 1234567</div>
+    <div><strong>📧 Email</strong>info@rameenproperty.com</div>
+    <div><strong>📍 Office</strong>Main Boulevard, Lahore, Pakistan</div>
+  </div>
+</section>
 
-if (firebaseConfig.apiKey.startsWith("YOUR_")) {
-  status.textContent =
-    "Setup pending: Firebase web app configuration add karein.";
-} else {
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+<footer>
+  © 2025 RAMEEN PROPERTY. All Rights Reserved. | Designed with ❤️
+</footer>
 
-  document.getElementById("rp-login-btn").onclick = async () => {
-    try {
-      await signInWithEmailAndPassword(
-        auth,
-        document.getElementById("rp-email").value.trim(),
-        document.getElementById("rp-password").value
-      );
-      status.textContent = "Login request successful.";
-    } catch {
-      status.textContent = "Login failed. Email/password check karein.";
-    }
-  };
+<script>
+// Property Data
+const properties = [
+  { id:1, title:"Luxury Villa", location:"DHA Phase 5, Lahore", price:"PKR 4.5 Crore", type:"House", img:"https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800", beds:5, baths:4, area:"1 Kanal", badge:"Hot Deal" },
+  { id:2, title:"Modern Flat", location:"Gulberg III, Lahore", price:"PKR 1.2 Crore", type:"Flat", img:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800", beds:3, baths:2, area:"1500 sqft", badge:"New" },
+  { id:3, title:"Residential Plot", location:"Bahria Town, Karachi", price:"PKR 85 Lac", type:"Plot", img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800", beds:0, baths:0, area:"10 Marla", badge:"" },
+  { id:4, title:"Commercial Shop", location:"Blue Area, Islamabad", price:"PKR 2.8 Crore", type:"Shop", img:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800", beds:0, baths:1, area:"800 sqft", badge:"Featured" },
+  { id:5, title:"Family House", location:"Johar Town, Lahore", price:"PKR 2.1 Crore", type:"House", img:"https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800", beds:4, baths:3, area:"10 Marla", badge:"" },
+  { id:6, title:"Sea View Flat", location:"Clifton, Karachi", price:"PKR 3.5 Crore", type:"Flat", img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800", beds:4, baths:3, area:"2200 sqft", badge:"Premium" }
+];
 
-  document.getElementById("rp-logout").onclick =
-    () => signOut(auth);
-
-  onAuthStateChanged(auth, async user => {
-    login.hidden = !!user;
-    admin.hidden = !user;
-    await loadListings();
-  });
-
-  async function loadListings() {
-    listingBox.replaceChildren();
-    try {
-      const q = query(
-        collection(db, "properties"),
-        orderBy("createdAt", "desc")
-      );
-      const snapshot = await getDocs(q);
-
-      snapshot.forEach(docSnap => {
-        const p = docSnap.data();
-        const card = document.createElement("article");
-        const title = document.createElement("h3");
-        title.textContent = p.title || "Property";
-        const info = document.createElement("p");
-        info.textContent = [
-          p.type, p.location, p.price, p.details
-        ].filter(Boolean).join(" • ");
-        const wa = document.createElement("a");
-        wa.href = "https://wa.me/919545247374?text=" +
-          encodeURIComponent("Interested in " + (p.title || "property"));
-        wa.textContent = "WhatsApp Enquiry";
-        wa.target = "_blank";
-        wa.rel = "noopener noreferrer";
-        card.append(title, info, wa);
-        listingBox.appendChild(card);
-      });
-    } catch {
-      status.textContent =
-        "Listings load nahi hui. Firebase database rules check karein.";
-    }
+// Render Properties
+function renderProperties(list) {
+  const grid = document.getElementById('propertyGrid');
+  if (list.length === 0) {
+    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:#888;font-size:18px;">😕 No properties found. Try another search.</p>`;
+    return;
   }
-
-  document.getElementById("rp-add").onclick = async () => {
-    if (!auth.currentUser) return;
-    const title = document.getElementById("rp-title").value.trim();
-    const location = document.getElementById("rp-location").value.trim();
-
-    if (!title || !location) {
-      status.textContent = "Title aur location zaroori hain.";
-      return;
-    }
-
-    try {
-      await addDoc(collection(db, "properties"), {
-        title,
-        location,
-        type: document.getElementById("rp-type").value,
-        price: document.getElementById("rp-price").value.trim(),
-        details: document.getElementById("rp-details").value.trim(),
-        createdAt: serverTimestamp()
-      });
-      status.textContent = "Property online save ho gayi.";
-      document.getElementById("rp-title").value = "";
-      document.getElementById("rp-location").value = "";
-      document.getElementById("rp-price").value = "";
-      document.getElementById("rp-details").value = "";
-      await loadListings();
-    } catch {
-      status.textContent =
-        "Save nahi hua. Firebase authentication aur security rules check karein.";
-    }
-  };
+  grid.innerHTML = list.map(p => `
+    <div class="card-wrap">
+      ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+      <div class="card">
+        <img src="${p.img}" alt="${p.title}">
+        <div class="card-body">
+          <h3>${p.title}</h3>
+          <p class="loc">📍 ${p.location}</p>
+          <p class="price">${p.price}</p>
+          <div class="features">
+            ${p.beds ? `<span>🛏 ${p.beds} Beds</span>` : ''}
+            ${p.baths ? `<span>🛁 ${p.baths} Baths</span>` : ''}
+            <span>📐 ${p.area}</span>
+          </div>
+          <a href="#" class="btn-view" onclick="viewProperty(${p.id});return false;">View Details</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
-</script.>
 
+// Search
+function searchProperty() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const type = document.getElementById('typeFilter').value;
+  const filtered = properties.filter(p => {
+    const matchQ = p.location.toLowerCase().includes(q) || p.title.toLowerCase().includes(q);
+    const matchT = !type || p.type === type;
+    return matchQ && matchT;
+  });
+  renderProperties(filtered);
+  document.getElementById('properties').scrollIntoView({ behavior: 'smooth' });
+}
+
+// View details
+function viewProperty(id) {
+  const p = properties.find(x => x.id === id);
+  alert(`🏠 ${p.title}\n\n📍 Location: ${p.location}\n💰 Price: ${p.price}\n📐 Area: ${p.area}\n🛏 Beds: ${p.beds || 'N/A'}\n🛁 Baths: ${p.baths || 'N/A'}\n\n📞 Call: +92 300 1234567`);
+}
+
+// Enter key search
+document.getElementById('searchInput').addEventListener('keypress', e => {
+  if (e.key === 'Enter') searchProperty();
+});
+
+// Initial load
+renderProperties(properties);
+</script>
+
+</body>
+</html.>
