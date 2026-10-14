@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#101410">
 <title>Rameen Property Trust – Broker Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
 :root{
   --navy:#0c100c;--navy2:#1a211a;--gold:#c9a86a;--gold2:#e2c994;
@@ -23,8 +24,6 @@ h1,h2,h3{font-family:'Playfair Display',Georgia,'Times New Roman',serif;margin:0
 a{color:inherit}
 img{max-width:100%}
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px}
-
-/* header */
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:#0c100c;border-bottom:1px solid var(--line)}
 .top-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0}
 .brand{text-decoration:none;color:var(--text);display:flex;align-items:center;gap:10px}
@@ -42,8 +41,6 @@ nav.menu{display:none;flex-direction:column;gap:2px;padding:0 0 12px}nav.menu.op
 nav.menu::-webkit-scrollbar{display:none}
 nav.menu a{color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:500;padding:7px 13px;border-radius:999px;white-space:nowrap}
 nav.menu a.on,nav.menu a:hover{background:rgba(201,168,106,.22);color:var(--text)}
-
-/* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:inherit;font-weight:700;text-decoration:none;border-radius:12px;padding:12px 20px;font-size:15px;transition:transform .12s,box-shadow .12s}
 .btn:active{transform:scale(.98)}
 .btn-gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--navy);box-shadow:0 4px 16px rgba(201,168,106,.35)}
@@ -56,8 +53,6 @@ nav.menu a.on,nav.menu a:hover{background:rgba(201,168,106,.22);color:var(--text
 .btn-lg{padding:16px 26px;font-size:17px;border-radius:14px}
 .btn-block{width:100%}
 svg.i{width:18px;height:18px;flex:none}
-
-/* hero */
 .hero{background:radial-gradient(1200px 500px at 80% -10%,rgba(201,168,106,.22),transparent 60%),linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;padding:48px 0 56px;text-align:left}
 .hero .tag{display:flex;align-items:center;gap:14px;color:var(--gold);font-size:12px;letter-spacing:.28em;text-transform:uppercase;margin-bottom:18px}
 .hero .tag:before{content:"";width:48px;height:1px;background:var(--gold)}
@@ -101,6 +96,9 @@ textarea{min-height:100px;resize:vertical}
 .card:hover .img img{transform:scale(1.04)}
 .badge{position:absolute;left:10px;top:10px;background:var(--gold);color:var(--navy);font-weight:700;font-size:11.5px;padding:4px 10px;border-radius:999px;letter-spacing:.03em}
 .badge.feat-b{background:var(--navy);color:var(--gold2);left:auto;right:10px;border:1px solid var(--gold)}
+.card.agri{border:2px solid #1f9d5c}
+.card.agri .badge{background:#1f9d5c;color:#fff}
+.chip.agri{background:rgba(31,157,92,.15);border-color:rgba(31,157,92,.5)}
 .card .body{padding:15px;display:flex;flex-direction:column;gap:8px;flex:1}
 .card h3{font-size:17px;margin:0;cursor:pointer}
 .loc{color:var(--muted);font-size:13.5px}
@@ -208,14 +206,18 @@ footer a{color:var(--gold2)}
 
 <div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 (function(){
 'use strict';
 var WA='919545247374', PHONE='9545247374', ADMIN_PW='Rameen@2024', ADMIN_EMAIL='rameenproperty@gmail.com';
 var CFG={URL:'',KEY:''};
 var REMOTE=!!(CFG.URL&&CFG.KEY);
-var LOCS=['CIDCO N-5','CIDCO N-1','CIDCO N-2','CIDCO N-3','CIDCO N-4','CIDCO N-6','CIDCO N-7','CIDCO N-8','Garkheda','Jalna Road','Osmanpura','Aurangpura','Beed Bypass','Waluj','Shendra MIDC','Satara Parisar'];
-var TYPES=['JV Project','Sale','Rent','Commercial'];
+var LOCS=['Aurangabad Zamin','Gangapur Ki Zamin','Narnpor Ki Zamin','Paithan Ki Zamin','Pholamri Ki Zamin','CIDCO N-5','CIDCO N-1','CIDCO N-2','CIDCO N-3','CIDCO N-4','CIDCO N-6','CIDCO N-7','CIDCO N-8','Garkheda','Jalna Road','Osmanpura','Aurangpura','Beed Bypass','Waluj','Shendra MIDC','Satara Parisar','Mumbai','Thane','Navi Mumbai','Pune','Pimpri-Chinchwad','Nagpur','Nashik','Kalyan-Dombivli','Vasai-Virar','Solapur','Bhiwandi','Amravati','Nanded','Kolhapur','Ulhasnagar','Sangli','Malegaon','Jalgaon','Akola','Latur','Dhule','Ahmednagar','Chandrapur','Parbhani','Ichalkaranji','Jalna','Ambarnath','Bhusawal','Panvel','Badlapur','Beed','Gondia','Satara','Barshi','Yavatmal','Achalpur','Osmanabad','Nandurbar','Wardha','Udgir','Hinganghat','Shirdi','Lonavala','Mahabaleshwar','Alibaug','Ratnagiri','Sindhudurg','Khandala','Panchgani','Chiplun','Dapoli','Harnai'];
+var TYPES=['JV Project','Sale','Rent','Commercial','Agriculture'];
+var RATIOS=['10','20','30','40','50','60','70','80','90','100'];
+var DEP_TYPES=['Refundable','Non-Refundable'];
 var K={b:'rpt_brokers',l:'rpt_listings',m:'rpt_me',a:'rpt_admin',mo:'rpt_meobj'};
 var mem={};
 function ls(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return (k in mem)?mem[k]:d}}
@@ -240,7 +242,7 @@ var IC={
  wa:'<svg class="i" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.3z"/></svg>'
 };
 function art(type,n){
-  var pal={'JV Project':['#0a192f','#c9a86a'],'Sale':['#0a192f','#3d6fa3'],'Rent':['#0a192f','#3f8f78'],'Commercial':['#0a192f','#a8702f']}[type]||['#0a192f','#c9a86a'];
+  var pal={'JV Project':['#0a192f','#c9a86a'],'Sale':['#0a192f','#3d6fa3'],'Rent':['#0a192f','#3f8f78'],'Commercial':['#0a192f','#a8702f'],'Agriculture':['#0a192f','#1f9d5c']}[type]||['#0a192f','#c9a86a'];
   var h=[90,140,110,170,120,150,100], x=24, bars='';
   for(var i=0;i<7;i++){
     var hh=h[(i+n)%7], w=38;
@@ -259,16 +261,19 @@ function imgOf(l,i){
 }
 function seed(){
   var t=Date.now()-86400000*3;
-  function s(id,title,loc,type,price,label,pm,size,bhk,desc){
-    return {id:id,title:title,location:loc,type:type,price:price,priceLabel:label||'',perMonth:!!pm,size:size,bhk:bhk,photos:[],desc:desc,owner:PHONE,brokerId:'rameen',brokerName:'Rameen Property Trust',brokerPhone:PHONE,status:'Approved',views:0,created:t,featured:id==='s1'};
+  function s(id,title,loc,type,price,label,pm,size,bhk,desc,extra){
+    var o={id:id,title:title,location:loc,type:type,price:price,priceLabel:label||'',perMonth:!!pm,size:size,bhk:bhk,photos:[],desc:desc,owner:PHONE,brokerId:'rameen',brokerName:'Rameen Property Trust',brokerPhone:PHONE,status:'Approved',views:0,created:t,featured:id==='s1'};
+    if(extra)for(var k in extra)o[k]=extra[k];
+    return o;
   }
   return [
-   s('s1','14x 3BHK Luxury – JV Project','CIDCO N-5','JV Project',0,'JV – Call for terms',false,537.6,'3','Premium joint-venture opportunity on a 537.6 sqm plot in CIDCO N-5 for 14 luxury 3BHK flats. Prime residential location with wide approach road, near schools, hospitals and markets. Clear title. Contact Rameen Property Trust for JV ratio and project details.'),
-   s('s2','Spacious 3BHK Flat – East Facing','CIDCO N-2','Sale',5800000,'',false,125,'3','Well-ventilated 3BHK in a gated society with covered parking, lift and 24x7 water supply. Ready possession.'),
-   s('s3','2BHK Semi-Furnished Flat','CIDCO N-4','Rent',18000,'',true,85,'2','Semi-furnished 2BHK close to the main road and market. Family or working professionals preferred.'),
-   s('s4','Prime Showroom / Shop – Main Road','Jalna Road','Commercial',12000000,'',false,60,'NA','Ground-floor commercial space on high-footfall Jalna Road. Ideal for showroom, bank or retail brand.'),
-   s('s5','4BHK Independent Row House','Garkheda','Sale',9500000,'',false,200,'4','Independent row house with private parking, terrace and garden space in a peaceful neighbourhood.'),
-   s('s6','Furnished Office Space – 1st Floor','Osmanpura','Commercial',45000,'',true,95,'NA','Ready-to-move furnished office with cabin, conference room, power backup and parking.')
+   s('s1','14x 3BHK Luxury – JV Project','CIDCO N-5','JV Project',0,'JV – Call for terms',false,5787,'3','Premium joint-venture opportunity on a 5787 sqft plot in CIDCO N-5 for 14 luxury 3BHK flats. Prime residential location with wide approach road, near schools, hospitals and markets. Clear title. Contact Rameen Property Trust for JV ratio and project details.',{ownerRatio:'40',builderRatio:'60',deposit:'500000',depType:'Refundable'}),
+   s('s2','Spacious 3BHK Flat – East Facing','CIDCO N-2','Sale',5800000,'',false,1345,'3','Well-ventilated 3BHK in a gated society with covered parking, lift and 24x7 water supply. Ready possession.'),
+   s('s3','2BHK Semi-Furnished Flat','CIDCO N-4','Rent',18000,'',true,915,'2','Semi-furnished 2BHK close to the main road and market. Family or working professionals preferred.'),
+   s('s4','Prime Showroom / Shop – Main Road','Jalna Road','Commercial',12000000,'',false,646,'NA','Ground-floor commercial space on high-footfall Jalna Road. Ideal for showroom, bank or retail brand.'),
+   s('s5','4BHK Independent Row House','Garkheda','Sale',9500000,'',false,2153,'4','Independent row house with private parking, terrace and garden space in a peaceful neighbourhood.'),
+   s('s6','Furnished Office Space – 1st Floor','Osmanpura','Commercial',45000,'',true,1022,'NA','Ready-to-move furnished office with cabin, conference room, power backup and parking.'),
+   s('s7','Agriculture Land – Paithan Road','Paithan Ki Zamin','Agriculture',3500000,'',false,0,'NA','Fertile agriculture land with borewell, electricity connection and road access. Suitable for farming or farmhouse project.',{acre:'2',guntha:'15'})
   ];
 }
 function api(path,opt){
@@ -303,15 +308,34 @@ function go(p){location.hash='#'+p}
 function opt(list,sel){return list.map(function(v){return '<option'+(v===sel?' selected':'')+'>'+esc(v)+'</option>'}).join('')}
 function $(s,r){return (r||document).querySelector(s)}
 function head(title,sub){return '<div class="page-head"><div class="wrap"><h1>'+title+'</h1><p>'+sub+'</p></div></div>'}
+function jvDetails(l){
+  if(l.type!=='JV Project')return '';
+  var d='';
+  if(l.ownerRatio)d+='<span class="chip">Owner: '+esc(l.ownerRatio)+'%</span>';
+  if(l.builderRatio)d+='<span class="chip">Builder: '+esc(l.builderRatio)+'%</span>';
+  if(l.deposit)d+='<span class="chip">Deposit: '+money(l.deposit)+'</span>';
+  if(l.depType)d+='<span class="chip">'+esc(l.depType)+'</span>';
+  return d?'<div class="chips" style="margin-top:4px">'+d+'</div>':'';
+}
+function agriDetails(l){
+  if(l.type!=='Agriculture')return '';
+  var d='';
+  if(l.acre)d+='<span class="chip agri">'+esc(l.acre)+' Acre</span>';
+  if(l.guntha)d+='<span class="chip agri">'+esc(l.guntha)+' Guntha</span>';
+  return d?'<div class="chips" style="margin-top:4px">'+d+'</div>':'';
+}
 function card(l){
   var b=bhkText(l);
-  return '<article class="card">'+
+  var agri=l.type==='Agriculture';
+  return '<article class="card'+(agri?' agri':'')+'">'+
    '<div class="img" data-act="open" data-id="'+esc(l.id)+'"><img loading="lazy" alt="'+esc(l.title)+'" src="'+imgOf(l)+'"><span class="badge">'+esc(l.type)+'</span>'+(l.featured?'<span class="badge feat-b">★ Featured</span>':'')+'</div>'+
    '<div class="body">'+
     '<h3 data-act="open" data-id="'+esc(l.id)+'">'+esc(l.title)+'</h3>'+
     '<div class="loc">📍 '+esc(l.location)+', Chhatrapati Sambhajinagar</div>'+
     '<div class="price">'+priceHtml(l)+'</div>'+
-    '<div class="chips"><span class="chip">'+esc(l.size)+' sqm</span>'+(b?'<span class="chip">'+b+'</span>':'')+'<span class="chip">'+esc(l.type)+'</span></div>'+
+    (l.size>0?'<div class="chips"><span class="chip">'+esc(l.size)+' sqft</span>'+(b?'<span class="chip">'+b+'</span>':'')+'<span class="chip">'+esc(l.type)+'</span></div>':'<div class="chips"><span class="chip">'+esc(l.type)+'</span></div>')+
+    jvDetails(l)+
+    agriDetails(l)+
     '<div class="broker">Broker: <b>'+esc(l.brokerName)+'</b></div>'+
     '<div class="actions">'+
       '<a class="btn btn-call btn-sm" href="tel:+91'+PHONE+'">'+IC.call+' Call</a>'+
@@ -352,6 +376,7 @@ function pListings(){
    '<p class="count" id="cnt"></p><div class="grid" id="grid"></div></div>';
   function bind(id,key){$(id).addEventListener('change',function(e){F[key]=e.target.value;grid()})}
   bind('#f-loc','loc');bind('#f-type','type');bind('#f-bhk','bhk');bind('#f-bud','budget');
+  if(window.jQuery&&jQuery.fn.select2){$('#f-loc').select2({placeholder:'Search location...',allowClear:true,width:'100%'})}
   grid();
 }
 function grid(){
@@ -434,9 +459,27 @@ function pAdd(){
     '<div class="field"><label>Type <em>*</em></label><select id="a-type">'+opt(TYPES,'JV Project')+'</select></div>'+
    '</div>'+
    '<div class="field" id="cust" style="display:none"><label>Custom Location <em>*</em></label><input id="a-custom" placeholder="Area / locality name"></div>'+
+   '<div class="field" id="jvBox" style="display:none;background:rgba(201,168,106,.08);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:14px">'+
+     '<div style="font-weight:700;color:var(--gold);margin-bottom:10px">JV Project Details</div>'+
+     '<div class="row2">'+
+       '<div class="field"><label>Owner Ratio (%)</label><select id="a-oratio"><option value="">Select</option>'+opt(RATIOS,'')+'</select></div>'+
+       '<div class="field"><label>Builder Ratio (%)</label><select id="a-bratio"><option value="">Select</option>'+opt(RATIOS,'')+'</select></div>'+
+     '</div>'+
+     '<div class="row2">'+
+       '<div class="field"><label>Deposit (₹)</label><input id="a-dep" type="number" inputmode="numeric" min="0" placeholder="e.g. 500000"><div class="hint" id="dph"></div></div>'+
+       '<div class="field"><label>Deposit Type</label><select id="a-deptype"><option value="">Select</option>'+opt(DEP_TYPES,'')+'</select></div>'+
+     '</div>'+
+   '</div>'+
+   '<div class="field" id="agriBox" style="display:none;background:rgba(31,157,92,.08);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:14px">'+
+     '<div style="font-weight:700;color:#1f9d5c;margin-bottom:10px">Agriculture Land Details</div>'+
+     '<div class="row2">'+
+       '<div class="field"><label>Acre</label><input id="a-acre" type="number" step="0.01" min="0" placeholder="e.g. 2"></div>'+
+       '<div class="field"><label>Guntha</label><input id="a-guntha" type="number" step="0.01" min="0" placeholder="e.g. 15"></div>'+
+     '</div>'+
+   '</div>'+
    '<div class="row2">'+
     '<div class="field"><label>Price (₹) <em>*</em></label><input id="a-price" type="number" inputmode="numeric" min="0" placeholder="e.g. 5500000"><div class="hint" id="pp"></div></div>'+
-    '<div class="field"><label>Plot Size (sqm)</label><input id="a-size" type="number" step="0.1" min="0" value="537.6"></div>'+
+    '<div class="field"><label>Plot Size (sqft)</label><input id="a-size" type="number" step="0.1" min="0" value="5787"></div>'+
    '</div>'+
    '<div class="row2">'+
     '<div class="field"><label>BHK <em>*</em></label><select id="a-bhk"><option value="1">1 BHK</option><option value="2">2 BHK</option><option value="3" selected>3 BHK</option><option value="4">4 BHK</option><option value="5">5+ BHK</option><option value="NA">N/A (Commercial / Plot)</option></select></div>'+
@@ -449,7 +492,14 @@ function pAdd(){
    '<button class="btn btn-gold btn-block btn-lg" type="submit">Submit Listing for Approval</button>'+
   '</form></div>';
   $('#a-loc').addEventListener('change',function(e){$('#cust').style.display=e.target.value==='__c'?'block':'none'});
+  $('#a-type').addEventListener('change',function(e){
+    var v=e.target.value;
+    $('#jvBox').style.display=v==='JV Project'?'block':'none';
+    $('#agriBox').style.display=v==='Agriculture'?'block':'none';
+  });
   $('#a-price').addEventListener('input',function(e){var v=+e.target.value;$('#pp').textContent=v>0?'= '+money(v):''});
+  $('#a-dep').addEventListener('input',function(e){var v=+e.target.value;$('#dph').textContent=v>0?'= '+money(v):''});
+  if(window.jQuery&&jQuery.fn.select2){$('#a-loc').select2({placeholder:'Search location...',allowClear:true,width:'100%'})}
   $('#a-ph').addEventListener('change',function(e){
     var files=[].slice.call(e.target.files);
     files.forEach(function(f){
@@ -476,10 +526,10 @@ function pAdd(){
     if(!title||!loc){er.textContent='Title and location are required.';return}
     if(!(price>0)){er.textContent='Please enter a valid price.';return}
     if(owner.length!==10){er.textContent='Enter a valid 10-digit owner contact.';return}
-    var l={id:uid(),title:title,location:loc,type:$('#a-type').value,price:price,priceLabel:'',perMonth:$('#a-pm').checked,size:$('#a-size').value||'537.6',bhk:$('#a-bhk').value,photos:photos.slice(),desc:$('#a-desc').value.trim(),owner:owner,brokerId:b.id,brokerName:b.name,brokerPhone:b.phone,status:'Pending',views:0,created:Date.now()};
+    var l={id:uid(),title:title,location:loc,type:$('#a-type').value,price:price,priceLabel:'',perMonth:$('#a-pm').checked,size:$('#a-size').value||'5787',bhk:$('#a-bhk').value,photos:photos.slice(),desc:$('#a-desc').value.trim(),owner:owner,brokerId:b.id,brokerName:b.name,brokerPhone:b.phone,status:'Pending',views:0,created:Date.now(),ownerRatio:$('#a-oratio').value,builderRatio:$('#a-bratio').value,deposit:$('#a-dep').value,depType:$('#a-deptype').value,acre:$('#a-acre').value,guntha:$('#a-guntha').value};
     var btn=$('#af button[type=submit]');
     function done(){
-      var msg='New listing for approval\nTitle: '+l.title+'\nLocation: '+l.location+'\nType: '+l.type+'\nPrice: '+(l.priceLabel||money(l.price))+(l.perMonth?' / month':'')+'\nSize: '+l.size+' sqm\nBHK: '+(bhkText(l)||'N/A')+'\nOwner contact: '+l.owner+'\nBroker: '+b.name+' ('+b.phone+'), '+b.company+(b.rera?' RERA '+b.rera:'')+'\nPhotos: '+l.photos.length+(l.desc?'\nDescription: '+l.desc:'');
+      var msg='New listing for approval\nTitle: '+l.title+'\nLocation: '+l.location+'\nType: '+l.type+'\nPrice: '+(l.priceLabel||money(l.price))+(l.perMonth?' / month':'')+'\nSize: '+l.size+' sqft\nBHK: '+(bhkText(l)||'N/A')+(l.type==='JV Project'?'\nOwner Ratio: '+l.ownerRatio+'%\nBuilder Ratio: '+l.builderRatio+'%\nDeposit: '+money(l.deposit)+'\nDeposit Type: '+l.depType:'')+(l.type==='Agriculture'?'\nAcre: '+l.acre+'\nGuntha: '+l.guntha:'')+'\nOwner contact: '+l.owner+'\nBroker: '+b.name+' ('+b.phone+'), '+b.company+(b.rera?' RERA '+b.rera:'')+'\nPhotos: '+l.photos.length+(l.desc?'\nDescription: '+l.desc:'');
       var note=REMOTE?'Status: Pending. Rameen admin can now see your listing and will approve it soon.':'Status: Pending. Tap the green button so Rameen receives your listing details instantly on WhatsApp (send photos in the same chat).';
       $('.form-card').innerHTML='<div class="success"><div class="tick">✓</div><h2>Listing Submitted</h2><p style="font-size:16px"><b>Listing sent to Rameen for approval - Call 9545247374</b></p><p class="hint">'+note+'</p><div style="display:grid;gap:10px;margin-top:18px"><a class="btn btn-wa btn-lg" target="_blank" rel="noopener" href="'+waLink(WA,msg)+'">'+IC.wa+' Send details to Rameen on WhatsApp</a><a class="btn btn-call btn-lg" href="tel:+919545247374">'+IC.call+' Call 9545247374</a><a class="btn btn-gold" href="#/broker-dashboard">Go to My Dashboard</a><a class="btn btn-ghost" style="color:var(--text);border-color:var(--line)" href="#/add-listing">+ Add Another Listing</a></div></div>';
       window.scrollTo(0,0);
@@ -502,7 +552,10 @@ function prev(){
 function aRow(l,btns){
   var br=db.brokers.filter(function(b){return b.id===l.brokerId})[0];
   var ph=br?br.phone:l.brokerPhone;
-  return '<div class="lrow"><img src="'+imgOf(l)+'" alt=""><div class="info"><b>'+esc(l.title)+'</b><span>'+esc(l.location)+' · '+esc(l.type)+' · '+priceHtml(l).replace(/<[^>]+>/g,'')+'<br>By '+esc(l.brokerName)+' · <a href="tel:+91'+digits(ph)+'">'+esc(ph)+'</a> · Owner: '+esc(l.owner)+'</span></div><div class="btns">'+btns+'</div></div>';
+  var extra='';
+  if(l.type==='JV Project')extra='<br><b style="color:var(--gold)">JV:</b> Owner '+esc(l.ownerRatio||'—')+'% · Builder '+esc(l.builderRatio||'—')+'% · Deposit '+money(l.deposit||0)+' · '+esc(l.depType||'—');
+  if(l.type==='Agriculture')extra='<br><b style="color:#1f9d5c">Agri:</b> '+esc(l.acre||'—')+' Acre · '+esc(l.guntha||'—')+' Guntha';
+  return '<div class="lrow"><img src="'+imgOf(l)+'" alt=""><div class="info"><b>'+esc(l.title)+'</b><span>'+esc(l.location)+' · '+esc(l.type)+' · '+priceHtml(l).replace(/<[^>]+>/g,'')+'<br>By '+esc(l.brokerName)+' · <a href="tel:+91'+digits(ph)+'">'+esc(ph)+'</a> · Owner: '+esc(l.owner)+extra+'</span></div><div class="btns">'+btns+'</div></div>';
 }
 function pAdmin(){
   if(!isAdmin()){
@@ -550,9 +603,17 @@ function openL(id,noView){
   if(!noView&&l.status==='Approved'){l.views=(l.views||0)+1;save();if(REMOTE&&l.brokerId!=='rameen')rpc('add_view',{p_id:l.id}).catch(function(){})}
   var n=(l.photos&&l.photos.length)||1,b=bhkText(l);
   var th=n>1?'<div class="thumbs">'+l.photos.map(function(s,i){return '<img src="'+s+'" data-act="thumb" data-i="'+i+'" class="'+(i===0?'on':'')+'" alt="">'}).join('')+'</div>':'';
+  var extra='';
+  if(l.type==='JV Project'){
+    extra='<div class="kv"><div><span>Owner Ratio</span>'+esc(l.ownerRatio||'—')+'%</div><div><span>Builder Ratio</span>'+esc(l.builderRatio||'—')+'%</div><div><span>Deposit</span>'+money(l.deposit||0)+'</div><div><span>Deposit Type</span>'+esc(l.depType||'—')+'</div></div>';
+  }
+  if(l.type==='Agriculture'){
+    extra='<div class="kv"><div><span>Acre</span>'+esc(l.acre||'—')+'</div><div><span>Guntha</span>'+esc(l.guntha||'—')+'</div></div>';
+  }
   $('#modal').innerHTML='<button class="x" data-act="close" aria-label="Close">×</button><img class="mi" id="mi" src="'+imgOf(l)+'" alt="">'+th+
    '<div class="mb"><span class="chip">'+esc(l.type)+'</span><h2 style="margin-top:10px">'+esc(l.title)+'</h2><div class="loc">📍 '+esc(l.location)+', Chhatrapati Sambhajinagar</div><div class="price" style="margin:8px 0">'+priceHtml(l)+'</div>'+
-   '<div class="kv"><div><span>Size</span>'+esc(l.size)+' sqm</div><div><span>Config</span>'+(b||'—')+'</div><div><span>Broker</span>'+esc(l.brokerName)+'</div><div><span>Views</span>'+(l.views||0)+'</div></div>'+
+   '<div class="kv"><div><span>Size</span>'+(l.size>0?esc(l.size)+' sqft':'—')+'</div><div><span>Config</span>'+(b||'—')+'</div><div><span>Broker</span>'+esc(l.brokerName)+'</div><div><span>Views</span>'+(l.views||0)+'</div></div>'+
+   extra+
    (l.desc?'<p style="font-size:14.5px;color:var(--muted);white-space:pre-line">'+esc(l.desc)+'</p>':'')+
    '<div class="actions" style="margin-top:12px"><a class="btn btn-call" href="tel:+91'+PHONE+'">'+IC.call+' Call Rameen</a><a class="btn btn-wa" target="_blank" rel="noopener" href="'+waLink(WA,'Hello, I am interested in: '+l.title+' ('+l.location+') – seen on Rameen Property Trust portal.')+'">'+IC.wa+' WhatsApp</a></div>'+
    '<p class="hint" style="text-align:center;margin-top:10px">All enquiries are handled by Rameen Property Trust.</p></div>';
