@@ -1,178 +1,281 @@
-- Gunthe 1 se 40
-- Area: CIDCO N-1 se N-12, Garkheda, Jalna Road...
-- Plot Type: Zamin, Yellow, Agriculture, Commercial, R-Zone
-- JV Project option
-- Owner Contact
-- Title<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rameen Property Trust - Listing</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #1a1a1a;
-    font-family: Arial, sans-serif;
-    color: #fff;
-    padding: 15px;
-  }
-  .form-box {
-    background: #222;
-    padding: 20px;
-    border-radius: 12px;
-    max-width: 520px;
-    margin: auto;
-  }
-  h2 {
-    text-align: center;
-    color: #d4a017;
-    margin-bottom: 15px;
-  }
-  label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 6px;
-    font-weight: bold;
-    font-size: 15px;
-  }
-  label span { color: red; }
+  * { box-sizing: border-box; }
+  body { background:#1a1a1a; color:#fff; font-family:Arial,sans-serif; padding:15px; margin:0; }
+  .box { background:#222; padding:20px; border-radius:12px; max-width:520px; margin:auto; }
+  h2 { text-align:center; color:#d4a017; margin-bottom:15px; }
+  label { display:block; margin-top:15px; margin-bottom:6px; font-weight:bold; font-size:15px; }
+  label span { color:red; }
   input, select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #b8860b;
-    background: #111;
-    color: #fff;
-    font-size: 15px;
+    width:100%; padding:12px; border-radius:8px;
+    border:1px solid #b8860b; background:#111; color:#fff;
+    font-size:15px;
   }
-  select { cursor: pointer; }
+  select { cursor:pointer; }
   button {
-    margin-top: 22px;
-    width: 100%;
-    padding: 14px;
-    background: #d4a017;
-    color: #000;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
+    margin-top:22px; width:100%; padding:14px;
+    background:#d4a017; color:#000; font-weight:bold;
+    border:none; border-radius:8px; font-size:16px; cursor:pointer;
   }
-  .hidden { display: none; }
+  .hide { display:none; }
+
+  /* ===== Searchable Dropdown ===== */
+  .search-wrap { position:relative; }
+  .search-list {
+    position:absolute; top:100%; left:0; right:0;
+    background:#111; border:1px solid #b8860b; border-top:none;
+    border-radius:0 0 8px 8px; max-height:200px; overflow-y:auto;
+    z-index:999; display:none;
+  }
+  .search-list div {
+    padding:10px 12px; cursor:pointer; border-bottom:1px solid #333;
+  }
+  .search-list div:hover, .search-list div.active {
+    background:#d4a017; color:#000;
+  }
 </style>
 </head>
 <body>
 
-<div class="form-box">
+<div class="box">
   <h2>Property Listing</h2>
+
+  <!-- Property Title -->
+  <label>Property Title <span>*</span></label>
+  <input type="text" id="title" placeholder="e.g. 3 BHK Luxury Flat" required>
 
   <!-- Property Category -->
   <label>Property Category <span>*</span></label>
   <select id="category" required onchange="showFields()">
     <option value="">-- Select Category --</option>
-    <option value="zamin">Zamin</option>
-    <option value="yellow">Yellow</option>
-    <option value="agriculture">Agriculture</option>
+    <option value="plot">Plot</option>
     <option value="flat">Flat</option>
     <option value="rowhouse">Row House</option>
+    <option value="jv">JV Project</option>
   </select>
 
-  <!-- ZAMIN / YELLOW / AGRICULTURE ke liye Acre -->
-  <div id="landFields" class="hidden">
-    <label>Acre <span>*</span></label>
-    <select id="acre">
-      <option value="">-- Select Acre --</option>
+  <!-- ===== PLOT ===== -->
+  <div id="plotFields" class="hide">
+    <label>Plot Type <span>*</span></label>
+    <select id="plotType">
+      <option value="">-- Select Plot Type --</option>
+      <option>Zamin Yellow</option>
+      <option>Agriculture</option>
+      <option>Commercial Plot</option>
+      <option>R-Zone Plot</option>
+      <option>JV Plot</option>
     </select>
+
+    <label>Acre <span>*</span></label>
+    <select id="acre"><option value="">-- Select Acre --</option></select>
+
+    <label>Gunthe <span>*</span></label>
+    <select id="gunthe"><option value="">-- Select Gunthe --</option></select>
   </div>
 
-  <!-- FLAT / ROW HOUSE ke liye BHK -->
-  <div id="bhkFields" class="hidden">
+  <!-- ===== FLAT / ROW HOUSE ===== -->
+  <div id="bhkFields" class="hide">
     <label>BHK <span>*</span></label>
     <select id="bhk">
       <option value="">-- Select BHK --</option>
-      <option>1 BHK</option>
-      <option>2 BHK</option>
-      <option>3 BHK</option>
-      <option>4 BHK</option>
-      <option>5 BHK</option>
+      <option>1 BHK</option><option>2 BHK</option><option>3 BHK</option>
+      <option>4 BHK</option><option>5 BHK</option>
+    </select>
+  </div>
+
+  <!-- ===== JV PROJECT ===== -->
+  <div id="jvFields" class="hide">
+    <label>JV Deposit Type <span>*</span></label>
+    <select id="jvDeposit">
+      <option value="">-- Select JV Deposit --</option>
+      <option>Non Refundable</option>
+      <option>Refundable</option>
+    </select>
+
+    <label>Owner Ratio <span>*</span></label>
+    <select id="jvOwnerRatio">
+      <option value="">-- Select Owner Ratio --</option>
+      <option>10</option><option>20</option><option>30</option><option>40</option>
+      <option>50</option><option>60</option><option>70</option><option>80</option>
+      <option>90</option>
+    </select>
+
+    <label>Builder Ratio <span>*</span></label>
+    <select id="jvBuilderRatio">
+      <option value="">-- Select Builder Ratio --</option>
+      <option>10</option><option>20</option><option>30</option><option>40</option>
+      <option>50</option><option>60</option><option>70</option><option>80</option>
+      <option>90</option>
     </select>
   </div>
 
   <!-- Deposit Type -->
-  <label>Deposit Type <span>*</span></label>
-  <select id="depositType" required>
-    <option value="">-- Select Deposit Type --</option>
-    <option>Non Refundable</option>
-    <option>Refundable</option>
-  </select>
+  <div id="depositBox">
+    <label>Deposit Type <span>*</span></label>
+    <select id="depositType">
+      <option value="">-- Select Deposit Type --</option>
+      <option>Non Refundable</option>
+      <option>Refundable</option>
+    </select>
+  </div>
+
+  <!-- ===== AREA SEARCHABLE ===== -->
+  <label>Area <span>*</span></label>
+  <div class="search-wrap">
+    <input 
+      type="text" 
+      id="areaInput" 
+      placeholder="Type karo... (gaon / area)"
+      autocomplete="off"
+      oninput="filterArea()"
+      onfocus="filterArea()"
+      required
+    >
+    <input type="hidden" id="areaValue">
+    <div class="search-list" id="areaList"></div>
+  </div>
 
   <!-- Amount -->
   <label>Amount (₹) <span>*</span></label>
   <select id="amount" required>
     <option value="">-- Select Amount --</option>
-    <option>10,000</option>
-    <option>25,000</option>
-    <option>50,000</option>
-    <option>1,00,000</option>
-    <option>2,00,000</option>
-    <option>5,00,000</option>
-    <option>10,00,000</option>
-    <option>25,00,000</option>
-    <option>50,00,000</option>
-    <option>1,00,00,000</option>
-    <option>5,00,00,000</option>
-    <option>10,00,00,000</option>
+    <option>10,000</option><option>25,000</option><option>50,000</option>
+    <option>1,00,000</option><option>2,00,000</option><option>5,00,000</option>
+    <option>10,00,000</option><option>25,00,000</option><option>50,00,000</option>
+    <option>1,00,00,000</option><option>5,00,00,000</option><option>10,00,00,000</option>
   </select>
 
-  <!-- Owner Ratio -->
-  <label>Owner Ratio <span>*</span></label>
-  <select id="ownerRatio" required>
-    <option value="">-- Select Owner Ratio --</option>
-    <option>10</option><option>20</option><option>30</option><option>40</option>
-    <option>50</option><option>60</option><option>70</option><option>80</option>
-    <option>90</option>
-  </select>
-
-  <!-- Builder Ratio -->
-  <label>Builder Ratio <span>*</span></label>
-  <select id="builderRatio" required>
-    <option value="">-- Select Builder Ratio --</option>
-    <option>10</option><option>20</option><option>30</option><option>40</option>
-    <option>50</option><option>60</option><option>70</option><option>80</option>
-    <option>90</option>
-  </select>
+  <!-- Owner Contact -->
+  <label>Owner Contact <span>*</span></label>
+  <input type="tel" id="contact" placeholder="10 digit mobile number" pattern="[0-9]{10}" required>
 
   <button type="submit">Submit Listing</button>
 </div>
 
 <script>
-  // Acre dropdown 1 se 2000 tak
-  const acreSelect = document.getElementById('acre');
+  // ===== Acre 1 se 2000 =====
+  let acre = document.getElementById('acre');
   for (let i = 1; i <= 2000; i++) {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = i + ' Acre';
-    acreSelect.appendChild(opt);
+    acre.innerHTML += `<option>${i} Acre</option>`;
   }
 
-  // Category ke hisaab se field dikhana
+  // ===== Gunthe 1 se 40 =====
+  let gunthe = document.getElementById('gunthe');
+  for (let i = 1; i <= 40; i++) {
+    gunthe.innerHTML += `<option>${i}</option>`;
+  }
+
+  // ===== POORA AURANGABAD DISTRICT =====
+  const areas = [
+    // Aurangabad City
+    "CIDCO N-1","CIDCO N-2","CIDCO N-3","CIDCO N-4","CIDCO N-5","CIDCO N-6",
+    "CIDCO N-7","CIDCO N-8","CIDCO N-9","CIDCO N-10","CIDCO N-11","CIDCO N-12",
+    "Garkheda","Jalna Road","Paithan Road","Beed Bypass","Station Road","Kranti Chowk",
+    "Harsul","Satara Parisar","TV Center","Waluj","Shendra","Padegaon",
+    "Chikalthana","Mukundwadi","Ulkanagari","Samarth Nagar","Nirala Bazar",
+    "Gulmandi","Karmad","Chauka","Daulatabad","Pimpri","Chikhalthana MIDC",
+    "Shivaji Nagar","Cidco Waluj","Chhatrapati Nagar","N-11","N-12",
+
+    // Gangapur
+    "Gangapur","Gangapur Jahagir","Gangapur Nehari","Shendraban",
+    "Wadgaon Kolhati","Wahegaon","Waluj Bk.","Waluj Kh.","Wanwadi",
+
+    // Paithan
+    "Paithan","Bidkingaon","Pachod","Limbgaon","Kutub Kheda",
+    "Apegaon","Bahula","Bakshichapada","Bhalgaon","Bhatodi",
+
+    // Khuldabad
+    "Khuldabad","Kasabkheda","Loni","Mamnapur",
+    "Nagapur","Nagsar","Padali","Palaskheda",
+
+    // Phulambri
+    "Phulambri","Lahanyachiwadi","Leha Babra","Lohgad Nandra",
+    "Mahal Kinhola","Mamnabad","Mangrul","Mohurla",
+
+    // Vaijapur
+    "Vaijapur","Adegaon","Ambegaon","Anandgaon","Anjanpur",
+    "Apegaon","Arav","Bahadarpur","Balhegaon","Bhaigaon",
+
+    // Kannad
+    "Kannad","Deogaan","Pishore","Banoti",
+    "Akhrani","Amkheda","Anjandoh","Bahuli","Bakshi",
+
+    // Sillod
+    "Sillod","Wadod","Amthana","Ajunta","Kutubpur",
+    "Leha","Lonwadi","Madni","Mandgaon","Palod","Pimpalgaon",
+
+    // Soegaon
+    "Soegaon","Amkheda","Bahulkheda","Dastapur","Devhari","Dhabha",
+    "Fardapur","Galwada","Ghanegaon Tanda","Ghosala","Gondegaon",
+    "Hanumant Kheda","Jamthi","Jangala Tanda","Jangali Kotha",
+    "Jarandi","Kahurkheda","Khadki","Kotha","Ladgaon","Mahal",
+    "Maldhok","Mandala","Mohgaon","Nanda","Nimkheda","Palasgaon",
+    "Pimpalgaon","Pimparkheda","Rahati","Ranjangaon","Sawargaon",
+    "Shevta","Shindkheda","Sirasgaon","Takli","Talni","Wadgaon",
+    "Wakadi","Warud","Zodga"
+  ];
+
+  // ===== Searchable Dropdown =====
+  const input = document.getElementById('areaInput');
+  const list = document.getElementById('areaList');
+  const hidden = document.getElementById('areaValue');
+
+  function filterArea() {
+    const q = input.value.toLowerCase();
+    list.innerHTML = '';
+    let matches = areas.filter(a => a.toLowerCase().includes(q));
+
+    if (matches.length === 0) {
+      list.innerHTML = '<div style="color:#888;">No area found</div>';
+      list.style.display = 'block';
+      return;
+    }
+
+    matches.slice(0, 50).forEach(a => {
+      const d = document.createElement('div');
+      d.textContent = a;
+      d.onclick = () => {
+        input.value = a;
+        hidden.value = a;
+        list.style.display = 'none';
+      };
+      list.appendChild(d);
+    });
+    list.style.display = 'block';
+  }
+
+  // Bahar click karne par list band
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-wrap')) {
+      list.style.display = 'none';
+    }
+  });
+
+  // ===== Category ke hisaab se fields =====
   function showFields() {
-    const cat = document.getElementById('category').value;
-    const landFields = document.getElementById('landFields');
-    const bhkFields = document.getElementById('bhkFields');
+    let cat = document.getElementById('category').value;
+    let plotFields = document.getElementById('plotFields');
+    let bhkFields = document.getElementById('bhkFields');
+    let jvFields = document.getElementById('jvFields');
+    let depositBox = document.getElementById('depositBox');
 
-    landFields.classList.add('hidden');
-    bhkFields.classList.add('hidden');
-    document.getElementById('acre').required = false;
-    document.getElementById('bhk').required = false;
+    plotFields.classList.add('hide');
+    bhkFields.classList.add('hide');
+    jvFields.classList.add('hide');
+    depositBox.classList.remove('hide');
 
-    if (cat === 'zamin' || cat === 'yellow' || cat === 'agriculture') {
-      landFields.classList.remove('hidden');
-      document.getElementById('acre').required = true;
+    if (cat === 'plot') {
+      plotFields.classList.remove('hide');
     } else if (cat === 'flat' || cat === 'rowhouse') {
-      bhkFields.classList.remove('hidden');
-      document.getElementById('bhk').required = true;
+      bhkFields.classList.remove('hide');
+    } else if (cat === 'jv') {
+      jvFields.classList.remove('hide');
+      depositBox.classList.add('hide');
     }
   }
 </script>
