@@ -1,284 +1,154 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rameen Property Trust - Listing</title>
-<style>
-  * { box-sizing: border-box; }
-  body { background:#1a1a1a; color:#fff; font-family:Arial,sans-serif; padding:15px; margin:0; }
-  .box { background:#222; padding:20px; border-radius:12px; max-width:520px; margin:auto; }
-  h2 { text-align:center; color:#d4a017; margin-bottom:15px; }
-  label { display:block; margin-top:15px; margin-bottom:6px; font-weight:bold; font-size:15px; }
-  label span { color:red; }
-  input, select {
-    width:100%; padding:12px; border-radius:8px;
-    border:1px solid #b8860b; background:#111; color:#fff;
-    font-size:15px;
-  }
-  select { cursor:pointer; }
-  button {
-    margin-top:22px; width:100%; padding:14px;
-    background:#d4a017; color:#000; font-weight:bold;
-    border:none; border-radius:8px; font-size:16px; cursor:pointer;
-  }
-  .hide { display:none; }
 
-  /* ===== Searchable Dropdown ===== */
-  .search-wrap { position:relative; }
-  .search-list {
-    position:absolute; top:100%; left:0; right:0;
-    background:#111; border:1px solid #b8860b; border-top:none;
-    border-radius:0 0 8px 8px; max-height:200px; overflow-y:auto;
-    z-index:999; display:none;
-  }
-  .search-list div {
-    padding:10px 12px; cursor:pointer; border-bottom:1px solid #333;
-  }
-  .search-list div:hover, .search-list div.active {
-    background:#d4a017; color:#000;
-  }
-</style>
-</head>
-<body>
+<section id="rp-online">
+  <h2>RAMEEN PROPERTY — Admin</h2>
 
-<div class="box">
-  <h2>Property Listing</h2>
-
-  <!-- Property Title -->
-  <label>Property Title <span>*</span></label>
-  <input type="text" id="title" placeholder="e.g. 3 BHK Luxury Flat" required>
-
-  <!-- Property Category -->
-  <label>Property Category <span>*</span></label>
-  <select id="category" required onchange="showFields()">
-    <option value="">-- Select Category --</option>
-    <option value="plot">Plot</option>
-    <option value="flat">Flat</option>
-    <option value="rowhouse">Row House</option>
-    <option value="jv">JV Project</option>
-  </select>
-
-  <!-- ===== PLOT ===== -->
-  <div id="plotFields" class="hide">
-    <label>Plot Type <span>*</span></label>
-    <select id="plotType">
-      <option value="">-- Select Plot Type --</option>
-      <option>Zamin Yellow</option>
-      <option>Agriculture</option>
-      <option>Commercial Plot</option>
-      <option>R-Zone Plot</option>
-      <option>JV Plot</option>
-    </select>
-
-    <label>Acre <span>*</span></label>
-    <select id="acre"><option value="">-- Select Acre --</option></select>
-
-    <label>Gunthe <span>*</span></label>
-    <select id="gunthe"><option value="">-- Select Gunthe --</option></select>
+  <div id="rp-login">
+    <input id="rp-email" type="email"
+      placeholder="Admin email" autocomplete="username">
+    <input id="rp-password" type="password"
+      placeholder="Admin password" autocomplete="current-password">
+    <button id="rp-login-btn">Admin Login</button>
   </div>
 
-  <!-- ===== FLAT / ROW HOUSE ===== -->
-  <div id="bhkFields" class="hide">
-    <label>BHK <span>*</span></label>
-    <select id="bhk">
-      <option value="">-- Select BHK --</option>
-      <option>1 BHK</option><option>2 BHK</option><option>3 BHK</option>
-      <option>4 BHK</option><option>5 BHK</option>
+  <div id="rp-admin" hidden>
+    <h3>Add Property</h3>
+    <input id="rp-title" placeholder="Property title">
+    <select id="rp-type">
+      <option>Plot</option>
+      <option>Flat</option>
+      <option>JV</option>
+      <option>Commercial</option>
     </select>
+    <input id="rp-location" placeholder="Location">
+    <input id="rp-price" placeholder="Price / budget">
+    <textarea id="rp-details" placeholder="Property details"></textarea>
+    <button id="rp-add">Publish Listing</button>
+    <button id="rp-logout">Logout</button>
   </div>
 
-  <!-- ===== JV PROJECT ===== -->
-  <div id="jvFields" class="hide">
-    <label>JV Deposit Type <span>*</span></label>
-    <select id="jvDeposit">
-      <option value="">-- Select JV Deposit --</option>
-      <option>Non Refundable</option>
-      <option>Refundable</option>
-    </select>
+  <p id="rp-status" aria-live="polite"></p>
+  <h3>Online Property Listings</h3>
+  <div id="rp-listings"></div>
+</section>
 
-    <label>Owner Ratio <span>*</span></label>
-    <select id="jvOwnerRatio">
-      <option value="">-- Select Owner Ratio --</option>
-      <option>10</option><option>20</option><option>30</option><option>40</option>
-      <option>50</option><option>60</option><option>70</option><option>80</option>
-      <option>90</option>
-    </select>
+<script type="module">
+import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+import {
+  getAuth, signInWithEmailAndPassword, onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, getDocs,
+  query, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-    <label>Builder Ratio <span>*</span></label>
-    <select id="jvBuilderRatio">
-      <option value="">-- Select Builder Ratio --</option>
-      <option>10</option><option>20</option><option>30</option><option>40</option>
-      <option>50</option><option>60</option><option>70</option><option>80</option>
-      <option>90</option>
-    </select>
-  </div>
+// Firebase Console se apni web app ki config yahan daalein.
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  appId: "YOUR_APP_ID"
+};
 
-  <!-- Deposit Type -->
-  <div id="depositBox">
-    <label>Deposit Type <span>*</span></label>
-    <select id="depositType">
-      <option value="">-- Select Deposit Type --</option>
-      <option>Non Refundable</option>
-      <option>Refundable</option>
-    </select>
-  </div>
+const status = document.getElementById("rp-status");
+const login = document.getElementById("rp-login");
+const admin = document.getElementById("rp-admin");
+const listingBox = document.getElementById("rp-listings");
 
-  <!-- ===== AREA SEARCHABLE ===== -->
-  <label>Area <span>*</span></label>
-  <div class="search-wrap">
-    <input 
-      type="text" 
-      id="areaInput" 
-      placeholder="Type karo... (gaon / area)"
-      autocomplete="off"
-      oninput="filterArea()"
-      onfocus="filterArea()"
-      required
-    >
-    <input type="hidden" id="areaValue">
-    <div class="search-list" id="areaList"></div>
-  </div>
+if (firebaseConfig.apiKey.startsWith("YOUR_")) {
+  status.textContent =
+    "Setup pending: Firebase web app configuration add karein.";
+} else {
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  <!-- Amount -->
-  <label>Amount (₹) <span>*</span></label>
-  <select id="amount" required>
-    <option value="">-- Select Amount --</option>
-    <option>10,000</option><option>25,000</option><option>50,000</option>
-    <option>1,00,000</option><option>2,00,000</option><option>5,00,000</option>
-    <option>10,00,000</option><option>25,00,000</option><option>50,00,000</option>
-    <option>1,00,00,000</option><option>5,00,00,000</option><option>10,00,00,000</option>
-  </select>
+  document.getElementById("rp-login-btn").onclick = async () => {
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        document.getElementById("rp-email").value.trim(),
+        document.getElementById("rp-password").value
+      );
+      status.textContent = "Login request successful.";
+    } catch {
+      status.textContent = "Login failed. Email/password check karein.";
+    }
+  };
 
-  <!-- Owner Contact -->
-  <label>Owner Contact <span>*</span></label>
-  <input type="tel" id="contact" placeholder="10 digit mobile number" pattern="[0-9]{10}" required>
+  document.getElementById("rp-logout").onclick =
+    () => signOut(auth);
 
-  <button type="submit">Submit Listing</button>
-</div>
+  onAuthStateChanged(auth, async user => {
+    login.hidden = !!user;
+    admin.hidden = !user;
+    await loadListings();
+  });
 
-<script>
-  // ===== Acre 1 se 2000 =====
-  let acre = document.getElementById('acre');
-  for (let i = 1; i <= 2000; i++) {
-    acre.innerHTML += `<option>${i} Acre</option>`;
+  async function loadListings() {
+    listingBox.replaceChildren();
+    try {
+      const q = query(
+        collection(db, "properties"),
+        orderBy("createdAt", "desc")
+      );
+      const snapshot = await getDocs(q);
+
+      snapshot.forEach(docSnap => {
+        const p = docSnap.data();
+        const card = document.createElement("article");
+        const title = document.createElement("h3");
+        title.textContent = p.title || "Property";
+        const info = document.createElement("p");
+        info.textContent = [
+          p.type, p.location, p.price, p.details
+        ].filter(Boolean).join(" • ");
+        const wa = document.createElement("a");
+        wa.href = "https://wa.me/919545247374?text=" +
+          encodeURIComponent("Interested in " + (p.title || "property"));
+        wa.textContent = "WhatsApp Enquiry";
+        wa.target = "_blank";
+        wa.rel = "noopener noreferrer";
+        card.append(title, info, wa);
+        listingBox.appendChild(card);
+      });
+    } catch {
+      status.textContent =
+        "Listings load nahi hui. Firebase database rules check karein.";
+    }
   }
 
-  // ===== Gunthe 1 se 40 =====
-  let gunthe = document.getElementById('gunthe');
-  for (let i = 1; i <= 40; i++) {
-    gunthe.innerHTML += `<option>${i}</option>`;
-  }
+  document.getElementById("rp-add").onclick = async () => {
+    if (!auth.currentUser) return;
+    const title = document.getElementById("rp-title").value.trim();
+    const location = document.getElementById("rp-location").value.trim();
 
-  // ===== POORA AURANGABAD DISTRICT =====
-  const areas = [
-    // Aurangabad City
-    "CIDCO N-1","CIDCO N-2","CIDCO N-3","CIDCO N-4","CIDCO N-5","CIDCO N-6",
-    "CIDCO N-7","CIDCO N-8","CIDCO N-9","CIDCO N-10","CIDCO N-11","CIDCO N-12",
-    "Garkheda","Jalna Road","Paithan Road","Beed Bypass","Station Road","Kranti Chowk",
-    "Harsul","Satara Parisar","TV Center","Waluj","Shendra","Padegaon",
-    "Chikalthana","Mukundwadi","Ulkanagari","Samarth Nagar","Nirala Bazar",
-    "Gulmandi","Karmad","Chauka","Daulatabad","Pimpri","Chikhalthana MIDC",
-    "Shivaji Nagar","Cidco Waluj","Chhatrapati Nagar","N-11","N-12",
-
-    // Gangapur
-    "Gangapur","Gangapur Jahagir","Gangapur Nehari","Shendraban",
-    "Wadgaon Kolhati","Wahegaon","Waluj Bk.","Waluj Kh.","Wanwadi",
-
-    // Paithan
-    "Paithan","Bidkingaon","Pachod","Limbgaon","Kutub Kheda",
-    "Apegaon","Bahula","Bakshichapada","Bhalgaon","Bhatodi",
-
-    // Khuldabad
-    "Khuldabad","Kasabkheda","Loni","Mamnapur",
-    "Nagapur","Nagsar","Padali","Palaskheda",
-
-    // Phulambri
-    "Phulambri","Lahanyachiwadi","Leha Babra","Lohgad Nandra",
-    "Mahal Kinhola","Mamnabad","Mangrul","Mohurla",
-
-    // Vaijapur
-    "Vaijapur","Adegaon","Ambegaon","Anandgaon","Anjanpur",
-    "Apegaon","Arav","Bahadarpur","Balhegaon","Bhaigaon",
-
-    // Kannad
-    "Kannad","Deogaan","Pishore","Banoti",
-    "Akhrani","Amkheda","Anjandoh","Bahuli","Bakshi",
-
-    // Sillod
-    "Sillod","Wadod","Amthana","Ajunta","Kutubpur",
-    "Leha","Lonwadi","Madni","Mandgaon","Palod","Pimpalgaon",
-
-    // Soegaon
-    "Soegaon","Amkheda","Bahulkheda","Dastapur","Devhari","Dhabha",
-    "Fardapur","Galwada","Ghanegaon Tanda","Ghosala","Gondegaon",
-    "Hanumant Kheda","Jamthi","Jangala Tanda","Jangali Kotha",
-    "Jarandi","Kahurkheda","Khadki","Kotha","Ladgaon","Mahal",
-    "Maldhok","Mandala","Mohgaon","Nanda","Nimkheda","Palasgaon",
-    "Pimpalgaon","Pimparkheda","Rahati","Ranjangaon","Sawargaon",
-    "Shevta","Shindkheda","Sirasgaon","Takli","Talni","Wadgaon",
-    "Wakadi","Warud","Zodga"
-  ];
-
-  // ===== Searchable Dropdown =====
-  const input = document.getElementById('areaInput');
-  const list = document.getElementById('areaList');
-  const hidden = document.getElementById('areaValue');
-
-  function filterArea() {
-    const q = input.value.toLowerCase();
-    list.innerHTML = '';
-    let matches = areas.filter(a => a.toLowerCase().includes(q));
-
-    if (matches.length === 0) {
-      list.innerHTML = '<div style="color:#888;">No area found</div>';
-      list.style.display = 'block';
+    if (!title || !location) {
+      status.textContent = "Title aur location zaroori hain.";
       return;
     }
 
-    matches.slice(0, 50).forEach(a => {
-      const d = document.createElement('div');
-      d.textContent = a;
-      d.onclick = () => {
-        input.value = a;
-        hidden.value = a;
-        list.style.display = 'none';
-      };
-      list.appendChild(d);
-    });
-    list.style.display = 'block';
-  }
-
-  // Bahar click karne par list band
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.search-wrap')) {
-      list.style.display = 'none';
+    try {
+      await addDoc(collection(db, "properties"), {
+        title,
+        location,
+        type: document.getElementById("rp-type").value,
+        price: document.getElementById("rp-price").value.trim(),
+        details: document.getElementById("rp-details").value.trim(),
+        createdAt: serverTimestamp()
+      });
+      status.textContent = "Property online save ho gayi.";
+      document.getElementById("rp-title").value = "";
+      document.getElementById("rp-location").value = "";
+      document.getElementById("rp-price").value = "";
+      document.getElementById("rp-details").value = "";
+      await loadListings();
+    } catch {
+      status.textContent =
+        "Save nahi hua. Firebase authentication aur security rules check karein.";
     }
-  });
+  };
+}
+</script.>
 
-  // ===== Category ke hisaab se fields =====
-  function showFields() {
-    let cat = document.getElementById('category').value;
-    let plotFields = document.getElementById('plotFields');
-    let bhkFields = document.getElementById('bhkFields');
-    let jvFields = document.getElementById('jvFields');
-    let depositBox = document.getElementById('depositBox');
-
-    plotFields.classList.add('hide');
-    bhkFields.classList.add('hide');
-    jvFields.classList.add('hide');
-    depositBox.classList.remove('hide');
-
-    if (cat === 'plot') {
-      plotFields.classList.remove('hide');
-    } else if (cat === 'flat' || cat === 'rowhouse') {
-      bhkFields.classList.remove('hide');
-    } else if (cat === 'jv') {
-      jvFields.classList.remove('hide');
-      depositBox.classList.add('hide');
-    }
-  }
-</script>
-
-</body>
-</html.>
