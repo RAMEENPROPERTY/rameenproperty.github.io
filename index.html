@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101410">
+<title>Rameen Property Trust – Broker Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0c100c;--navy2:#1a211a;--gold:#c9a86a;--gold2:#e2c994;
+  --bg:#101410;--card:#1e251d;--text:#f1ede2;--muted:#a3ad9f;--line:#2f3a2e;--input:#141a14;--shadow:0 6px 24px rgba(0,0,0,.45);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#101410;--card:#1e251d;--text:#f1ede2;--muted:#a3ad9f;--line:#2f3a2e;--input:#141a14;--shadow:0 6px 24px rgba(0,0,0,.4);}
+}
+:root[data-theme="dark"]{--bg:#101410;--card:#1e251d;--text:#f1ede2;--muted:#a3ad9f;--line:#2f3a2e;--input:#141a14;--shadow:0 6px 24px rgba(0,0,0,.4);}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*:before,*:after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.5;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:'Playfair Display',Georgia,'Times New Roman',serif;margin:0 0 .4em;line-height:1.2}
+a{color:inherit}
+img{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:#0c100c;border-bottom:1px solid var(--line)}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0}
+.brand{text-decoration:none;color:var(--text);display:flex;align-items:center;gap:10px}
+.brand svg{width:28px;height:34px;flex:none;color:var(--gold)}
+.brand span{display:block}
+.brand b{font-family:'Playfair Display',Georgia,serif;font-size:17px;font-weight:600;letter-spacing:.14em;display:block;line-height:1.1;color:var(--text)}
+.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:.34em;text-transform:uppercase;margin-top:4px}
+.phone-link{background:var(--gold);color:var(--navy);font-weight:700;text-decoration:none;padding:8px 11px;border-radius:999px;font-size:12px;white-space:nowrap;display:inline-flex;gap:6px;align-items:center}
+nav.menu{display:none;flex-direction:column;gap:2px;padding:0 0 12px}nav.menu.open{display:flex}
+.top-actions{display:flex;align-items:center;gap:8px}
+.burger{width:42px;height:42px;border:1px solid var(--line);background:transparent;border-radius:8px;display:grid;place-items:center;cursor:pointer;flex:none}
+.burger span,.burger span:before,.burger span:after{display:block;width:20px;height:2px;background:var(--text);content:"";position:relative}
+.burger span:before{position:absolute;top:-6px}.burger span:after{position:absolute;top:6px}
+.eyebrow{display:flex;align-items:center;gap:12px;color:var(--gold);font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+nav.menu::-webkit-scrollbar{display:none}
+nav.menu a{color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:500;padding:7px 13px;border-radius:999px;white-space:nowrap}
+nav.menu a.on,nav.menu a:hover{background:rgba(201,168,106,.22);color:var(--text)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:inherit;font-weight:700;text-decoration:none;border-radius:12px;padding:12px 20px;font-size:15px;transition:transform .12s,box-shadow .12s}
+.btn:active{transform:scale(.98)}
+.btn-gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--navy);box-shadow:0 4px 16px rgba(201,168,106,.35)}
+.btn-navy{background:var(--navy);color:var(--gold2);border:1px solid var(--gold)}
+.btn-ghost{background:transparent;color:var(--gold2);border:1.5px solid var(--gold)}
+.btn-wa{background:#25d366;color:#07351b}
+.btn-call{background:var(--navy);color:var(--gold2)}
+.btn-ok{background:#1f9d5c;color:#fff}.btn-no{background:#c0392b;color:#fff}.btn-del{background:transparent;color:#c0392b;border:1.5px solid #c0392b}
+.btn-sm{padding:8px 14px;font-size:13px;border-radius:10px}
+.btn-lg{padding:16px 26px;font-size:17px;border-radius:14px}
+.btn-block{width:100%}
+svg.i{width:18px;height:18px;flex:none}
+
+/* hero */
+.hero{background:radial-gradient(1200px 500px at 80% -10%,rgba(201,168,106,.22),transparent 60%),linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;padding:48px 0 56px;text-align:left}
+.hero .tag{display:flex;align-items:center;gap:14px;color:var(--gold);font-size:12px;letter-spacing:.28em;text-transform:uppercase;margin-bottom:18px}
+.hero .tag:before{content:"";width:48px;height:1px;background:var(--gold)}
+.hero h1{font-size:clamp(38px,10vw,68px);color:var(--text);font-weight:500}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero p{color:var(--muted);max-width:560px;margin:0 0 24px;font-size:16px}
+.cta-stack{display:flex;flex-direction:column;gap:12px;max-width:440px;margin:0}
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:640px;margin:30px 0 0}
+.stats-strip div{background:rgba(255,255,255,.06);border:1px solid rgba(201,168,106,.35);border-radius:14px;padding:12px 6px}
+.stats-strip b{display:block;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold2)}
+.stats-strip span{font-size:11.5px;color:#9fb0cc}
+section.block{padding:38px 0}
+.sec-title{text-align:center;margin-bottom:22px}
+.sec-title h2{font-size:clamp(22px,4.5vw,32px)}
+.sec-title h2:after{content:"";display:block;width:56px;height:3px;background:var(--gold);margin:10px auto 0;border-radius:3px}
+.features{display:grid;gap:14px;grid-template-columns:1fr}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.feat .ic{width:44px;height:44px;border-radius:12px;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-size:22px;margin-bottom:10px}
+.feat h3{font-size:18px}.feat p{margin:0;color:var(--muted);font-size:14.5px}
+.page-head{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;padding:28px 0 64px;text-align:center}
+.page-head h1{color:var(--gold);font-size:clamp(22px,5vw,38px);letter-spacing:.04em}
+.page-head p{margin:0;color:#b8c6de;font-size:15px}
+.search{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:14px;margin:-44px auto 22px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.search label{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.search .full{grid-column:1/-1}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+.field label em{color:#c0392b;font-style:normal}
+input,select,textarea{width:100%;font:inherit;font-size:15px;color:var(--text);background:var(--input);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,106,.25)}
+textarea{min-height:100px;resize:vertical}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+.form-card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:22px;max-width:640px;margin:-40px auto 40px}
+.row2{display:grid;grid-template-columns:1fr;gap:0 12px}
+.err{color:#c0392b;font-size:13px;margin:6px 0 0;min-height:18px}
+.count{color:var(--muted);font-size:14px;margin:0 2px 12px}
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:46px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.card .img{position:relative;aspect-ratio:16/10;background:var(--navy);cursor:pointer;overflow:hidden}
+.card .img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.card:hover .img img{transform:scale(1.04)}
+.badge{position:absolute;left:10px;top:10px;background:var(--gold);color:var(--navy);font-weight:700;font-size:11.5px;padding:4px 10px;border-radius:999px;letter-spacing:.03em}
+.badge.feat-b{background:var(--navy);color:var(--gold2);left:auto;right:10px;border:1px solid var(--gold)}
+.card .body{padding:15px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{font-size:17px;margin:0;cursor:pointer}
+.loc{color:var(--muted);font-size:13.5px}
+.price{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--text)}
+.price small{font-family:Inter,sans-serif;font-size:12px;color:var(--muted);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:rgba(201,168,106,.15);border:1px solid rgba(201,168,106,.5);color:var(--text);font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:8px}
+.broker{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:9px;margin-top:auto}
+.broker b{color:var(--text)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.empty{text-align:center;padding:40px 16px;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:16px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;box-shadow:var(--shadow)}
+.stat b{display:block;font-family:'Playfair Display',serif;font-size:28px;color:var(--gold)}
+:root .stat b{color:#a8832f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stat b{color:var(--gold)}}
+:root[data-theme="dark"] .stat b{color:var(--gold)}
+.stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.lrow{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px;align-items:center}
+.lrow img{width:84px;height:64px;object-fit:cover;border-radius:10px;flex:none;background:var(--navy)}
+.lrow .info{flex:1;min-width:0}
+.lrow .info b{display:block;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lrow .info span{font-size:12.5px;color:var(--muted)}
+.status{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.s-Pending{background:#fff3cd;color:#8a6200}.s-Approved{background:#d4f3e2;color:#0d6b3a}.s-Rejected{background:#fbdcd8;color:#a02a1c}
+.sec-h{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:22px 0 12px;flex-wrap:wrap}
+.sec-h h2{font-size:22px;margin:0}
+.alist .lrow{flex-wrap:wrap}
+.alist .btns{display:flex;gap:8px;width:100%;flex-wrap:wrap}
+.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.drop{border:2px dashed var(--gold);border-radius:12px;padding:16px;text-align:center;background:rgba(201,168,106,.07);cursor:pointer;font-size:14px;color:var(--muted)}
+.previews{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.pv{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.pv img{width:100%;height:100%;object-fit:cover}
+.pv button{position:absolute;right:4px;top:4px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(10,25,47,.85);color:#fff;cursor:pointer;font-size:14px;line-height:1}
+.success{text-align:center;padding:10px 0}
+.success .tick{width:64px;height:64px;border-radius:50%;background:#1f9d5c;color:#fff;display:grid;place-items:center;font-size:34px;margin:0 auto 14px}
+.overlay{position:fixed;inset:0;background:rgba(3,10,22,.72);z-index:100;display:none;align-items:flex-end;justify-content:center;padding:0}
+.overlay.show{display:flex}
+.modal{background:var(--card);color:var(--text);width:100%;max-width:640px;max-height:92%;overflow-y:auto;border-radius:22px 22px 0 0;position:relative;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+.modal .mi{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--navy)}
+.modal .thumbs{display:flex;gap:6px;padding:8px 16px 0;overflow-x:auto}
+.modal .thumbs img{width:60px;height:46px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid transparent;flex:none}
+.modal .thumbs img.on{border-color:var(--gold)}
+.modal .mb{padding:16px}
+.modal .x{position:absolute;right:12px;top:12px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(10,25,47,.85);color:#fff;font-size:20px;cursor:pointer;z-index:2}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.kv div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px}
+.kv span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+footer{background:var(--navy);color:#9fb0cc;text-align:center;padding:26px 16px 96px;border-top:2px solid var(--gold);font-size:13.5px}
+footer b{color:var(--gold);font-family:'Playfair Display',serif;letter-spacing:.06em;font-size:16px}
+footer a{color:var(--gold2)}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:58px;height:58px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.35);z-index:90;text-decoration:none;animation:pulse 2.4s infinite}
+.fab svg{width:32px;height:32px}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.55),0 6px 20px rgba(0,0,0,.35)}70%{box-shadow:0 0 0 16px rgba(37,211,102,0),0 6px 20px rgba(0,0,0,.35)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0),0 6px 20px rgba(0,0,0,.35)}}
+@media(min-width:640px){
+  .search{grid-template-columns:repeat(4,1fr)}
+  .search .full{grid-column:auto}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .features{grid-template-columns:repeat(3,1fr)}
+  .row2{grid-template-columns:1fr 1fr}
+  .stat-grid{grid-template-columns:repeat(4,1fr)}
+  .cta-stack{flex-direction:row;max-width:640px}
+  .cta-stack .btn{flex:1}
+  .brand b{font-size:27px;letter-spacing:.2em}.brand small{font-size:10px}.brand svg{width:38px;height:46px}nav.menu{display:flex!important;flex-direction:row;padding:0 0 8px}.burger{display:none!important}
+  .overlay{align-items:center;padding:20px}.modal{border-radius:22px;max-width:620px}
+}
+@media(min-width:960px){.grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <a class="brand" href="#/" aria-label="Rameen Property Trust"><svg viewBox="0 0 34 40" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 38h30M5 38V16h9v22M14 38V4l9 3v31M23 38V14h8v24"/><path d="M8 21v3M8 27v3M18 10v3M18 17v3M18 24v3M27 19v3M27 26v3" stroke-width="1.6"/></svg><span><b>RAMEEN</b><small>Property Trust</small></span></a>
+      <div class="top-actions"><a class="phone-link" href="tel:+919545247374"><svg class="i" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>+91 9545247374</a><button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span></button></div>
+    </div>
+    <nav class="menu" id="menu">
+      <a href="#/" data-p="/">Home</a>
+      <a href="#/listings" data-p="/listings">Properties</a>
+      <a href="#/broker-register" data-p="/broker-register">Broker Register</a>
+      <a href="#/broker-dashboard" data-p="/broker-dashboard">Broker Dashboard</a>
+      <a href="#/add-listing" data-p="/add-listing">Add Listing</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer>
+  <b>RAMEEN PROPERTY TRUST</b><br>
+  Chhatrapati Sambhajinagar's No.1 Property Portal<br>
+  <a href="tel:+919545247374">+91 9545247374</a> · <a href="https://wa.me/919545247374" target="_blank" rel="noopener">WhatsApp</a><br>
+  <span style="font-size:12px"><a href="#/admin">Admin</a></span>
+</footer>
+
+<a class="fab" href="https://wa.me/919545247374?text=Hello%20Rameen%20Property%20Trust" target="_blank" rel="noopener" aria-label="WhatsApp Rameen Property Trust">
+  <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.3z"/></svg>
+</a>
+
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+
+<script>
+(function(){
+'use strict';
+var WA='919545247374', PHONE='9545247374', ADMIN_PW='Rameen@2024', ADMIN_EMAIL='rameenproperty@gmail.com';
+var CFG={URL:'',KEY:''};
+var REMOTE=!!(CFG.URL&&CFG.KEY);
+var LOCS=['CIDCO N-5','CIDCO N-1','CIDCO N-2','CIDCO N-3','CIDCO N-4','CIDCO N-6','CIDCO N-7','CIDCO N-8','Garkheda','Jalna Road','Osmanpura','Aurangpura','Beed Bypass','Waluj','Shendra MIDC','Satara Parisar'];
+var TYPES=['JV Project','Sale','Rent','Commercial'];
+var K={b:'rpt_brokers',l:'rpt_listings',m:'rpt_me',a:'rpt_admin',mo:'rpt_meobj'};
+var mem={};
+function ls(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return (k in mem)?mem[k]:d}}
+function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){mem[k]=v;return false}}
+function del(k){try{localStorage.removeItem(k)}catch(e){}delete mem[k]}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function digits(s){return String(s||'').replace(/\D/g,'').slice(-10)}
+function money(n){
+  if(n>=1e7)return '₹'+(n/1e7).toFixed(2).replace(/\.?0+$/,'')+' Cr';
+  if(n>=1e5)return '₹'+(n/1e5).toFixed(2).replace(/\.?0+$/,'')+' Lakh';
+  return '₹'+Number(n).toLocaleString('en-IN');
+}
+function priceHtml(l){
+  if(l.priceLabel)return esc(l.priceLabel);
+  return money(l.price)+(l.perMonth?' <small>/ month</small>':'');
+}
+function bhkText(l){return l.bhk==='NA'?'':(l.bhk==='5'?'5+ BHK':l.bhk+' BHK')}
+function waLink(num,msg){return 'https://wa.me/91'+digits(num)+'?text='+encodeURIComponent(msg)}
+var IC={
+ call:'<svg class="i" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>',
+ wa:'<svg class="i" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.3z"/></svg>'
+};
+function art(type,n){
+  var pal={'JV Project':['#0a192f','#c9a86a'],'Sale':['#0a192f','#3d6fa3'],'Rent':['#0a192f','#3f8f78'],'Commercial':['#0a192f','#a8702f']}[type]||['#0a192f','#c9a86a'];
+  var h=[90,140,110,170,120,150,100], x=24, bars='';
+  for(var i=0;i<7;i++){
+    var hh=h[(i+n)%7], w=38;
+    bars+='<rect x="'+x+'" y="'+(230-hh)+'" width="'+w+'" height="'+hh+'" fill="#fff" fill-opacity="'+(0.10+0.04*(i%3))+'"/>';
+    for(var r=0;r<Math.floor(hh/24);r++){
+      bars+='<rect x="'+(x+8)+'" y="'+(240-hh+r*24)+'" width="8" height="10" fill="#e2c994" fill-opacity=".7"/><rect x="'+(x+22)+'" y="'+(240-hh+r*24)+'" width="8" height="10" fill="#e2c994" fill-opacity=".45"/>';
+    }
+    x+=51;
+  }
+  var s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+pal[0]+'"/><stop offset="1" stop-color="'+pal[1]+'"/></linearGradient></defs><rect width="400" height="250" fill="url(#g)"/><circle cx="330" cy="50" r="22" fill="#e2c994" fill-opacity=".55"/>'+bars+'<rect y="230" width="400" height="20" fill="#000" fill-opacity=".25"/></svg>';
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(s);
+}
+function imgOf(l,i){
+  if(l.photos&&l.photos.length)return l.photos[i||0]||l.photos[0];
+  return art(l.type,(l.id||'').length+(l.title||'').length);
+}
+function seed(){
+  var t=Date.now()-86400000*3;
+  function s(id,title,loc,type,price,label,pm,size,bhk,desc){
+    return {id:id,title:title,location:loc,type:type,price:price,priceLabel:label||'',perMonth:!!pm,size:size,bhk:bhk,photos:[],desc:desc,owner:PHONE,brokerId:'rameen',brokerName:'Rameen Property Trust',brokerPhone:PHONE,status:'Approved',views:0,created:t,featured:id==='s1'};
+  }
+  return [
+   s('s1','14x 3BHK Luxury – JV Project','CIDCO N-5','JV Project',0,'JV – Call for terms',false,537.6,'3','Premium joint-venture opportunity on a 537.6 sqm plot in CIDCO N-5 for 14 luxury 3BHK flats. Prime residential location with wide approach road, near schools, hospitals and markets. Clear title. Contact Rameen Property Trust for JV ratio and project details.'),
+   s('s2','Spacious 3BHK Flat – East Facing','CIDCO N-2','Sale',5800000,'',false,125,'3','Well-ventilated 3BHK in a gated society with covered parking, lift and 24x7 water supply. Ready possession.'),
+   s('s3','2BHK Semi-Furnished Flat','CIDCO N-4','Rent',18000,'',true,85,'2','Semi-furnished 2BHK close to the main road and market. Family or working professionals preferred.'),
+   s('s4','Prime Showroom / Shop – Main Road','Jalna Road','Commercial',12000000,'',false,60,'NA','Ground-floor commercial space on high-footfall Jalna Road. Ideal for showroom, bank or retail brand.'),
+   s('s5','4BHK Independent Row House','Garkheda','Sale',9500000,'',false,200,'4','Independent row house with private parking, terrace and garden space in a peaceful neighbourhood.'),
+   s('s6','Furnished Office Space – 1st Floor','Osmanpura','Commercial',45000,'',true,95,'NA','Ready-to-move furnished office with cabin, conference room, power backup and parking.')
+  ];
+}
+function api(path,opt){
+  opt=opt||{};
+  var h=Object.assign({apikey:CFG.KEY,Authorization:'Bearer '+CFG.KEY,'Content-Type':'application/json'},opt.headers||{});
+  return fetch(CFG.URL+path,Object.assign({},opt,{headers:h})).then(function(r){
+    return r.text().then(function(t){
+      if(!r.ok)throw new Error(t||r.status);
+      return t?JSON.parse(t):null;
+    });
+  });
+}
+function rpc(name,args){return api('/rest/v1/rpc/'+name,{method:'POST',body:JSON.stringify(args)})}
+var adminPw='';try{adminPw=sessionStorage.getItem('rpt_pw')||''}catch(e){}
+function setPw(v){adminPw=v;try{if(v)sessionStorage.setItem('rpt_pw',v);else sessionStorage.removeItem('rpt_pw')}catch(e){}}
+var db={brokers:ls(K.b,[]),listings:REMOTE?null:ls(K.l,null),meId:ls(K.m,null),meObj:ls(K.mo,null)};
+if(!db.listings){db.listings=seed();if(!REMOTE)ss(K.l,db.listings)}
+function save(){if(REMOTE)return true;var a=ss(K.b,db.brokers),b=ss(K.l,db.listings);return a&&b}
+function me(){return db.brokers.filter(function(b){return b.id===db.meId})[0]||((db.meObj&&db.meObj.id===db.meId)?db.meObj:null)}
+function isAdmin(){return REMOTE?!!adminPw:ls(K.a,false)===true}
+function mapRow(r){var d=r.data||{};d.id=r.id;d.status=r.status;d.views=r.views||0;d.created=r.created||d.created;d.brokerId=r.broker_id||d.brokerId;return d}
+function setRemote(arr){db.listings=seed().concat(arr)}
+function syncFor(p){
+  if(!REMOTE)return Promise.resolve();
+  if(p==='/'||p==='/listings')return api('/rest/v1/listings?status=eq.Approved&select=*&order=created.desc').then(function(rows){setRemote(rows.map(mapRow))});
+  if(p==='/broker-dashboard'&&db.meId)return rpc('my_listings',{p_broker_id:db.meId}).then(function(rows){setRemote(rows.map(mapRow))});
+  if(p==='/admin'&&adminPw)return rpc('admin_data',{p:adminPw}).then(function(d){db.brokers=d.brokers||[];setRemote((d.listings||[]).map(mapRow))});
+  return Promise.resolve();
+}
+var app=document.getElementById('app');
+function go(p){location.hash='#'+p}
+function opt(list,sel){return list.map(function(v){return '<option'+(v===sel?' selected':'')+'>'+esc(v)+'</option>'}).join('')}
+function $(s,r){return (r||document).querySelector(s)}
+function head(title,sub){return '<div class="page-head"><div class="wrap"><h1>'+title+'</h1><p>'+sub+'</p></div></div>'}
+function card(l){
+  var b=bhkText(l);
+  return '<article class="card">'+
+   '<div class="img" data-act="open" data-id="'+esc(l.id)+'"><img loading="lazy" alt="'+esc(l.title)+'" src="'+imgOf(l)+'"><span class="badge">'+esc(l.type)+'</span>'+(l.featured?'<span class="badge feat-b">★ Featured</span>':'')+'</div>'+
+   '<div class="body">'+
+    '<h3 data-act="open" data-id="'+esc(l.id)+'">'+esc(l.title)+'</h3>'+
+    '<div class="loc">📍 '+esc(l.location)+', Chhatrapati Sambhajinagar</div>'+
+    '<div class="price">'+priceHtml(l)+'</div>'+
+    '<div class="chips"><span class="chip">'+esc(l.size)+' sqm</span>'+(b?'<span class="chip">'+b+'</span>':'')+'<span class="chip">'+esc(l.type)+'</span></div>'+
+    '<div class="broker">Broker: <b>'+esc(l.brokerName)+'</b></div>'+
+    '<div class="actions">'+
+      '<a class="btn btn-call btn-sm" href="tel:+91'+PHONE+'">'+IC.call+' Call</a>'+
+      '<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="'+waLink(WA,'Hello, I am interested in: '+l.title+' ('+l.location+') – seen on Rameen Property Trust portal.')+'">'+IC.wa+' WhatsApp</a>'+
+    '</div>'+
+   '</div></article>';
+}
+function pHome(){
+  var feat=db.listings.filter(function(l){return l.status==='Approved'}).slice(0,3);
+  app.innerHTML=
+  '<section class="hero"><div class="wrap">'+
+    '<span class="tag">Chhatrapati Sambhajinagar</span>'+
+    '<h1>Great properties.<br><em>Greater possibilities.</em></h1>'+
+    '<p>Chhatrapati Sambhajinagar\'s No.1 Property Portal — JV projects, flats, plots, rentals and commercial spaces from trusted brokers.</p>'+
+    '<div class="cta-stack">'+
+      '<a class="btn btn-gold btn-lg" href="#/listings">🏙️ View All Properties – Broker Portal</a>'+
+      '<a class="btn btn-ghost btn-lg" href="#/broker-register">🤝 List Your Property as Broker</a>'+
+    '</div>'+
+    '<div class="stats-strip"><div><b>'+db.listings.filter(function(l){return l.status==='Approved'}).length+'+</b><span>Live Listings</span></div><div><b>'+db.brokers.length+'</b><span>Brokers</span></div><div><b>JV</b><span>Specialists</span></div></div>'+
+  '</div></section>'+
+  '<section class="block"><div class="wrap"><div class="sec-title"><h2>Featured Properties</h2></div><div class="grid" style="margin-bottom:10px">'+feat.map(card).join('')+'</div><div style="text-align:center"><a class="btn btn-navy" href="#/listings">See all properties →</a></div></div></section>'+
+  '<section class="block" style="padding-top:10px"><div class="wrap"><div class="sec-title"><h2>Why Rameen Property Trust</h2></div><div class="features">'+
+    '<div class="feat"><div class="ic">🏗️</div><h3>JV &amp; Development</h3><p>Joint-venture projects on prime CIDCO plots with clear titles and transparent terms.</p></div>'+
+    '<div class="feat"><div class="ic">✅</div><h3>Verified Listings</h3><p>Every broker listing is reviewed and approved by Rameen before it goes live.</p></div>'+
+    '<div class="feat"><div class="ic">📞</div><h3>Direct Contact</h3><p>One tap to call or WhatsApp the broker — no middle layers, no delays.</p></div>'+
+  '</div></div></section>';
+}
+var F={loc:'',type:'',bhk:'',budget:''};
+function pListings(){
+  app.innerHTML=head('RAMEEN PROPERTY TRUST','Chhatrapati Sambhajinagar\'s No.1 Property Portal')+
+  '<div class="wrap">'+
+   '<div class="search" id="sf">'+
+    '<div><label>Location</label><select id="f-loc"><option value="">All Locations</option>'+opt(LOCS,F.loc)+'</select></div>'+
+    '<div><label>Type</label><select id="f-type"><option value="">All Types</option>'+opt(TYPES,F.type)+'</select></div>'+
+    '<div><label>BHK</label><select id="f-bhk"><option value="">Any BHK</option>'+[['1','1 BHK'],['2','2 BHK'],['3','3 BHK'],['4','4 BHK'],['5','5+ BHK'],['NA','Commercial / Plot']].map(function(o){return '<option value="'+o[0]+'"'+(F.bhk===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></div>'+
+    '<div><label>Budget</label><select id="f-bud"><option value="">Any Budget</option>'+[['u25','Under ₹25 Lakh'],['25','₹25 – 50 Lakh'],['50','₹50 Lakh – 1 Cr'],['o1','Above ₹1 Cr']].map(function(o){return '<option value="'+o[0]+'"'+(F.budget===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></div>'+
+   '</div>'+
+   '<p class="count" id="cnt"></p><div class="grid" id="grid"></div></div>';
+  function bind(id,key){$(id).addEventListener('change',function(e){F[key]=e.target.value;grid()})}
+  bind('#f-loc','loc');bind('#f-type','type');bind('#f-bhk','bhk');bind('#f-bud','budget');
+  grid();
+}
+function grid(){
+  var L=db.listings.filter(function(l){
+    if(l.status!=='Approved')return false;
+    if(F.loc&&l.location!==F.loc)return false;
+    if(F.type&&l.type!==F.type)return false;
+    if(F.bhk&&l.bhk!==F.bhk)return false;
+    if(F.budget&&l.price>0){
+      var p=l.price;
+      if(F.budget==='u25'&&!(p<2500000))return false;
+      if(F.budget==='25'&&!(p>=2500000&&p<5000000))return false;
+      if(F.budget==='50'&&!(p>=5000000&&p<10000000))return false;
+      if(F.budget==='o1'&&!(p>=10000000))return false;
+    }
+    return true;
+  }).sort(function(a,b){return (b.featured?1:0)-(a.featured?1:0)||b.created-a.created});
+  $('#cnt').textContent=L.length+(L.length===1?' property found':' properties found');
+  $('#grid').innerHTML=L.length?L.map(card).join(''):'<div class="empty" style="grid-column:1/-1">No properties match your search. Try changing the filters.</div>';
+}
+function pRegister(){
+  app.innerHTML=head('Broker Registration','Join Rameen Property Trust and list your properties')+
+  '<div class="wrap"><form class="form-card" id="rf" novalidate>'+
+   '<div class="field"><label>Full Name <em>*</em></label><input id="r-name" autocomplete="name" placeholder="e.g. Rahul Patil"></div>'+
+   '<div class="row2">'+
+    '<div class="field"><label>Phone <em>*</em></label><input id="r-phone" type="tel" inputmode="numeric" maxlength="14" autocomplete="tel" placeholder="10-digit mobile"></div>'+
+    '<div class="field"><label>City <em>*</em></label><input id="r-city" value="Chhatrapati Sambhajinagar"></div>'+
+   '</div>'+
+   '<div class="field"><label>Company Name <em>*</em></label><input id="r-co" autocomplete="organization" placeholder="Your agency / firm"></div>'+
+   '<div class="field"><label>RERA ID (optional)</label><input id="r-rera" placeholder="e.g. A12345678901"></div>'+
+   '<p class="err" id="r-err"></p>'+
+   '<button class="btn btn-gold btn-block btn-lg" type="submit">Register as Broker</button>'+
+   '<p class="hint" style="text-align:center;margin-top:12px">Already registered? Enter the same phone number to log in.</p>'+
+  '</form></div>';
+  $('#rf').addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=$('#r-name').value.trim(),p=digits($('#r-phone').value),c=$('#r-co').value.trim(),city=$('#r-city').value.trim(),rera=$('#r-rera').value.trim(),er=$('#r-err'),btn=$('#rf button[type=submit]');
+    if(!n||!c||!city){er.textContent='Please fill all required fields.';return}
+    if(p.length!==10){er.textContent='Enter a valid 10-digit phone number.';return}
+    function fin(b){db.meId=b.id;db.meObj=b;ss(K.m,b.id);ss(K.mo,b);save();go('/broker-dashboard')}
+    if(REMOTE){
+      btn.disabled=true;er.textContent='';
+      rpc('broker_upsert',{p_id:uid(),p_name:n,p_phone:p,p_company:c,p_rera:rera,p_city:city}).then(fin).catch(function(){btn.disabled=false;er.textContent='Network error. Please try again.'});
+      return;
+    }
+    var ex=db.brokers.filter(function(b){return b.phone===p})[0];
+    if(ex){ex.name=n;ex.company=c;ex.city=city;if(rera)ex.rera=rera;fin(ex)}
+    else{var b={id:uid(),name:n,phone:p,company:c,rera:rera,city:city,joined:Date.now()};db.brokers.push(b);fin(b)}
+  });
+}
+function pDash(){
+  var b=me();
+  if(!b){go('/broker-register');return}
+  var mine=db.listings.filter(function(l){return l.brokerId===b.id}).sort(function(a,c){return c.created-a.created});
+  var views=mine.reduce(function(s,l){return s+(l.views||0)},0);
+  app.innerHTML=head('Welcome, '+esc(b.name),esc(b.company)+(b.rera?' · RERA '+esc(b.rera):''))+
+  '<div class="wrap" style="padding-bottom:40px">'+
+   '<div class="stat-grid" style="margin-top:-40px">'+
+    '<div class="stat"><b>'+mine.length+'</b><span>My Listings</span></div>'+
+    '<div class="stat"><b>'+mine.filter(function(l){return l.status==='Approved'}).length+'</b><span>Approved</span></div>'+
+    '<div class="stat"><b>'+mine.filter(function(l){return l.status==='Pending'}).length+'</b><span>Pending</span></div>'+
+    '<div class="stat"><b>'+views+'</b><span>Total Views</span></div>'+
+   '</div>'+
+   '<div class="sec-h"><h2>My Listings</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-gold" href="#/add-listing">+ Add New Listing</a><button class="btn btn-ghost btn-sm" style="color:var(--text);border-color:var(--line)" data-act="logout">Logout</button></div></div>'+
+   (mine.length?mine.map(function(l){
+     return '<div class="lrow"><img src="'+imgOf(l)+'" alt=""><div class="info"><b>'+esc(l.title)+'</b><span>'+esc(l.location)+' · '+priceHtml(l).replace(/<[^>]+>/g,'')+' · 👁 '+(l.views||0)+'</span></div><span class="status s-'+l.status+'">'+l.status+'</span></div>';
+   }).join(''):'<div class="empty">You have no listings yet. Tap <b>+ Add New Listing</b> to get started.</div>')+
+  '</div>';
+}
+var photos=[];
+function pAdd(){
+  var b=me();
+  if(!b){go('/broker-register');return}
+  photos=[];
+  app.innerHTML=head('Add New Listing','Your listing goes live after Rameen approves it')+
+  '<div class="wrap"><form class="form-card" id="af" novalidate>'+
+   '<div class="field"><label>Property Title <em>*</em></label><input id="a-title" placeholder="e.g. 3BHK Luxury Flat – CIDCO N-5"></div>'+
+   '<div class="row2">'+
+    '<div class="field"><label>Location <em>*</em></label><select id="a-loc">'+opt(LOCS,'CIDCO N-5')+'<option value="__c">Other (type below)…</option></select></div>'+
+    '<div class="field"><label>Type <em>*</em></label><select id="a-type">'+opt(TYPES,'JV Project')+'</select></div>'+
+   '</div>'+
+   '<div class="field" id="cust" style="display:none"><label>Custom Location <em>*</em></label><input id="a-custom" placeholder="Area / locality name"></div>'+
+   '<div class="row2">'+
+    '<div class="field"><label>Price (₹) <em>*</em></label><input id="a-price" type="number" inputmode="numeric" min="0" placeholder="e.g. 5500000"><div class="hint" id="pp"></div></div>'+
+    '<div class="field"><label>Plot Size (sqm)</label><input id="a-size" type="number" step="0.1" min="0" value="537.6"></div>'+
+   '</div>'+
+   '<div class="row2">'+
+    '<div class="field"><label>BHK <em>*</em></label><select id="a-bhk"><option value="1">1 BHK</option><option value="2">2 BHK</option><option value="3" selected>3 BHK</option><option value="4">4 BHK</option><option value="5">5+ BHK</option><option value="NA">N/A (Commercial / Plot)</option></select></div>'+
+    '<div class="field"><label>Owner Contact <em>*</em> <span class="hint">(only Rameen admin can see)</span></label><input id="a-owner" type="tel" inputmode="numeric" maxlength="14" value="'+esc(b.phone)+'"></div>'+
+   '</div>'+
+   '<div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500"><input type="checkbox" id="a-pm" style="width:auto"> Price is per month (rent)</label></div>'+
+   '<div class="field"><label>Photos</label><label class="drop" for="a-ph">📷 Tap to upload photos (multiple, max 6)</label><input id="a-ph" type="file" accept="image/*" multiple style="display:none"><div class="previews" id="pv"></div></div>'+
+   '<div class="field"><label>Description</label><textarea id="a-desc" placeholder="Facing, amenities, road width, possession, JV terms…"></textarea></div>'+
+   '<p class="err" id="a-err"></p>'+
+   '<button class="btn btn-gold btn-block btn-lg" type="submit">Submit Listing for Approval</button>'+
+  '</form></div>';
+  $('#a-loc').addEventListener('change',function(e){$('#cust').style.display=e.target.value==='__c'?'block':'none'});
+  $('#a-price').addEventListener('input',function(e){var v=+e.target.value;$('#pp').textContent=v>0?'= '+money(v):''});
+  $('#a-ph').addEventListener('change',function(e){
+    var files=[].slice.call(e.target.files);
+    files.forEach(function(f){
+      if(photos.length>=6)return;
+      var r=new FileReader();
+      r.onload=function(){
+        var im=new Image();
+        im.onload=function(){
+          var m=900,s=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');
+          c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
+          c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+          if(photos.length<6){photos.push(c.toDataURL('image/jpeg',.72));prev()}
+        };
+        im.src=r.result;
+      };
+      r.readAsDataURL(f);
+    });
+    e.target.value='';
+  });
+  $('#af').addEventListener('submit',function(e){
+    e.preventDefault();
+    var er=$('#a-err'),title=$('#a-title').value.trim(),loc=$('#a-loc').value,price=+$('#a-price').value,owner=digits($('#a-owner').value);
+    if(loc==='__c')loc=$('#a-custom').value.trim();
+    if(!title||!loc){er.textContent='Title and location are required.';return}
+    if(!(price>0)){er.textContent='Please enter a valid price.';return}
+    if(owner.length!==10){er.textContent='Enter a valid 10-digit owner contact.';return}
+    var l={id:uid(),title:title,location:loc,type:$('#a-type').value,price:price,priceLabel:'',perMonth:$('#a-pm').checked,size:$('#a-size').value||'537.6',bhk:$('#a-bhk').value,photos:photos.slice(),desc:$('#a-desc').value.trim(),owner:owner,brokerId:b.id,brokerName:b.name,brokerPhone:b.phone,status:'Pending',views:0,created:Date.now()};
+    var btn=$('#af button[type=submit]');
+    function done(){
+      var msg='New listing for approval\nTitle: '+l.title+'\nLocation: '+l.location+'\nType: '+l.type+'\nPrice: '+(l.priceLabel||money(l.price))+(l.perMonth?' / month':'')+'\nSize: '+l.size+' sqm\nBHK: '+(bhkText(l)||'N/A')+'\nOwner contact: '+l.owner+'\nBroker: '+b.name+' ('+b.phone+'), '+b.company+(b.rera?' RERA '+b.rera:'')+'\nPhotos: '+l.photos.length+(l.desc?'\nDescription: '+l.desc:'');
+      var note=REMOTE?'Status: Pending. Rameen admin can now see your listing and will approve it soon.':'Status: Pending. Tap the green button so Rameen receives your listing details instantly on WhatsApp (send photos in the same chat).';
+      $('.form-card').innerHTML='<div class="success"><div class="tick">✓</div><h2>Listing Submitted</h2><p style="font-size:16px"><b>Listing sent to Rameen for approval - Call 9545247374</b></p><p class="hint">'+note+'</p><div style="display:grid;gap:10px;margin-top:18px"><a class="btn btn-wa btn-lg" target="_blank" rel="noopener" href="'+waLink(WA,msg)+'">'+IC.wa+' Send details to Rameen on WhatsApp</a><a class="btn btn-call btn-lg" href="tel:+919545247374">'+IC.call+' Call 9545247374</a><a class="btn btn-gold" href="#/broker-dashboard">Go to My Dashboard</a><a class="btn btn-ghost" style="color:var(--text);border-color:var(--line)" href="#/add-listing">+ Add Another Listing</a></div></div>';
+      window.scrollTo(0,0);
+    }
+    if(REMOTE){
+      btn.disabled=true;btn.textContent='Submitting…';er.textContent='';
+      var row={id:l.id,data:l,status:'Pending',broker_id:b.id,views:0,created:l.created};
+      api('/rest/v1/listings',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify(row)}).then(done).catch(function(){btn.disabled=false;btn.textContent='Submit Listing for Approval';er.textContent='Could not submit. Check your internet and try again.'});
+      return;
+    }
+    db.listings.push(l);
+    if(!save()){db.listings.pop();er.textContent='Storage is full. Please remove some photos and try again.';return}
+    done();
+  });
+}
+function prev(){
+  var p=$('#pv');if(!p)return;
+  p.innerHTML=photos.map(function(s,i){return '<div class="pv"><img src="'+s+'" alt=""><button type="button" data-act="rmphoto" data-i="'+i+'" aria-label="Remove">×</button></div>'}).join('');
+}
+function aRow(l,btns){
+  var br=db.brokers.filter(function(b){return b.id===l.brokerId})[0];
+  var ph=br?br.phone:l.brokerPhone;
+  return '<div class="lrow"><img src="'+imgOf(l)+'" alt=""><div class="info"><b>'+esc(l.title)+'</b><span>'+esc(l.location)+' · '+esc(l.type)+' · '+priceHtml(l).replace(/<[^>]+>/g,'')+'<br>By '+esc(l.brokerName)+' · <a href="tel:+91'+digits(ph)+'">'+esc(ph)+'</a> · Owner: '+esc(l.owner)+'</span></div><div class="btns">'+btns+'</div></div>';
+}
+function pAdmin(){
+  if(!isAdmin()){
+    app.innerHTML=
+    '<div class="wrap" style="padding:36px 16px 40px"><form class="form-card" id="lf" style="max-width:520px;margin:0 auto">'+
+    '<div style="width:56px;height:56px;color:var(--gold);margin-bottom:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1" fill="currentColor"/></svg></div>'+
+    '<div class="eyebrow">Invited admins only</div><h1 style="font-size:clamp(30px,8vw,44px)">Administrator login</h1>'+
+    '<p style="color:var(--muted);margin:0 0 20px">Sign in to review and manage the property network.</p>'+
+    '<div class="field"><label>Email address</label><input id="ad-em" type="email" autocomplete="username" value="RAMEENPROPERTY@gmail.com"></div>'+
+    '<div class="field"><label>Password</label><div style="position:relative"><input id="ad-pw" type="password" autocomplete="current-password" placeholder="Enter your password" style="padding-right:48px"><button type="button" id="ad-eye" aria-label="Show password" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--gold);cursor:pointer;font-size:18px;padding:6px">👁</button></div></div>'+
+    '<p class="err" id="ad-err"></p><button class="btn btn-gold btn-block btn-lg" type="submit">Sign in to admin panel →</button>'+
+    '<p class="hint" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">Here to share a property? <a href="#/add-listing" style="color:var(--gold2)">Add a listing ↗</a></p></form></div>';
+    $('#ad-eye').addEventListener('click',function(){var i=$('#ad-pw');i.type=i.type==='password'?'text':'password'});
+    $('#lf').addEventListener('submit',function(e){
+      e.preventDefault();
+      var em=$('#ad-em').value.trim().toLowerCase(),pw=$('#ad-pw').value,er=$('#ad-err');
+      var bad='Sign-in failed. Check your email and password.';
+      if(em!==ADMIN_EMAIL){er.textContent=bad;return}
+      if(REMOTE){rpc('admin_data',{p:pw}).then(function(){setPw(pw);render()}).catch(function(){er.textContent=bad})}
+      else if(pw===ADMIN_PW){ss(K.a,true);pAdmin()}
+      else er.textContent=bad;
+    });
+    return;
+  }
+  var AL=db.listings.filter(function(l){return !(REMOTE&&l.brokerId==='rameen')});
+  var P=AL.filter(function(l){return l.status==='Pending'}),A=AL.filter(function(l){return l.status==='Approved'}),R=AL.filter(function(l){return l.status==='Rejected'});
+  app.innerHTML=head('Admin Dashboard','Manage brokers and listings')+
+  '<div class="wrap alist" style="padding-bottom:40px">'+
+   '<div class="stat-grid" style="margin-top:-40px;grid-template-columns:repeat(3,1fr)">'+
+    '<div class="stat"><b>'+AL.length+'</b><span>Total Listings</span></div>'+
+    '<div class="stat"><b>'+db.brokers.length+'</b><span>Total Brokers</span></div>'+
+    '<div class="stat"><b>'+P.length+'</b><span>Pending</span></div>'+
+   '</div>'+
+   '<div class="sec-h"><h2>Pending Listings ('+P.length+')</h2><button class="btn btn-ghost btn-sm" style="color:var(--text);border-color:var(--line)" data-act="adminout">Logout</button></div>'+
+   (P.length?P.map(function(l){return aRow(l,'<button class="btn btn-ok btn-sm" data-act="approve" data-id="'+l.id+'">✓ Approve</button><button class="btn btn-no btn-sm" data-act="reject" data-id="'+l.id+'">✕ Reject</button><button class="btn btn-ghost btn-sm" style="color:var(--text);border-color:var(--line)" data-act="open" data-id="'+l.id+'" data-noview="1">Details</button>')}).join(''):'<div class="empty">No pending listings.</div>')+
+   '<div class="sec-h"><h2>Approved Listings ('+A.length+')</h2></div>'+
+   (A.length?A.map(function(l){return aRow(l,'<button class="btn btn-del btn-sm" data-act="delete" data-id="'+l.id+'">🗑 Delete</button>')}).join(''):'<div class="empty">No approved listings.</div>')+
+   (R.length?'<div class="sec-h"><h2>Rejected ('+R.length+')</h2></div>'+R.map(function(l){return aRow(l,'<button class="btn btn-ok btn-sm" data-act="approve" data-id="'+l.id+'">Approve</button><button class="btn btn-del btn-sm" data-act="delete" data-id="'+l.id+'">🗑 Delete</button>')}).join(''):'')+
+   '<div class="sec-h"><h2>All Brokers ('+db.brokers.length+')</h2></div>'+
+   (db.brokers.length?'<div class="tbl"><table><thead><tr><th>Name</th><th>Phone</th><th>Company</th><th>RERA</th><th>City</th><th>Listings</th></tr></thead><tbody>'+db.brokers.map(function(b){return '<tr><td>'+esc(b.name)+'</td><td><a href="tel:+91'+b.phone+'">'+esc(b.phone)+'</a></td><td>'+esc(b.company)+'</td><td>'+esc(b.rera||'—')+'</td><td>'+esc(b.city)+'</td><td>'+AL.filter(function(l){return l.brokerId===b.id}).length+'</td></tr>'}).join('')+'</tbody></table></div>':'<div class="empty">No brokers registered yet.</div>')+
+  '</div>';
+}
+function openL(id,noView){
+  var l=db.listings.filter(function(x){return x.id===id})[0];if(!l)return;
+  if(!noView&&l.status==='Approved'){l.views=(l.views||0)+1;save();if(REMOTE&&l.brokerId!=='rameen')rpc('add_view',{p_id:l.id}).catch(function(){})}
+  var n=(l.photos&&l.photos.length)||1,b=bhkText(l);
+  var th=n>1?'<div class="thumbs">'+l.photos.map(function(s,i){return '<img src="'+s+'" data-act="thumb" data-i="'+i+'" class="'+(i===0?'on':'')+'" alt="">'}).join('')+'</div>':'';
+  $('#modal').innerHTML='<button class="x" data-act="close" aria-label="Close">×</button><img class="mi" id="mi" src="'+imgOf(l)+'" alt="">'+th+
+   '<div class="mb"><span class="chip">'+esc(l.type)+'</span><h2 style="margin-top:10px">'+esc(l.title)+'</h2><div class="loc">📍 '+esc(l.location)+', Chhatrapati Sambhajinagar</div><div class="price" style="margin:8px 0">'+priceHtml(l)+'</div>'+
+   '<div class="kv"><div><span>Size</span>'+esc(l.size)+' sqm</div><div><span>Config</span>'+(b||'—')+'</div><div><span>Broker</span>'+esc(l.brokerName)+'</div><div><span>Views</span>'+(l.views||0)+'</div></div>'+
+   (l.desc?'<p style="font-size:14.5px;color:var(--muted);white-space:pre-line">'+esc(l.desc)+'</p>':'')+
+   '<div class="actions" style="margin-top:12px"><a class="btn btn-call" href="tel:+91'+PHONE+'">'+IC.call+' Call Rameen</a><a class="btn btn-wa" target="_blank" rel="noopener" href="'+waLink(WA,'Hello, I am interested in: '+l.title+' ('+l.location+') – seen on Rameen Property Trust portal.')+'">'+IC.wa+' WhatsApp</a></div>'+
+   '<p class="hint" style="text-align:center;margin-top:10px">All enquiries are handled by Rameen Property Trust.</p></div>';
+  $('#modal').dataset.id=id;
+  $('#overlay').classList.add('show');
+  if(!noView&&$('#grid'))grid();
+}
+function closeM(){$('#overlay').classList.remove('show')}
+document.addEventListener('click',function(e){
+  if(e.target.id==='overlay'){closeM();return}
+  var t=e.target.closest('[data-act]');if(!t)return;
+  var a=t.dataset.act,id=t.dataset.id,l;
+  function find(){return db.listings.filter(function(x){return x.id===id})[0]}
+  if(a==='open')openL(id,!!t.dataset.noview);
+  else if(a==='close')closeM();
+  else if(a==='thumb'){var ls_=db.listings.filter(function(x){return x.id===$('#modal').dataset.id})[0];$('#mi').src=ls_.photos[+t.dataset.i];[].forEach.call(document.querySelectorAll('.thumbs img'),function(x){x.classList.remove('on')});t.classList.add('on')}
+  else if(a==='rmphoto'){photos.splice(+t.dataset.i,1);prev()}
+  else if(a==='logout'){db.meId=null;db.meObj=null;del(K.m);del(K.mo);go('/broker-register')}
+  else if(a==='adminout'){del(K.a);setPw('');pAdmin()}
+  else if(a==='approve'){adminAct('admin_set_status',{p_id:id,p_status:'Approved'},function(){var x=find();if(x)x.status='Approved'})}
+  else if(a==='reject'){adminAct('admin_set_status',{p_id:id,p_status:'Rejected'},function(){var x=find();if(x)x.status='Rejected'})}
+  else if(a==='delete'){if(confirm('Delete this listing permanently?')){adminAct('admin_delete',{p_id:id},function(){db.listings=db.listings.filter(function(x){return x.id!==id})})}}
+});
+function adminAct(fn,args,localFn){
+  if(REMOTE){args.p=adminPw;rpc(fn,args).then(function(){render()}).catch(function(e){alert('Error: '+e.message)})}
+  else{localFn();save();pAdmin()}
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM()});
+document.getElementById('burger').addEventListener('click',function(){var m=document.getElementById('menu');var o=m.classList.toggle('open');this.setAttribute('aria-expanded',o)});
+var routes={'/':pHome,'/listings':pListings,'/broker-register':pRegister,'/broker-dashboard':pDash,'/add-listing':pAdd,'/admin':pAdmin};
+var rtoken=0;
+function render(){
+  var p=(location.hash.slice(1)||'/').split('?')[0];
+  closeM();document.getElementById('menu').classList.remove('open');
+  if(!REMOTE){db.brokers=ls(K.b,db.brokers);db.listings=ls(K.l,db.listings)}
+  db.meId=ls(K.m,db.meId);
+  [].forEach.call(document.querySelectorAll('#menu a'),function(a){a.classList.toggle('on',a.dataset.p===p)});
+  var my=++rtoken;
+  function show(failed){
+    if(my!==rtoken)return;
+    (routes[p]||pHome)();
+    if(failed)app.insertAdjacentHTML('afterbegin','<div class="wrap"><p class="err" style="margin-top:12px">Could not load the latest data. Check your internet connection.</p></div>');
+    if(!(p==='/broker-dashboard'&&!me())&&!(p==='/add-listing'&&!me()))window.scrollTo(0,0);
+  }
+  if(REMOTE&&(p==='/'||p==='/listings'||p==='/broker-dashboard'||p==='/admin')){
+    if(p!=='/admin'||adminPw)app.innerHTML='<div class="wrap"><div class="empty" style="margin:40px 0">Loading…</div></div>';
+    syncFor(p).then(function(){show(false)}).catch(function(){if(p==='/admin')setPw('');show(true)});
+  }else show(false);
+}
+window.addEventListener('hashchange',render);
+render();
+})();
+</script>
+</body>
+</html>
