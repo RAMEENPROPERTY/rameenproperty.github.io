@@ -1,72 +1,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Rameen Property - Aurangabad</title>
-  <style>
-    body{margin:0;font-family:sans-serif;background:#f1f3f6}
-    .h{background:#0f2a44;color:#fff;padding:12px;text-align:center}
-    .logo{color:#e8b631;font-weight:800;font-size:22px}
-    .sub{font-size:12px;opacity:.8}
-    .menu{
-      display:flex;gap:8px;overflow:auto;
-      padding:10px;background:#fff;
-      border-bottom:1px solid #ddd;
-      position:sticky;top:0;z-index:5
-    }
-    .menu button{
-      white-space:nowrap;border:1px solid #0f2a44;
-      background:#fff;color:#0f2a44;
-      padding:8px 14px;border-radius:20px;
-      font-weight:700
-    }
-    .menu button.active{background:#0f2a44;color:#fff}
-    
-    /* ✅ TIK 1 - BROKER BUTTON STYLE */
-    .broker-btn{
-      background:#e8b631!important;
-      color:#000!important;
-      border-color:#e8b631!important;
-    }
-    .list{
-      display:grid;gap:12px;
-      max-width:1100px;margin:auto;padding:12px
-    }
-    @media(min-width:700px){
-      .list{grid-template-columns:1fr 1fr}
-    }
-    .card{
-      background:#fff;border-radius:12px;
-      overflow:hidden;border:1px solid #ddd
-    }
-    .card img{width:100%;height:180px;object-fit:cover}
-    .card-body{padding:10px}
-    .price{color:#128c4f;font-weight:700}
-    .wa{
-      background:#128c4f;color:#fff;display:block;
-      text-align:center;padding:8px;border-radius:8px;
-      text-decoration:none;margin-top:6px;font-weight:700
-    }
-    .modal{
-      position:fixed;inset:0;
-      background:rgba(0,0,0,.6);
-      display:none;place-items:center;
-      padding:15px;z-index:99;overflow:auto
-    }
-    .modal.open{display:grid}
-    .mbox{
-      background:#fff;border-radius:12px;
-      padding:16px;max-width:450px;width:100%
-    }
-    .mbox input,.mbox select,.mbox textarea{
-      width:100%;padding:10px;margin:4px 0;
-      border-radius:8px;border:1px solid #ccc;
-      box-sizing:border-box
-    }
-    .btn-save{
-      background:#0f2a44;color:#fff;border:0;
-      padding:12px;width:100%;border-radius:8px;
-      font-weight:800
-    }
-   
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rameen Property - Aurangabad</title>
+<style>
+body{margin:0;font-family:sans-serif;background:#f1f3f6}
+.h{background:#0f2a44;color:#fff;padding:12px;text-align:center}
+.logo{color:#e8b631;font-weight:800;font-size:22px}
+.sub{font-size:12px;opacity:.8}
+.menu{display:flex;gap:8px;overflow:auto;padding:10px;background:#fff;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:5}
+.menu button{white-space:nowrap;border:1px solid #0f2a44;background:#fff;color:#0f2a44;padding:8px 14px;border-radius:20px;font-weight:700}
+.menu button.active{background:#0f2a44;color:#fff}
+.broker-btn{background:#e8b631!important;color:#000!important;border-color:#e8b631!important}
+.list{display:grid;gap:12px;max-width:1100px;margin:auto;padding:12px}
+@media(min-width:700px){.list{grid-template-columns:1fr 1fr}}
+.card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #ddd}
+.card img{width:100%;height:180px;object-fit:cover}
+.card-body{padding:10px}
+.price{color:#128c4f;font-weight:700}
+.wa{background:#128c4f;color:#fff;display:block;text-align:center;padding:8px;border-radius:8px;text-decoration:none;margin-top:6px;font-weight:700}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;place-items:center;padding:15px;z-index:99;overflow:auto}
+.modal.open{display:grid}
+.mbox{background:#fff;border-radius:12px;padding:16px;max-width:450px;width:100%}
+.mbox input,.mbox select,.mbox textarea{width:100%;padding:10px;margin:4px 0;border-radius:8px;border:1px solid #ccc;box-sizing:border-box}
+.btn-save{background:#0f2a44;color:#fff;border:0;padding:12px;width:100%;border-radius:8px;font-weight:800}
+.btn-close{background:#eee;border:0;padding:9px;width:100%;border-radius:8px;margin-top:6px}
+.preview{width:100%;height:150px;background:#eee;border-radius:8px;margin:6px 0;object-fit:cover;display:none}
+.float{position:fixed;right:12px;bottom:12px;background:#128c4f;color:#fff;padding:12px 18px;border-radius:30px;text-decoration:none;font-weight:800;z-index:10}
+.float-add{position:fixed;right:12px;bottom:65px;background:#e8b631;color:#000;padding:12px 18px;border-radius:30px;border:0;font-weight:800;z-index:10;display:none}
+.float-add.show{display:block!important}
+.contact-box{background:#0f2a44;color:#fff;padding:20px;text-align:center;border-radius:12px;margin:15px}
+</style>
+</head>
+<body>
+<div class="h"><div class="logo">RAMEEN PROPERTY</div><div class="sub">Aurangabad - 9545247374</div></div>
+<div class="menu" id="menu">
+<button class="active" onclick="filterCat('ALL',this)">Property - All</button>
+<button onclick="filterCat('SELL',this)">Sell Property</button>
+<button onclick="filterCat('BUY',this)">Buy Property</button>
+<button onclick="filterCat('RENT',this)">Rent Property</button>
+<button onclick="filterCat('COMMERCIAL',this)">Commercial</button>
+<button onclick="filterCat('R ZONE',this)">R ZONE</button>
+<button onclick="filterCat('FLAT',this)">FLAT</button>
+<button onclick="filterCat('ROW HOUSE',this)">ROW HOUSE</button>
+<button onclick="filterCat('BANGLO',this)">BANGLO</button>
+<button onclick="showContact(this)">CONTACT RAMEEN PROPERTY</button>
+<button class="broker-btn" onclick="brokerLogin()">🔐 BROKER LOGIN</button>
+</div>
+<div class="list" id="list"></div>
+<div id="contactSec" style="display:none"><div class="contact-box"><h2>CONTACT RAMEEN PROPERTY</h2><p>Plot / Flat / Row House / Banglo / Commercial / R Zone</p><h3>WHATSAPP: 9545247374</h3><a class="wa" style="background:#e8b631;color:#000" href="https://wa.me/919545247374">WhatsApp pe Message Karo</a></div></div>
+<button class="float-add" id="floatBtn" onclick="openAdd()">+ Add Property</button>
+<a class="float" href="https://wa.me/919545247374">WhatsApp 9545247374</a>
+<div class="modal" id="addModal"><div class="mbox"><h3>🏠 Property Jodo</h3><select id="aDeal"><option>SELL</option><option>BUY</option><option>RENT</option></select><select id="aType"><option>FLAT</option><option>ROW HOUSE</option><option>BANGLO</option><option>COMMERCIAL</option><option>R ZONE</option><option>Plot</option><option>Villa</option><option>Shop</option></select><input id="aTitle" placeholder="Title - 2BHK Flat CIDCO"><input id="aCity" placeholder="Area - CIDCO, Beed Bypass"><input id="aPrice" placeholder="Price - 45 Lakh"><input id="aPhone" placeholder="Mobile Number" type="tel"><label style="font-size:12px;font-weight:700;margin-top:6px;display:block">📸 Photo Chuno:</label><input type="file" id="aFile" accept="image/*" onchange="previewFile()"><img id="preview" class="preview"><input id="aImg" placeholder="Photo Link (optional)"><textarea id="aDetails" placeholder="Details"></textarea><button class="btn-save" onclick="saveProp()">Save & WhatsApp pe Bhejo ✅</button><button class="btn-close" onclick="closeAdd()">Band Karo</button></div></div>
+<script>
+let selectedBase64="";let isBroker=false;
+let allProps=JSON.parse(localStorage.getItem("rameenV3")||"null")||[
+{deal:"SELL",type:"FLAT",img:"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600",title:"2 BHK Flat CIDCO",city:"CIDCO",price:"₹32 Lakh",phone:"9545247374",details:"Ready to move"},
+{deal:"SELL",type:"ROW HOUSE",img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600",title:"Row House Satara",city:"Satara",price:"₹55 Lakh",phone:"9545247374",details:"3BHK"},
+{deal:"SELL",type:"R ZONE",img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600",title:"R Zone Plot Beed Bypass",city:"Beed Bypass",price:"₹45 Lakh",phone:"9545247374",details:"1000 sqft"},
+{deal:"SELL",type:"BANGLO",img:"https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=600",title:"Banglo CIDCO",city:"CIDCO",price:"₹1.2 Cr",phone:"9545247374",details:"4BHK"},
+{deal:"RENT",type:"FLAT",img:"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600",title:"Flat For Rent",city:"Aurangabad",price:"₹12k / month",phone:"9545247374",details:"2BHK"},
+{deal:"COMMERCIAL",type:"COMMERCIAL",img:"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600",title:"Commercial Shop",city:"Cidco",price:"₹35 Lakh",phone:"9545247374",details:"Shop"}
+];
+function saveLocal(){localStorage.setItem("rameenV3",JSON.stringify(allProps));}
+function render(list){
+document.getElementById("contactSec").style.display="none";
+document.getElementById("list").style.display="grid";
+document.getElementById("list").innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div class="card-body"><b>${p.title}</b><br>📍 ${p.city} | ${p.deal} | ${p.type}<br><span class="price">${p.price}</span><br><span style="font-size:12px">${p.details||""}</span><br><span style="font-size:12px">📞 ${p.phone}</span><a class="wa" href="https://wa.me/919545247374?text=${encodeURIComponent(p.title+" "+p.city+" "+p.price)}">WHATSAPP 9545247374</a></div></div>`).join("");
+}
+function filterCat(cat,el){
+document.querySelectorAll(".menu button").forEach(b=>b.classList.remove("active"));
+if(el)el.classList.add("active");
+if(cat==="ALL"){render(allProps);return;}
+let f=allProps.filter(p=>p.deal===cat||p.type===cat);
+if(f.length===0){f=allProps.filter(p=>JSON.stringify(p).includes(cat));}
+render(f.length?f:allProps);
+}
+function showContact(el){
+document.querySelectorAll(".menu button").forEach(b=>b.classList.remove("active"));
+if(el)el.classList.add("active");
+document.getElementById("list").style.display="none";
+document.getElementById("contactSec").style.display="block";
+}
+function previewFile(){let file=document.getElementById("aFile").files[0];if(!file)return;let r=new FileReader();r.onload=function(e){selectedBase64=e.target.result;let img=document.getElementById("preview");img.src=selectedBase64;img.style.display="block";};r.readAsDataURL(file);}
+function brokerLogin(){let p=prompt("BROKER PASSWORD DALO:");if(p=="1234"){isBroker=true;document.getElementById("floatBtn").classList.add("show");alert("✅ LOGIN HO GAYA BOR!");}else{alert("❌ Galat Password! 1234 daalo");}}
+function openAdd(){if(!isBroker){brokerLogin();return;}document.getElementById("addModal").classList.add("open")}
+function closeAdd(){document.getElementById("addModal").classList.remove("open");selectedBase64="";document.getElementById("preview").style.display="none";}
+function saveProp(){
+let deal=document.getElementById("aDeal").value;let type=document.getElementById("aType").value;let title=document.getElementById("aTitle").value||"New Property";let city=document.getElementById("aCity").value||"Aurangabad";let price=document.getElementById("aPrice").value||"Contact";let phone=document.getElementById("aPhone").value||"9545247374";let details=document.getElementById("aDetails").value||"";let link=document.getElementById("aImg").value;let finalImg=selectedBase64||link||"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600";allProps.unshift({deal,type,img:finalImg,title,city,price,phone,details});saveLocal();closeAdd();render(allProps);let msg=`🏠 NAYI PROPERTY AYI HAI\n${deal} - ${type}\nTitle: ${title}\nArea: ${city}\nPrice: ${price}\nPhone: ${phone}\nDetails: ${details}`;window.open(`https://wa.me/919545247374?text=${encodeURIComponent(msg)}`,"_blank");document.getElementById("aTitle").value="";document.getElementById("aCity").value="";document.getElementById("aPrice").value="";document.getElementById("aDetails").value="";document.getElementById("aPhone").value="";document.getElementById("aImg").value="";document.getElementById("aFile").value="";alert("✅ Property Add Ho Gayi!");
+}
+render(allProps);
+</script>
+</body>
+</html>
