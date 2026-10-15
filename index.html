@@ -22,7 +22,7 @@ body{margin:0;font-family:sans-serif;background:#f1f3f6}
 .float{position:fixed;right:12px;bottom:12px;background:#128c4f;color:#fff;padding:11px 16px;border-radius:30px;text-decoration:none;font-weight:700;z-index:10}
 </style></head><body>
 <div class="h"><div class="logo">RAMEEN PROPERTY</div><button class="btn-add" onclick="openAdd()">+ Add Photo</button></div>
-<div style="background:#0f2a44;color:#fff;text-align:center;padding:12px"><h2 style="margin:0">औरंगाबाद में सभी प्रॉपर्टी</h2><div style="font-size:12px;opacity:.8">Photo wali listing</div></div>
+<div style="background:#0f2a44;color:#fff;text-align:center;padding:12px"><h2 style="margin:0">औरंगाबाद में सभी प्रॉपर्टी</h2><div style="font-size:12px;opacity:.8">Photo wali listing - Direct WhatsApp</div></div>
 <div class="list" id="list"></div>
 <button class="float-add" onclick="openAdd()">+ Photo Listing</button>
 <a class="float" href="https://wa.me/919545247374">WhatsApp</a>
@@ -30,31 +30,29 @@ body{margin:0;font-family:sans-serif;background:#f1f3f6}
 <div class="modal" id="addModal"><div class="mbox">
 <h3 style="margin:0 0 10px">📸 Photo ke saath Listing Jodo</h3>
 <select id="aType"><option>Plot</option><option>Flat</option><option>JV</option><option>Villa</option><option>FarmHouse</option><option>Shop</option><option>Office</option><option>Commercial</option><option>BuilderFloor</option></select>
-<input id="aTitle" placeholder="Title">
+<input id="aTitle" placeholder="Title - ex: CIDCO Plot">
 <input id="aCity" placeholder="Area - CIDCO, Beed Bypass">
-<input id="aPrice" placeholder="Price">
-
+<input id="aPrice" placeholder="Price - 45 Lakh">
+<input id="aPhone" placeholder="Aapka Mobile Number - 98xxxxxxxx" type="tel">
 <label style="font-size:12px;font-weight:700;margin-top:8px;display:block">📸 Phone se Photo Chuno:</label>
 <input type="file" id="aFile" accept="image/*" onchange="previewFile()">
 <img id="preview" class="preview">
-
 <label style="font-size:11px;color:#666">Ya Photo ka Link (optional):</label>
 <input id="aImg" placeholder="https://... photo link">
-
 <textarea id="aDetails" placeholder="Details"></textarea>
-<button class="btn-save" onclick="saveProp()">Save with Photo ✅</button>
+<button class="btn-save" onclick="saveProp()">Save & WhatsApp pe Bhejo ✅</button>
 <button class="btn-close" onclick="closeAdd()">Band Karo</button>
 </div></div>
 
 <script>
 let selectedBase64="";
 let props=JSON.parse(localStorage.getItem("rameenPropsV2")||"null")||[
-{type:"Plot",img:"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600",title:"Beed Bypass Plot",city:"Beed Bypass",price:"₹45 Lakh",details:"1000 sqft"},
-{type:"Flat",img:"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600",title:"2 BHK Flat CIDCO",city:"CIDCO",price:"₹32 Lakh",details:"950 sqft"}
+{type:"Plot",img:"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600",title:"Beed Bypass Plot",city:"Beed Bypass",price:"₹45 Lakh",details:"1000 sqft",phone:""},
+{type:"Flat",img:"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600",title:"2 BHK Flat CIDCO",city:"CIDCO",price:"₹32 Lakh",details:"950 sqft",phone:""}
 ];
 function saveLocal(){localStorage.setItem("rameenPropsV2",JSON.stringify(props));}
 function render(list){
-document.getElementById("list").innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div class="card-body"><b>${p.title}</b><br>📍 ${p.city} | ${p.type}<br><span class="price">${p.price}</span><br><span style="font-size:12px">${p.details||""}</span><a class="wa" href="https://wa.me/919545247374?text=${encodeURIComponent(p.title)}">WhatsApp</a></div></div>`).join("");
+document.getElementById("list").innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div class="card-body"><b>${p.title}</b><br>📍 ${p.city} | ${p.type}<br><span class="price">${p.price}</span><br><span style="font-size:12px">${p.details||""}</span>${p.phone?`<br><span style="font-size:12px">📞 ${p.phone}</span>`:""}<a class="wa" href="https://wa.me/919545247374?text=${encodeURIComponent(p.title+" - "+p.city)}">WhatsApp</a></div></div>`).join("");
 }
 function previewFile(){
 let file=document.getElementById("aFile").files[0];
@@ -75,16 +73,23 @@ let type=document.getElementById("aType").value;
 let title=document.getElementById("aTitle").value||"New Property";
 let city=document.getElementById("aCity").value||"Aurangabad";
 let price=document.getElementById("aPrice").value||"Contact";
+let phone=document.getElementById("aPhone").value||"";
 let details=document.getElementById("aDetails").value||"";
 let link=document.getElementById("aImg").value;
 let finalImg="";
 if(selectedBase64){finalImg=selectedBase64;}
 else if(link){finalImg=link;}
 else{let m={Plot:"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600",Flat:"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600",JV:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600",Villa:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600",FarmHouse:"https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=600",Shop:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600",Office:"https://images.unsplash.com/photo-1497366216548-37526070297c?w=600",Commercial:"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600"};finalImg=m[type]||m.Plot;}
-props.unshift({type,img:finalImg,title,city,price,details});
+props.unshift({type,img:finalImg,title,city,price,details,phone});
 saveLocal();closeAdd();render(props);
-document.getElementById("aTitle").value="";document.getElementById("aCity").value="";document.getElementById("aPrice").value="";document.getElementById("aDetails").value="";document.getElementById("aImg").value="";document.getElementById("aFile").value="";
-alert("✅ Photo ke saath Add Ho Gayi!");
+
+// WhatsApp pe bhejo 9545247374 pe
+let msg=`🏠 NAYI PROPERTY AYI HAI\nType: ${type}\nTitle: ${title}\nArea: ${city}\nPrice: ${price}\nPhone: ${phone}\nDetails: ${details}`;
+let waUrl=`https://wa.me/919545247374?text=${encodeURIComponent(msg)}`;
+window.open(waUrl,"_blank");
+
+document.getElementById("aTitle").value="";document.getElementById("aCity").value="";document.getElementById("aPrice").value="";document.getElementById("aDetails").value="";document.getElementById("aPhone").value="";document.getElementById("aImg").value="";document.getElementById("aFile").value="";
+alert("✅ Photo ke saath Add Ho Gayi! WhatsApp pe bhej diya!");
 }
 render(props);
 </script></body></html>
