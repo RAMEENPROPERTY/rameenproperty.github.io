@@ -1,373 +1,138 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rameen Property - Aurangabad, Maharashtra</title>
+<title>RAMEEN PROPERTY</title>
+
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-  body { background: #1a1a1a; color: #fff; }
-
-  header {
-    background: #111; padding: 18px 25px;
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 2px solid #d4a017;
-    position: sticky; top: 0; z-index: 100;
-  }
-  .logo { font-size: 22px; font-weight: bold; color: #d4a017; letter-spacing: 1px; }
-  .logo span { color: #fff; }
-  nav a { color: #fff; margin-left: 20px; text-decoration: none; font-size: 15px; transition: 0.3s; }
-  nav a:hover { color: #d4a017; }
-
-  .hero {
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-                url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600') center/cover;
-    text-align: center; padding: 80px 20px;
-  }
-  .hero h1 { font-size: 42px; margin-bottom: 12px; }
-  .hero h1 span { color: #d4a017; }
-  .hero p { font-size: 17px; color: #ccc; margin-bottom: 25px; }
-
-  .search-box {
-    background: #222; padding: 20px; border-radius: 10px;
-    max-width: 800px; margin: 0 auto; display: flex; gap: 10px;
-    flex-wrap: wrap; border: 1px solid #d4a017;
-  }
-  .search-box input, .search-box select {
-    flex: 1; min-width: 150px; padding: 12px; border-radius: 6px;
-    border: 1px solid #b8860b; background: #1a1a1a; color: #fff; font-size: 15px;
-  }
-  .search-box button {
-    background: #d4a017; color: #1a1a1a; border: none;
-    padding: 12px 28px; border-radius: 6px; font-weight: bold;
-    cursor: pointer; transition: 0.3s;
-  }
-  .search-box button:hover { background: #f0b429; }
-
-  .section { padding: 55px 25px; }
-  .section-title { text-align: center; font-size: 30px; color: #d4a017; margin-bottom: 8px; }
-  .section-sub { text-align: center; color: #999; margin-bottom: 35px; }
-
-  .grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 22px; max-width: 1200px; margin: 0 auto;
-  }
-  .card {
-    background: #222; border-radius: 10px; overflow: hidden;
-    border: 1px solid #333; transition: 0.3s;
-  }
-  .card:hover { transform: translateY(-6px); border-color: #d4a017; box-shadow: 0 10px 25px rgba(212,160,23,0.2); }
-  .card img { width: 100%; height: 200px; object-fit: cover; }
-  .card-body { padding: 18px; }
-  .card-body h3 { color: #d4a017; font-size: 19px; margin-bottom: 6px; }
-  .card-body .loc { color: #aaa; font-size: 14px; margin-bottom: 10px; }
-  .card-body .price { color: #4caf50; font-size: 21px; font-weight: bold; margin-bottom: 12px; }
-  .features { display: flex; gap: 14px; font-size: 13px; color: #bbb; margin-bottom: 14px; flex-wrap: wrap; }
-  .badge {
-    position: absolute; background: #d4a017; color: #1a1a1a;
-    padding: 4px 12px; border-radius: 15px; font-size: 11px;
-    font-weight: bold; margin: 10px;
-  }
-  .card-wrap { position: relative; }
-  .btn-whatsapp {
-    display: block; text-align: center; background: #25D366; color: #fff;
-    padding: 10px; border-radius: 6px; text-decoration: none;
-    font-weight: bold; transition: 0.3s;
-  }
-  .btn-whatsapp:hover { background: #1eb356; }
-
-  .services { background: #111; padding: 55px 25px; }
-  .service-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px; max-width: 1100px; margin: 0 auto;
-  }
-  .service {
-    text-align: center; padding: 28px 18px; background: #1f1f1f;
-    border-radius: 10px; border: 1px solid #333; transition: 0.3s;
-  }
-  .service:hover { border-color: #d4a017; transform: translateY(-5px); }
-  .service .icon { font-size: 40px; margin-bottom: 12px; }
-  .service h3 { color: #d4a017; margin-bottom: 8px; font-size: 17px; }
-  .service p { font-size: 13px; color: #aaa; }
-
-  .contact {
-    background: linear-gradient(135deg, #111, #1f1f1f);
-    padding: 55px 25px; text-align: center;
-    border-top: 2px solid #d4a017;
-  }
-  .contact h2 { font-size: 30px; color: #d4a017; margin-bottom: 12px; }
-  .contact p { color: #ccc; margin-bottom: 25px; }
-  .contact-info { display: flex; justify-content: center; gap: 35px; flex-wrap: wrap; margin-top: 25px; }
-  .contact-info div { font-size: 15px; color: #ddd; }
-  .contact-info strong { color: #d4a017; display: block; margin-bottom: 5px; }
-  .contact-info a { color: #25D366; text-decoration: none; }
-
-  footer {
-    background: #0a0a0a; color: #777; text-align: center;
-    padding: 18px; font-size: 13px; border-top: 1px solid #222;
-  }
-  footer a { color: #d4a017; text-decoration: none; font-size: 12px; }
-
-  @media (max-width: 600px) {
-    header { flex-direction: column; gap: 10px; padding: 14px; }
-    nav a { margin: 0 8px; font-size: 13px; }
-    .hero h1 { font-size: 28px; }
-    .section { padding: 35px 15px; }
-  }
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f2f4f7;color:#222}
+header{background:#102b46;color:white;padding:22px 15px;text-align:center}
+header h1{margin:0;color:#f5c542}
+header p{margin-bottom:0}
+.container{padding:15px;max-width:800px;margin:auto}
+.card{background:white;padding:16px;margin:12px 0;border-radius:12px;box-shadow:0 2px 8px #ddd}
+input,select,textarea,button{width:100%;padding:12px;margin:7px 0;border:1px solid #ccc;border-radius:7px;font-size:16px}
+button{background:#102b46;color:white;border:0;font-weight:bold}
+.whatsapp{background:#168b50;color:white;text-align:center;padding:12px;display:block;border-radius:7px;text-decoration:none}
+.price{color:#13733a;font-weight:bold}
+.small{font-size:13px;color:#666}
 </style>
 </head>
-<body>
 
+<body>
 <header>
-  <div class="logo">RAMEEN <span>PROPERTY</span></div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#properties">Properties</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<h1>RAMEEN PROPERTY</h1>
+<p>Buy • Sell • Plots • Flats • Joint Venture</p>
 </header>
 
-<section class="hero" id="home">
-  <h1>Welcome to <span>Rameen Property</span></h1>
-  <p>Buy, Sell & Rent Properties in Aurangabad, Maharashtra</p>
+<div class="container">
+<div class="card">
+<h2>Find Properties</h2>
+<input id="search" placeholder="Search city, area or property..."
+oninput="showListings()">
+<select id="filter" onchange="showListings()">
+<option value="">All Properties</option>
+<option>Plot</option>
+<option>Flat</option>
+<option>JV</option>
+<option>Commercial</option>
+</select>
+</div>
 
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="🔍 Search by area...">
-    <select id="typeFilter">
-      <option value="">All Types</option>
-      <option value="House">House</option>
-      <option value="Plot">Plot</option>
-      <option value="Flat">Flat</option>
-      <option value="Shop">Shop</option>
-    </select>
-    <button onclick="searchProperty()">Search</button>
-  </div>
-</section>
+<div id="listings"></div>
 
-<section class="section" id="properties">
-  <h2 class="section-title">Featured Properties</h2>
-  <p class="section-sub">Best deals in Aurangabad</p>
-  <div class="grid" id="propertyGrid"></div>
-</section>
+<div class="card">
+<h2>Submit Property</h2>
+<p class="small">Property details submit karne ke liye form bharein.</p>
+<input id="title" placeholder="Property title" required>
+<select id="type">
+<option>Plot</option><option>Flat</option>
+<option>JV</option><option>Commercial</option>
+</select>
+<input id="city" placeholder="City / Location">
+<input id="price" placeholder="Expected price (e.g. ₹5 crore)">
+<textarea id="details" placeholder="Area, road width, JV terms, details"></textarea>
+<input id="owner" placeholder="Owner / broker contact number">
+<button onclick="submitProperty()">Submit Listing</button>
+<p id="status"></p>
+</div>
 
-<section class="services" id="services">
-  <h2 class="section-title">Our Services</h2>
-  <p class="section-sub">Everything you need in real estate</p>
-  <div class="service-grid">
-    <div class="service">
-      <div class="icon">🏠</div>
-      <h3>Buy Property</h3>
-      <p>Verified houses, plots & flats in Aurangabad.</p>
-    </div>
-    <div class="service">
-      <div class="icon">💰</div>
-      <h3>Sell Property</h3>
-      <p>Get best market value for your property.</p>
-    </div>
-    <div class="service">
-      <div class="icon">🔑</div>
-      <h3>Rent & Lease</h3>
-      <p>Residential & commercial rentals.</p>
-    </div>
-    <div class="service">
-      <div class="icon">📋</div>
-      <h3>Legal Help</h3>
-      <p>Registry, transfer & documentation.</p>
-    </div>
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <h2>Get In Touch</h2>
-  <p>Ready to buy or sell? Contact Rameen Property today!</p>
-  <div class="contact-info">
-    <div><strong>📞 Phone</strong><a href="tel:+919545247374">+91 95452 47374</a></div>
-    <div><strong>💬 WhatsApp</strong><a href="https://wa.me/919545247374" target="_blank">+91 95452 47374</a></div>
-    <div><strong>📍 Location</strong>Aurangabad, Maharashtra</div>
-  </div>
-</section>
-
-<footer>
-  © 2025 RAMEEN PROPERTY. All Rights Reserved. | Aurangabad, Maharashtra 🇮🇳
-  <br><br>
-  <a href="admin.html">🔐 Admin Login</a>
-</footer>
-
-<a href="https://wa.me/919545247374?text=Hello%20Rameen%20Property%2C%20mujhe%20property%20ke%20baare%20mein%20jaankari%20chahiye" 
-   target="_blank"
-   style="position:fixed;bottom:22px;right:22px;background:#25D366;color:#fff;
-          width:58px;height:58px;border-radius:50%;display:flex;align-items:center;
-          justify-content:center;font-size:28px;text-decoration:none;z-index:999;
-          box-shadow:0 4px 15px rgba(0,0,0,0.4);">
-   💬
-</a>
+<div class="card">
+<h3>Contact RAMEEN PROPERTY</h3>
+<a class="whatsapp"
+href="https://wa.me/919545247374?text=Hello%20RAMEEN%20PROPERTY"
+target="_blank">Chat on WhatsApp</a>
+</div>
+</div>
 
 <script>
 const properties = [
-  { id:1, title:"Luxury Bungalow", location:"CIDCO N-5, Aurangabad", price:"₹ 1.2 Crore", type:"House", img:"https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800", beds:4, baths:3, area:"2000 sqft", badge:"Hot Deal" },
-  { id:2, title:"Modern Flat", location:"Garkheda, Aurangabad", price:"₹ 45 Lakh", type:"Flat", img:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800", beds:2, baths:2, area:"1050 sqft", badge:"New" },
-  { id:3, title:"Residential Plot", location:"Jalna Road, Aurangabad", price:"₹ 28 Lakh", type:"Plot", img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800", beds:0, baths:0, area:"1500 sqft", badge:"" },
-  { id:4, title:"Commercial Shop", location:"Station Road, Aurangabad", price:"₹ 75 Lakh", type:"Shop", img:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800", beds:0, baths:1, area:"600 sqft", badge:"Featured" },
-  { id:5, title:"Family House", location:"Satara Parisar, Aurangabad", price:"₹ 68 Lakh", type:"House", img:"https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800", beds:3, baths:2, area:"1400 sqft", badge:"" },
-  { id:6, title:"Premium Flat", location:"Shendra MIDC, Aurangabad", price:"₹ 55 Lakh", type:"Flat", img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800", beds:3, baths:2, area:"1250 sqft", badge:"Premium" }
+{
+title:"CIDCO N-5 JV Plot",
+type:"JV",
+city:"Aurangabad",
+price:"Contact for price",
+details:"Residential JV opportunity. Proposed 3 BHK apartment project. All development details subject to verification."
+}
 ];
 
-function renderProperties(list) {
-  const grid = document.getElementById('propertyGrid');
-  if (list.length === 0) {
-    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:#888;font-size:17px;">😕 No properties found.</p>`;
-    return;
-  }
-  grid.innerHTML = list.map(p => `
-    <div class="card-wrap">
-      ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
-      <div class="card">
-        <img src="${p.img}" alt="${p.title}">
-        <div class="card-body">
-          <h3>${p.title}</h3>
-          <p class="loc">📍 ${p.location}</p>
-          <p class="price">${p.price}</p>
-          <div class="features">
-            ${p.beds ? `<span>🛏 ${p.beds} Beds</span>` : ''}
-            ${p.baths ? `<span>🛁 ${p.baths} Baths</span>` : ''}
-            <span>📐 ${p.area}</span>
-          </div>
-          <a href="https://wa.me/919545247374?text=Hello%20Rameen%20Property%2C%20mujhe%20yeh%20property%20chahiye%3A%20${encodeURIComponent(p.title)}%20-%20${encodeURIComponent(p.location)}%20-%20${encodeURIComponent(p.price)}" 
-             target="_blank" class="btn-whatsapp">💬 Enquire on WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
+function showListings(){
+const q=document.getElementById("search").value.toLowerCase();
+const f=document.getElementById("filter").value;
+const box=document.getElementById("listings");
 
-function searchProperty() {
-  const q = document.getElementById('searchInput').value.toLowerCase().trim();
-  const type = document.getElementById('typeFilter').value;
-  const filtered = properties.filter(p => {
-    const matchQ = p.location.toLowerCase().includes(q) || p.title.toLowerCase().includes(q);
-    const matchT = !type || p.type === type;
-    return matchQ && matchT;
-  });
-  renderProperties(filtered);
-  document.getElementById('properties').scrollIntoView({ behavior: 'smooth' });
-}
+const found=properties.filter(p=>
+(p.title+" "+p.city+" "+p.details).toLowerCase().includes(q)
+&&(!f||p.type===f));
 
-document.getElementById('searchInput').addEventListener('keypress', e => {
-  if (e.key === 'Enter') searchProperty();
+box.innerHTML=found.length?"":"<div class='card'>No properties found.</div>";
+
+found.forEach(p=>{
+box.innerHTML+=`
+<div class="card">
+<h3>${escapeHTML(p.title)}</h3>
+<p>${escapeHTML(p.type)} • ${escapeHTML(p.city)}</p>
+<p class="price">${escapeHTML(p.price)}</p>
+<p>${escapeHTML(p.details)}</p>
+<a class="whatsapp"
+href="https://wa.me/919545247374?text=${encodeURIComponent("I am interested in "+p.title)}"
+target="_blank">Enquire on WhatsApp</a>
+</div>`;
 });
+}
 
-renderProperties(properties);
+function escapeHTML(s){
+return String(s||"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+}
+
+function submitProperty(){
+const title=document.getElementById("title").value.trim();
+const city=document.getElementById("city").value.trim();
+const owner=document.getElementById("owner").value.trim();
+
+if(!title||!city){
+document.getElementById("status").textContent=
+"Property title aur location bharein.";
+return;
+}
+
+const message=
+"New Property Listing\n"+
+"Title: "+title+"\n"+
+"Type: "+document.getElementById("type").value+"\n"+
+"Location: "+city+"\n"+
+"Price: "+document.getElementById("price").value+"\n"+
+"Details: "+document.getElementById("details").value+
+"\nContact: "+owner;
+
+location.href="https://wa.me/919545247374?text="+encodeURIComponent(message);
+}
+
+showListings();
 </script>
-
 </body>
-<!-- RAMEEN PROPERTY: ADD LISTINGS -->
-<section id="add-listings" style="max-width:600px;margin:20px auto;padding:18px;border:1px solid #ddd;border-radius:12px;font-family:Arial,sans-serif">
-  <h2>🏠 RAMEEN PROPERTY</h2>
-  <h3>Add Property Listing</h3>
-
-  <form id="propertyForm">
-    <label>Property Type</label>
-    <select id="propertyType" required style="width:100%;padding:12px;margin:8px 0">
-      <option value="">Select Property</option>
-      <option>JV Plot</option>
-      <option>Agriculture Land</option>
-      <option>Residential Plot</option>
-      <option>Flat / Apartment</option>
-      <option>Commercial Property</option>
-    </select>
-
-    <div id="jvFields" hidden>
-      <h3>JV Plot Details</h3>
-      <label>Deposit Type</label>
-      <select id="depositType" style="width:100%;padding:12px;margin:8px 0">
-        <option value="">Select Deposit Type</option>
-        <option>Refundable Deposit</option>
-        <option>Non-refundable Deposit</option>
-        <option>No Deposit</option>
-        <option>Deposit Negotiable</option>
-      </select>
-      <label>Deposit Amount (₹)</label>
-      <input id="depositAmount" type="number" min="0" placeholder="Enter deposit amount" style="width:100%;padding:12px;margin:8px 0">
-    </div>
-
-    <label>Land Area Unit</label>
-    <select id="areaUnit" style="width:100%;padding:12px;margin:8px 0">
-      <option value="acre">Acre</option>
-      <option value="guntha">Guntha</option>
-    </select>
-
-    <label>Land Area</label>
-    <input id="area" type="number" min="1" max="2000" step="0.01" required placeholder="1–2000 Acre" style="width:100%;padding:12px;margin:8px 0">
-
-    <label>Property Location</label>
-    <input id="location" required placeholder="City, area, district" style="width:100%;padding:12px;margin:8px 0">
-
-    <label>Expected Price (₹)</label>
-    <input id="price" type="number" min="0" placeholder="Enter expected price" style="width:100%;padding:12px;margin:8px 0">
-
-    <label>Property Description</label>
-    <textarea id="description" rows="4" placeholder="Road touch, title status, JV terms, etc." style="width:100%;padding:12px;margin:8px 0"></textarea>
-
-    <label>Owner / Broker Contact (Private)</label>
-    <input id="contact" type="tel" placeholder="Contact number" style="width:100%;padding:12px;margin:8px 0">
-
-    <button type="submit" style="width:100%;padding:14px;background:#123b30;color:white;border:0;border-radius:8px;font-size:16px">
-      Add Listing
-    </button>
-    <p id="formMessage"></p>
-  </form>
-</section>
-
-<script>
-const typeField = document.getElementById("propertyType");
-const jvFields = document.getElementById("jvFields");
-const unitField = document.getElementById("areaUnit");
-const areaField = document.getElementById("area");
-
-typeField.addEventListener("change", () => {
-  jvFields.hidden = typeField.value !== "JV Plot";
-  document.getElementById("depositType").required =
-    typeField.value === "JV Plot";
-});
-
-unitField.addEventListener("change", () => {
-  const acre = unitField.value === "acre";
-  areaField.max = acre ? 2000 : 40;
-  areaField.step = acre ? "0.01" : "1";
-  areaField.placeholder = acre ? "1–2000 Acre" : "1–40 Guntha";
-  areaField.value = "";
-});
-
-document.getElementById("propertyForm").addEventListener("submit", e => {
-  e.preventDefault();
-
-  if (!e.target.reportValidity()) return;
-
-  const listing = {
-    type: typeField.value,
-    depositType: document.getElementById("depositType").value,
-    depositAmount: document.getElementById("depositAmount").value,
-    area: areaField.value,
-    areaUnit: unitField.value,
-    location: document.getElementById("location").value,
-    price: document.getElementById("price").value,
-    description: document.getElementById("description").value
-  };
-
-  // Demo only: public listing details, excluding private contact.
-  const saved = JSON.parse(localStorage.getItem("rpListings") || "[]");
-  saved.push(listing);
-  localStorage.setItem("rpListings", JSON.stringify(saved));
-
-  document.getElementById("formMessage").textContent =
-    "Listing demo mein save ho gayi. Online publish abhi nahi hui.";
-
-  e.target.reset();
-  jvFields.hidden = true;
-  unitField.dispatchEvent(new Event("change"));
-});
-</script>
-
-</html.>
+</html>
