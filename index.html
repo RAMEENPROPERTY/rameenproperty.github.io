@@ -1,72 +1,47 @@
 <!DOCTYPE html>
-<html lang="hi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Rameen Property - Aurangabad</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rameen Property</title>
 <style>
-:root{--navy:#0f2a44;--gold:#e8b631;--wa:#128c4f;--bg:#f1f3f6;--line:#dde2e8}
-*{box-sizing:border-box}body{margin:0;font-family:Poppins,sans-serif;background:var(--bg)}
-.hero{background:var(--navy);color:#fff;padding:14px}
-.top{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:auto}
-.logo{color:var(--gold);font-family:DM Serif Display;font-size:20px;font-weight:700}
-.btn-add{background:var(--gold);color:#000;border:0;border-radius:20px;padding:6px 14px;font-weight:700}
-.btn-lang{border:1px solid var(--gold);color:var(--gold);background:0 0;border-radius:20px;padding:5px 12px}
-.hero h1{max-width:1100px;margin:12px auto 8px;font-family:DM Serif Display;font-size:24px}
-.sbox{max-width:1100px;margin:0 auto;background:#fff;border-radius:12px;padding:10px;display:grid;gap:8px}
-@media(min-width:700px){.sbox{grid-template-columns:1fr 1fr 1fr auto}}
-select,input,textarea{padding:11px;border:1px solid var(--line);border-radius:8px;width:100%}
-.btn-go{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:11px 20px;font-weight:700}
-.wrap{max-width:1100px;margin:auto;padding:12px}
-.chips{display:flex;gap:6px;overflow:auto;padding:10px 0}
-.chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:20px;padding:5px 12px;font-size:12px}
-.chip.active{background:var(--navy);color:#fff}
-.list{display:grid;gap:12px}
+body{margin:0;font-family:sans-serif;background:#f1f3f6}
+.h{background:#0f2a44;color:#fff;padding:15px;text-align:center}
+.h b{color:#e8b631;font-size:22px}
+.box{max-width:1100px;margin:15px auto;background:#fff;padding:12px;border-radius:12px}
+select,input,button{padding:12px;width:100%;margin:5px 0;border-radius:8px;border:1px solid #ccc}
+.btn{background:#0f2a44;color:#fff;font-weight:700}
+.list{display:grid;gap:12px;max-width:1100px;margin:auto;padding:12px}
 @media(min-width:700px){.list{grid-template-columns:1fr 1fr}}
-@media(min-width:1000px){.list{grid-template-columns:1fr 1fr 1fr}}
-.card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #ddd}
 .card img{width:100%;height:160px;object-fit:cover}
-.card-body{padding:12px}
-.card-body h3{margin:0 0 3px;font-size:14px}
-.loc{color:#5d6b7a;font-size:11px}
-.price{color:var(--wa);font-weight:700;margin:5px 0}
-.btn-wa{display:block;background:var(--wa);color:#fff;text-align:center;padding:8px;border-radius:8px;text-decoration:none;font-weight:600}
-.float{position:fixed;right:12px;bottom:12px;background:var(--wa);color:#fff;border-radius:30px;padding:10px 16px;text-decoration:none;font-weight:700}
-.float-add{position:fixed;right:12px;bottom:60px;background:var(--gold);color:#000;border-radius:30px;padding:10px 16px;font-weight:700;border:0}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;padding:14px;z-index:20}
-.modal.open{display:grid}
-.mbox{background:#fff;border-radius:12px;padding:16px;max-width:500px;width:100%}
-.mbox h2{margin:0 0 12px}
-.form{display:grid;gap:8px}
-.frow{display:grid;gap:8px;grid-template-columns:1fr 1fr}
-.btn-save{background:var(--navy);color:#fff;border:0;padding:11px;border-radius:8px;font-weight:700}
-.btn-close{background:#eee;border:0;padding:9px;border-radius:8px;width:100%;margin-top:6px}
-</style>
-</head>
-<body>
-<header class="hero">
-<div class="top">
-<div class="logo">RAMEEN PROPERTY</div>
-<div><button class="btn-add" onclick="openAdd()">+ Add</button> <button class="btn-lang" onclick="toggleLang()" id="langBtn">English</button></div>
+.card div{padding:10px}
+.price{color:green;font-weight:700}
+.wa{background:#128c4f;color:#fff;display:block;text-align:center;padding:8px;border-radius:8px;text-decoration:none;margin-top:6px}
+.float{position:fixed;right:12px;bottom:12px;background:#128c4f;color:#fff;padding:12px 18px;border-radius:30px;text-decoration:none;font-weight:700}
+</style></head><body>
+<div class="h"><b>RAMEEN PROPERTY</b><br>औरंगाबाद में सभी प्रॉपर्टी</div>
+<div class="box">
+<select id="fType"><option value="">सभी प्रकार</option><option>Plot</option><option>Flat</option><option>JV</option><option>Villa</option><option>Shop</option><option>Office</option></select>
+<input id="fSearch" placeholder="खोजें - CIDCO, Beed Bypass">
+<button class="btn" onclick="doSearch()">खोजें</button>
 </div>
-<h1 id="hTitle">औरंगाबाद में सभी प्रॉपर्टी</h1>
-<div class="sbox">
-<select id="fType"><option value="">सभी प्रकार</option><option>Plot</option><option>Flat</option><option>JV</option><option>Villa</option><option>BuilderFloor</option><option>FarmHouse</option><option>Shop</option><option>Office</option><option>Commercial</option></select>
-<select id="fCity"><option value="">सभी इलाका</option><option>CIDCO</option><option>Beed Bypass</option><option>Aurangabad</option></select>
-<input id="fSearch" type="search" placeholder="खोजें...">
-<button class="btn-go" onclick="doSearch()">खोजें</button>
-</div>
-</header>
-<main class="wrap">
-<div class="chips" id="chips"></div>
 <div class="list" id="list"></div>
-</main>
-<button class="float-add" onclick="openAdd()">+ Listing</button>
 <a class="float" href="https://wa.me/919545247374">WhatsApp</a>
-<div class="modal" id="addModal"><div class="mbox"><h2>नई प्रॉपर्टी जोड़ें</h2><div class="form"><div class="frow"><select id="aType"><option>Plot</option><option>Flat</option><option>JV</option><option>Villa</option><option>BuilderFloor</option><option>FarmHouse</option><option>Shop</option><option>Office</option><option>Commercial</option></select><input id="aCity" placeholder="इलाका"></div><input id="aTitle" placeholder="टाइटल"><input id="aPrice" placeholder="कीमत"><input id="aImg" placeholder="फोटो लिंक"><textarea id="aDetails" placeholder="Details"></textarea><button class="btn-save" onclick="saveProp()">Save करें</button><button class="btn-close" onclick="closeAdd()">बंद करें</button></div></div></div>
 <script>
-const WA="919545247374";let lang="hi";
-const TYPES={hi:{"":"सभी",Plot:"प्लॉट",Flat:"फ्लैट",JV:"JV",Villa:"विला",BuilderFloor:"बिल्डर फ्लोर",FarmHouse:"फार्म हाउस",Shop:"दुकान",Office:"ऑफिस",Commercial:"कमर्शियल"},en:{"":"All",Plot:"Plots",Flat:"Flats",JV:"JV",Villa:"Villas",BuilderFloor:"Builder Floors",FarmHouse:"Farm Houses",Shop:"Shops",Office:"Offices",Commercial:"Commercial"}};
-let properties=[
-{type:"JV",img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600",hi:{title:"CIDCO N-5 JV प्लॉट",city:"CIDCO N-5",price:"संपर्क करें",details:"JV, 1200 sqft"},en:{title:"CIDCO N-5 JV Plot",city:"CIDCO N-5",price:"Contact",details:"JV, 1200 sqft
+let props=[
+{type:"JV",img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600",title:"CIDCO N-5 JV प्लॉट",city:"CIDCO N-5",price:"संपर्क करें"},
+{type:"Plot",img:"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600",title:"Beed Bypass प्लॉट",city:"Beed Bypass",price:"₹45 लाख"},
+{type:"Flat",img:"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600",title:"2 BHK फ्लैट - CIDCO",city:"CIDCO",price:"₹32 लाख"},
+{type:"Villa",img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600",title:"बंगला - CIDCO",city:"CIDCO",price:"₹85 लाख"},
+{type:"Shop",img:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600",title:"दुकान - CIDCO",city:"CIDCO",price:"₹22 लाख"},
+{type:"Office",img:"https://images.unsplash.com/photo-1497366216548-37526070297c?w=600",title:"ऑफिस - प्रोझोन",city:"API",price:"₹35k/महीना"}
+];
+function render(list){
+document.getElementById("list").innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div><b>${p.title}</b><br>📍 ${p.city}<br><span class="price">${p.price}</span><br><span style="font-size:12px">${p.type}</span><a class="wa" href="https://wa.me/919545247374?text=${p.title}">WhatsApp</a></div></div>`).join("");
+}
+function doSearch(){
+let q=document.getElementById("fSearch").value.toLowerCase();
+let ty=document.getElementById("fType").value;
+let f=props.filter(p=>(!ty||p.type==ty)&&(p.title+p.city).toLowerCase().includes(q));
+render(f);
+}
+render(props);
+</script></body></html>
