@@ -1,57 +1,87 @@
 <!DOCTYPE html>
 <html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Rameen Property - Aurangabad</title>
+<title>Rameen Property</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0f2a44;--gold:#e8b631;--wa:#128c4f;--bg:#f1f3f6;--line:#dde2e8}
-*{box-sizing:border-box}body{margin:0;font-family:Poppins,sans-serif;background:var(--bg);color:#1d2733}
-.hero{background:var(--navy);color:#fff;padding:18px 16px 26px}
+*{box-sizing:border-box}body{margin:0;font-family:Poppins,sans-serif;background:var(--bg)}
+.hero{background:var(--navy);color:#fff;padding:16px 16px 24px}
 .top{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:auto}
 .logo{color:var(--gold);font-family:DM Serif Display;font-size:22px;font-weight:700}
-.lang{border:1px solid var(--gold);color:var(--gold);background:transparent;border-radius:20px;padding:5px 14px;font-weight:600;cursor:pointer}
-.hero h1{max-width:1100px;margin:16px auto 12px;font-family:DM Serif Display;font-size:clamp(24px,6vw,34px)}
+.top-btns{display:flex;gap:8px}
+.btn-add{background:var(--gold);color:#000;border:0;border-radius:20px;padding:7px 16px;font-weight:700;cursor:pointer}
+.btn-lang{border:1px solid var(--gold);color:var(--gold);background:transparent;border-radius:20px;padding:6px 14px;font-weight:600;cursor:pointer}
+.hero h1{max-width:1100px;margin:14px auto 10px;font-family:DM Serif Display;font-size:clamp(22px,6vw,32px)}
 .search-box{max-width:1100px;margin:0 auto;background:#fff;border-radius:12px;padding:12px;display:grid;gap:10px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
 @media(min-width:700px){.search-box{grid-template-columns:1fr 1fr 1fr auto}}
-select,input{padding:12px;border:1px solid var(--line);border-radius:8px;font:500 14px Poppins}
+select,input,textarea{padding:12px;border:1px solid var(--line);border-radius:8px;font:500 14px Poppins;width:100%}
 .btn-go{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:12px 24px;font-weight:700;cursor:pointer}
 .wrap{max-width:1100px;margin:auto;padding:16px}
-.chips{display:flex;gap:8px;overflow:auto;padding:14px 0;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;white-space:nowrap}.chip.active{background:var(--navy);color:#fff}
+.chips{display:flex;gap:8px;overflow:auto;padding:12px 0}.chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer}.chip.active{background:var(--navy);color:#fff}
 .list{display:grid;gap:14px}@media(min-width:700px){.list{grid-template-columns:1fr 1fr}}@media(min-width:1000px){.list{grid-template-columns:1fr 1fr 1fr}}
-.card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
 .card img{width:100%;height:170px;object-fit:cover}
-.card-body{padding:14px}.card-body h3{margin:0 0 4px;font-size:16px}.loc{color:#5d6b7a;font-size:12px}.price{color:var(--wa);font-weight:700;font-size:16px;margin:6px 0}.desc{font-size:12px;color:#38444f;margin:0 0 10px;min-height:32px}
+.card-body{padding:12px}.card-body h3{margin:0 0 4px;font-size:15px}.loc{color:#5d6b7a;font-size:12px}.price{color:var(--wa);font-weight:700;margin:6px 0}.desc{font-size:12px;color:#38444f;margin:0 0 10px}
 .btn-wa{display:block;background:var(--wa);color:#fff;text-align:center;padding:9px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px}
-.float{position:fixed;right:14px;bottom:14px;background:var(--wa);color:#fff;border-radius:30px;padding:12px 20px;text-decoration:none;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:10}
+.float{position:fixed;right:14px;bottom:14px;background:var(--wa);color:#fff;border-radius:30px;padding:12px 20px;text-decoration:none;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.float-add{position:fixed;right:14px;bottom:70px;background:var(--gold);color:#000;border-radius:30px;padding:12px 20px;text-decoration:none;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.3);border:0;cursor:pointer}
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;padding:16px;z-index:20}.modal.open{display:grid}
+.modal-box{background:#fff;border-radius:12px;padding:20px;max-width:500px;width:100%;max-height:90vh;overflow:auto}
+.modal-box h2{margin:0 0 14px;font-size:20px}.form{display:grid;gap:10px}.form-row{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.btn-save{background:var(--navy);color:#fff;border:0;padding:12px;border-radius:8px;font-weight:700;cursor:pointer}.btn-close{background:#eee;border:0;padding:10px;border-radius:8px;cursor:pointer;margin-top:8px;width:100%}
 </style></head><body>
-<header class="hero"><div class="top"><div class="logo">RAMEEN PROPERTY</div><button class="lang" onclick="toggleLang()" id="langBtn">English</button></div>
+<header class="hero"><div class="top"><div class="logo">RAMEEN PROPERTY</div><div class="top-btns"><button class="btn-add" onclick="openAdd()">+ Add</button><button class="btn-lang" onclick="toggleLang()" id="langBtn">English</button></div></div>
 <h1 id="hTitle">औरंगाबाद में सभी तरह की प्रॉपर्टी</h1>
 <div class="search-box">
-<select id="fType"><option value="">सभी प्रकार</option><option value="Plot">प्लॉट</option><option value="Flat">फ्लैट</option><option value="JV">JV</option><option value="Villa">विला / बंगला</option><option value="BuilderFloor">बिल्डर फ्लोर</option><option value="FarmHouse">फार्म हाउस</option><option value="Shop">दुकान</option><option value="Office">ऑफिस</option><option value="Commercial">कमर्शियल</option></select>
+<select id="fType"><option value="">सभी प्रकार</option><option value="Plot">प्लॉट</option><option value="Flat">फ्लैट</option><option value="JV">JV</option><option value="Villa">विला</option><option value="BuilderFloor">बिल्डर फ्लोर</option><option value="FarmHouse">फार्म हाउस</option><option value="Shop">दुकान</option><option value="Office">ऑफिस</option><option value="Commercial">कमर्शियल</option></select>
 <select id="fCity"><option value="">सभी इलाका</option><option value="CIDCO">CIDCO</option><option value="Beed Bypass">Beed Bypass</option><option value="Aurangabad">औरंगाबाद</option></select>
 <input id="fSearch" type="search" placeholder="खोजें...">
 <button class="btn-go" onclick="doSearch()">खोजें</button>
 </div></header>
 <main class="wrap"><div class="chips" id="chips"></div><div class="list" id="list"></div></main>
+<button class="float-add" onclick="openAdd()">+ Add Listing</button>
 <a class="float" href="https://wa.me/919545247374">WhatsApp</a>
+
+<!-- ADD MODAL -->
+<div class="modal" id="addModal"><div class="modal-box">
+<h2>नई प्रॉपर्टी जोड़ें</h2>
+<div class="form">
+<div class="form-row">
+<select id="aType"><option value="Plot">प्लॉट</option><option value="Flat">फ्लैट</option><option value="JV">JV</option><option value="Villa">विला</option><option value="BuilderFloor">बिल्डर फ्लोर</option><option value="FarmHouse">फार्म हाउस</option><option value="Shop">दुकान</option><option value="Office">ऑफिस</option><option value="Commercial">कमर्शियल</option></select>
+<input id="aCity" placeholder="इलाका जैसे CIDCO N-5">
+</div>
+<input id="aTitle" placeholder="टाइटल जैसे 2 BHK फ्लैट">
+<input id="aPrice" placeholder="कीमत जैसे ₹32 लाख">
+<input id="aImg" placeholder="फोटो लिंक (खाली छोड़ा तो auto)">
+<textarea id="aDetails" placeholder="Details जैसे 1000 sqft, road"></textarea>
+<button class="btn-save" onclick="saveProp()">Save करें</button>
+<button class="btn-close" onclick="closeAdd()">बंद करें</button>
+</div>
+</div></div>
+
 <script>
 const WA="919545247374";let lang="hi";
 const TYPES={hi:{"":"सभी",Plot:"प्लॉट",Flat:"फ्लैट",JV:"JV",Villa:"विला",BuilderFloor:"बिल्डर फ्लोर",FarmHouse:"फार्म हाउस",Shop:"दुकान",Office:"ऑफिस",Commercial:"कमर्शियल"},en:{"":"All",Plot:"Plots",Flat:"Flats",JV:"JV",Villa:"Villas",BuilderFloor:"Builder Floors",FarmHouse:"Farm Houses",Shop:"Shops",Office:"Offices",Commercial:"Commercial"}};
-const properties=[
-{type:"JV",img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600",hi:{title:"CIDCO N-5 JV प्लॉट",city:"CIDCO N-5, औरंगाबाद",price:"कीमत के लिए संपर्क करें",details:"रिहायशी JV, 3 BHK प्रोजेक्ट, 1200 sqft"},en:{title:"CIDCO N-5 JV Plot",city:"CIDCO N-5, Aurangabad",price:"Contact for price",details:"Residential JV, 3 BHK project, 1200 sqft"}},
-{type:"Plot",img:"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600",hi:{title:"Beed Bypass प्लॉट",city:"Beed Bypass",price:"₹45 लाख",details:"1000 sqft, 30ft road, NA Approved"},en:{title:"Beed Bypass Plot",city:"Beed Bypass",price:"₹45 Lakh",details:"1000 sqft, 30ft road, NA"}},
-{type:"Villa",img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600",hi:{title:"बंगला - सिडको",city:"सिडको, औरंगाबाद",price:"₹85 लाख",details:"2 BHK बंगला, 1500 sqft, पार्किंग"},en:{title:"Bungalow - CIDCO",city:"CIDCO, Aurangabad",price:"₹85 Lakh",details:"2 BHK Bungalow, 1500 sqft"}},
-{type:"Flat",img:"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600",hi:{title:"2 BHK फ्लैट - सिडको",city:"सिडको",price:"₹32 लाख",details:"950 sqft, 3rd फ्लोर, लिफ्ट"},en:{title:"2 BHK Flat - CIDCO",city:"CIDCO",price:"₹32 Lakh",details:"950 sqft, 3rd floor"}},
-{type:"BuilderFloor",img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600",hi:{title:"बिल्डर फ्लोर - एन-7",city:"CIDCO N-7",price:"₹28 लाख",details:"1st फ्लोर, 1100 sqft, Independent"},en:{title:"Builder Floor - N-7",city:"CIDCO N-7",price:"₹28 Lakh",details:"1st floor, 1100 sqft"}},
-{type:"FarmHouse",img:"https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=600",hi:{title:"फार्म हाउस - खुल्ताबाद",city:"खुल्ताबाद रोड",price:"₹55 लाख",details:"2 एकड़, बोरवेल, फार्म हाउस"},en:{title:"Farm House - Khultabad",city:"Khultabad Road",price:"₹55 Lakh",details:"2 acre, borewell"}},
-{type:"Shop",img:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600",hi:{title:"दुकान - सिडको बस स्टैंड",city:"CIDCO",price:"₹22 लाख",details:"150 sqft, रोड टच, शटर"},en:{title:"Shop - CIDCO Bus Stand",city:"CIDCO",price:"₹22 Lakh",details:"150 sqft, road touch"}},
-{type:"Office",img:"https://images.unsplash.com/photo-1497366216548-37526070297c?w=600",hi:{title:"ऑफिस - प्रोझोन मॉल",city:"API कॉर्नर",price:"₹35 हजार/महीना",details:"500 sqft, AC, फर्निश्ड"},en:{title:"Office - Prozone Mall",city:"API Corner",price:"₹35k/month",details:"500 sqft, AC, furnished"}},
-{type:"Commercial",img:"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600",hi:{title:"कमर्शियल प्लॉट - जालना रोड",city:"जालना रोड",price:"₹1.2 करोड़",details:"2000 sqft, कमर्शियल NA"},en:{title:"Commercial Plot - Jalna Road",city:"Jalna Road",price:"₹1.2 Cr",details:"2000 sqft, commercial NA"}},
+let properties=[
+{type:"JV",img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600",hi:{title:"CIDCO N-5 JV प्लॉट",city:"CIDCO N-5",price:"संपर्क करें",details:"JV, 1200 sqft"},en:{title:"CIDCO N-5 JV Plot",city:"CIDCO N-5",price:"Contact",details:"JV, 1200 sqft"}},
+{type:"Plot",img:"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600",hi:{title:"Beed Bypass प्लॉट",city:"Beed Bypass",price:"₹45 लाख",details:"1000 sqft, NA"},en:{title:"Beed Bypass Plot",city:"Beed Bypass",price:"₹45 Lakh",details:"1000 sqft"}},
+{type:"Flat",img:"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600",hi:{title:"2 BHK फ्लैट - सिडको",city:"सिडको",price:"₹32 लाख",details:"950 sqft"},en:{title:"2 BHK Flat - CIDCO",city:"CIDCO",price:"₹32 Lakh",details:"950 sqft"}},
 ];
 function esc(s){return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
-function render(list){document.getElementById("list").innerHTML=list.map(p=>{const t=p[lang];return `<div class="card"><img src="${p.img}" loading="lazy"><div class="card-body"><h3>${esc(t.title)}</h3><div class="loc">📍 ${esc(t.city)}</div><div class="price">${esc(t.price)}</div><p class="desc">${esc(t.details)}</p><a class="btn-wa" href="https://wa.me/${WA}?text=${encodeURIComponent((lang==='hi'?'मुझे रुचि है: ':'I am interested in: ')+t.title)}">${lang==='hi'?'WhatsApp पर पूछें':'Ask on WhatsApp'}</a></div></div>`}).join("")||`<div style="background:#fff;padding:20px;border-radius:12px;text-align:center">कोई प्रॉपर्टी नहीं मिली</div>`}
-function doSearch(){const q=document.getElementById("fSearch").value.toLowerCase();const ty=document.getElementById("fType").value;const ct=document.getElementById("fCity").value.toLowerCase();const f=properties.filter(p=>{const t=p[lang];return (!ty||p.type===ty)&&(!ct||t.city.toLowerCase().includes(ct))&&(t.title+t.city+t.details).toLowerCase().includes(q)});render(f)}
+function render(list){document.getElementById("list").innerHTML=list.map(p=>{const t=p[lang];return `<div class="card"><img src="${p.img}"><div class="card-body"><h3>${esc(t.title)}</h3><div class="loc">📍 ${esc(t.city)}</div><div class="price">${esc(t.price)}</div><p class="desc">${esc(t.details)}</p><a class="btn-wa" href="https://wa.me/${WA}?text=${encodeURIComponent(t.title)}">WhatsApp</a></div></div>`}).join("")}
+function doSearch(){const q=document.getElementById("fSearch").value.toLowerCase();const ty=document.getElementById("fType").value;const ct=document.getElementById("fCity").value.toLowerCase();const f=properties.filter(p=>{const t=p[lang];return (!ty||p.type===ty)&&(!ct||t.city.toLowerCase().includes(ct))&&(t.title+t.city).toLowerCase().includes(q)});render(f)}
 function buildChips(){const b=document.getElementById("chips");b.innerHTML="";Object.keys(TYPES[lang]).forEach(k=>{const d=document.createElement("div");d.className="chip"+(k===""?" active":"");d.textContent=TYPES[lang][k];d.onclick=()=>{document.getElementById("fType").value=k;document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));d.classList.add("active");doSearch()};b.appendChild(d)})}
-function toggleLang(){lang=lang==="hi"?"en":"hi";document.getElementById("langBtn").textContent=lang==="hi"?"English":"हिन्दी";document.getElementById("hTitle").textContent=lang==="hi"?"औरंगाबाद में सभी तरह की प्रॉपर्टी":"All types of properties in Aurangabad";buildChips();doSearch()}
+function toggleLang(){lang=lang==="hi"?"en":"hi";document.getElementById("langBtn").textContent=lang==="hi"?"English":"हिन्दी";buildChips();doSearch()}
+function openAdd(){document.getElementById("addModal").classList.add("open")}
+function closeAdd(){document.getElementById("addModal").classList.remove("open")}
+function saveProp(){
+const type=document.getElementById("aType").value;const city=document.getElementById("aCity").value||"Aurangabad";const title=document.getElementById("aTitle").value||"New Property";const price=document.getElementById("aPrice").value||"Contact";const details=document.getElementById("aDetails").value||"";let img=document.getElementById("aImg").value;
+if(!img){const imgs={Plot:"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600",Flat:"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600",JV:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600",Villa:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600",BuilderFloor:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600",FarmHouse:"https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=600",Shop:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600",Office:"https://images.unsplash.com/photo-1497366216548-37526070297c?w=600",Commercial:"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600"};img=imgs[type]||imgs.Plot;}
+properties.unshift({type,img,hi:{title,city,price,details},en:{title,city,price,details}});
+closeAdd();render(properties);
+document.getElementById("aTitle").value="";document.getElementById("aCity").value="";document.getElementById("aPrice").value="";document.getElementById("aDetails").value="";document.getElementById("aImg").value="";
+alert("Property Add Ho Gayi! ✅")
+}
 buildChips();render(properties)
 </script></body></html>
