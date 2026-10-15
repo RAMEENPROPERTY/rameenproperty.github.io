@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAMEEN PROPERTY TRUST</title>
+<title>RAMEEN PROPERTY TRUST - SECURE PRIME</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}</style>
 </head>
-<body class="bg-[#f5f5f0] font-sans">
+<body class="bg-[#f5f5f0] font-sans select-none">
 <header class="bg-[#0a192f] text-white p-3 sticky top-0 z-50 flex justify-between items-center">
-<div><div class="font-black text-lg leading-none">RAMEEN</div><div class="text-[10px] text-[#c9a86a] tracking-widest">PROPERTY TRUST</div></div>
-<div class="flex gap-2"><button onclick="openAdd()" class="bg-[#c9a86a] text-black px-4 py-2 rounded-full text-xs font-bold">+ ADD</button><button id="adminBtn" onclick="adminLogin()" class="bg-white/10 px-4 py-2 rounded-full text-xs">ADMIN</button></div>
+<div id="logoTrigger" class="cursor-pointer"><div class="font-black text-lg leading-none">RAMEEN</div><div class="text-[10px] text-[#c9a86a] tracking-widest">PROPERTY TRUST</div></div>
+<div class="flex gap-2"><button onclick="openAdd()" class="bg-[#c9a86a] text-black px-4 py-2 rounded-full text-xs font-bold">+ ADD</button><button id="adminBtn" class="hidden bg-red-600 px-4 py-2 rounded-full text-xs font-bold">ADMIN</button></div>
 </header>
 <div class="bg-white p-2 flex gap-2 overflow-x-auto sticky top-[52px] z-40 shadow-sm no-scrollbar">
 <button onclick="filter('ALL')" id="btn-ALL" class="px-4 py-2 bg-[#0a192f] text-white rounded-full text-xs whitespace-nowrap">All</button>
@@ -21,26 +21,24 @@
 <button onclick="filter('RENTAL')" id="btn-RENTAL" class="px-4 py-2 bg-gray-100 rounded-full text-xs whitespace-nowrap">Rental</button>
 </div>
 <div id="list" class="p-3 grid grid-cols-1 md:grid-cols-3 gap-3"></div>
-
 <div id="modal" class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-3">
 <div class="bg-white rounded-2xl w-full max-w-md p-4 max-h-[90vh] overflow-y-auto">
-<h2 class="font-bold mb-3">Add Property - Prime</h2>
+<h2 class="font-bold mb-3">Add Property - Secure Prime</h2>
 <input id="title" placeholder="Title" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
 <select id="type" class="w-full border p-2.5 rounded-xl mb-2 text-sm"><option>FLAT</option><option>ROW HOUSE</option><option>BANGLO</option><option>PLOT</option><option>COMM. PLOT</option><option>RENTAL</option><option>R ZONE</option><option>R+C</option></select>
 <div class="flex gap-2 mb-2"><input id="price" placeholder="Price" class="flex-1 border p-2.5 rounded-xl text-sm"><select id="priceUnit" class="border p-2.5 rounded-xl text-sm"><option>per sqft</option><option>Lakh</option><option>Cr</option></select></div>
 <div class="flex gap-2 mb-2"><input id="area" placeholder="Area" class="flex-1 border p-2.5 rounded-xl text-sm"><select id="areaUnit" class="border p-2.5 rounded-xl text-sm"><option>Sqft</option><option>Guntha</option><option>Acre</option></select></div>
 <input id="diposit" placeholder="Deposit" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
 <input id="loc" placeholder="Location" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
-<input id="img" placeholder="Image Link - ImgBB.com" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
+<input id="img" placeholder="Image Link" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
 <input id="bname" placeholder="Broker Name" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
 <input id="bphone" placeholder="Broker Phone" class="w-full border p-2.5 rounded-xl mb-3 text-sm">
 <div class="flex gap-2"><button onclick="closeM()" class="flex-1 bg-gray-100 py-3 rounded-xl font-bold text-sm">Cancel</button><button onclick="save()" class="flex-1 bg-[#0a192f] text-white py-3 rounded-xl font-bold text-sm">SAVE</button></div>
 </div>
 </div>
-
 <div id="detailModal" class="hidden fixed inset-0 bg-black/80 z-[110] flex items-center justify-center p-3">
 <div class="bg-white rounded-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto relative">
-<button onclick="closeDetail()" class="absolute top-3 right-3 bg-black/70 text-white w-8 h-8 rounded-full text-sm z-10">✕</button>
+<button onclick="closeDetail()" class="absolute top-3 right-3 bg-black/70 text-white w-8 h-8 rounded-full text-sm">✕</button>
 <img id="dImg" class="w-full h-64 object-cover">
 <div class="p-4">
 <div class="flex justify-between items-start"><div id="dPrice" class="text-2xl font-black text-[#0a192f]"></div><span id="dType" class="bg-[#c9a86a] text-black text-[10px] px-3 py-1 rounded-full font-bold"></span></div>
@@ -50,86 +48,125 @@
 <div class="bg-gray-50 p-3 rounded-xl"><div class="text-[10px] text-gray-400">LOCATION</div><div id="dLoc" class="font-semibold"></div></div>
 <div class="bg-gray-50 p-3 rounded-xl"><div class="text-[10px] text-gray-400">AREA</div><div id="dArea" class="font-semibold"></div></div>
 </div>
-<div id="dBroker" class="mt-3 bg-yellow-50 border border-yellow-200 p-3 rounded-xl text-xs"></div>
-<div class="flex gap-2 mt-4"><a id="dCall" href="#" class="flex-1 bg-[#0a192f] text-white text-center py-3.5 rounded-xl text-sm font-bold">📞 CALL NOW</a><a id="dWA" href="#" class="flex-1 bg-green-500 text-white text-center py-3.5 rounded-xl text-sm font-bold">💬 WHATSAPP</a></div>
+<div id="dBroker" class="mt-3 bg-yellow-50 border p-3 rounded-xl text-xs"></div>
+<div class="flex gap-2 mt-4"><a id="dCall" href="#" class="flex-1 bg-[#0a192f] text-white text-center py-3.5 rounded-xl text-sm font-bold">📞 CALL</a><a id="dWA" href="#" class="flex-1 bg-green-500 text-white text-center py-3.5 rounded-xl text-sm font-bold">💬 WHATSAPP</a></div>
 </div>
 </div>
 </div>
-
 <a href="https://wa.me/919545247374" class="fixed bottom-5 right-5 bg-green-500 w-14 h-14 rounded-full flex items-center justify-center text-white font-bold shadow-lg">WA</a>
-
 <script>
-let isAdmin=false;
-const DEFAULT_DATA = [
-  {id:1001,title:"Rental Property - As Club Tisgaon - 10 per sqft",type:"RENTAL",price:"10 per sqft",area:"100000 Sqft",deposit:"4 Lakh Deposit",loc:"As Club Tisgaon",img:"",bname:"Rameen Property",bphone:"9545247374"},
-  {id:1,title:"3BHK Luxury Banglo",type:"BANGLO",price:"85 Lakh",area:"2500 Sqft",deposit:"",loc:"Nanded",img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9",bname:"Demo",bphone:"000"}
-];
-let allData = JSON.parse(localStorage.getItem('rameen_final_v6')||'null');
-if(!allData || allData.length===0){ allData = DEFAULT_DATA; localStorage.setItem('rameen_final_v6', JSON.stringify(allData)); }
-let curFilter='ALL';
-function saveLS(){localStorage.setItem('rameen_final_v6', JSON.stringify(allData));}
-function getFallbackImg(type){
-  if(type==='RENTAL' || type==='COMM. PLOT') return 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600';
-  if(type==='PLOT') return 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600';
-  return 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600';
-}
-function render(){
- let data=curFilter==='ALL'?allData:allData.filter(x=>x.type===curFilter);
- document.querySelectorAll('[id^="btn-"]').forEach(b=>{b.className="px-4 py-2 bg-gray-100 rounded-full text-xs whitespace-nowrap"} );
- let ab=document.getElementById('btn-'+curFilter); if(ab) ab.className="px-4 py-2 bg-[#0a192f] text-white rounded-full text-xs whitespace-nowrap";
- if(data.length===0){ document.getElementById('list').innerHTML='<p class="col-span-3 text-center py-20 text-gray-400">No property in '+curFilter+'</p>'; return; }
- let html = [...data].reverse().map(p=>{
-   let imgSrc = p.img && p.img.trim().length>5? p.img : getFallbackImg(p.type);
-   let depositHtml = p.deposit? `<div class="text-[10px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full inline-block mt-1">Deposit: ${p.deposit}</div>` : '';
-   return `<div onclick="openDetail(${p.id})" class="bg-white rounded-2xl shadow-sm overflow-hidden border cursor-pointer active:scale-[0.98] transition">
-     <img src="${imgSrc}" onerror="this.src='${getFallbackImg(p.type)}'" class="h-48 w-full object-cover pointer-events-none">
-     <div class="p-3">
-       <div class="flex justify-between items-center"><div class="font-bold text-[#0a192f]">₹ ${p.price}</div><span class="bg-[#c9a86a] text-black text-[9px] px-2 py-1 rounded-full font-bold">${p.type}</span></div>
-       <div class="font-semibold text-sm mt-1 line-clamp-1">${p.title}</div>
-       ${depositHtml}
-       <div class="text-[11px] text-gray-500 mt-1">📍 ${p.loc} | 📐 ${p.area}</div>
-       <div class="text-[10px] text-blue-600 mt-2 font-bold">👆 CLICK TO OPEN FULL DETAIL</div>
-     </div></div>`
- }).join('');
- document.getElementById('list').innerHTML=html;
-}
-window.filter=(t)=>{curFilter=t; render();}
-window.openAdd=()=>document.getElementById('modal').classList.remove('hidden');
-window.closeM=()=>document.getElementById('modal').classList.add('hidden');
-window.openDetail=(id)=>{
-  let p = allData.find(x=>x.id===id); if(!p) return;
-  let imgSrc = p.img && p.img.trim().length>5? p.img : getFallbackImg(p.type);
-  document.getElementById('dImg').src=imgSrc;
-  document.getElementById('dImg').onerror=function(){this.src=getFallbackImg(p.type)};
-  document.getElementById('dPrice').innerText='₹ '+p.price;
-  document.getElementById('dType').innerText=p.type;
-  document.getElementById('dTitle').innerText=p.title;
-  document.getElementById('dLoc').innerText=p.loc||'-';
-  document.getElementById('dArea').innerText=p.area||'-';
-  document.getElementById('dDeposit').innerHTML= p.deposit? `<span class="bg-orange-100 text-orange-700 text-xs px-3 py-1 rounded-full">Deposit: ${p.deposit}</span>` : '';
-  document.getElementById('dBroker').innerHTML=`<b>Broker:</b> ${p.bname||'Rameen Property'} | <b>Phone:</b> ${p.bphone||'9545247374'}`;
-  let phone = (p.bphone||'9545247374').replace(/[^0-9]/g,'').slice(-10);
-  document.getElementById('dCall').href='tel:'+phone;
-  document.getElementById('dWA').href=`https://wa.me/91${phone}?text=Hi, I am interested in ${encodeURIComponent(p.title)} at ${encodeURIComponent(p.loc)}`;
-  document.getElementById('detailModal').classList.remove('hidden');
-}
-window.closeDetail=()=>document.getElementById('detailModal').classList.add('hidden');
-window.adminLogin=()=>{
- if(isAdmin){isAdmin=false; document.getElementById('adminBtn').innerText='ADMIN'; render(); return;}
- let pw=prompt('Password:'); if(!pw) return;
- if(pw.trim().toLowerCase()==='rameen' || pw==='Rameen@2024' || pw.trim().toLowerCase()==='rameen@2024'){isAdmin=true; document.getElementById('adminBtn').innerText='ADMIN ✓'; alert('Admin ON Boss!'); render();}
- else alert('Wrong!');
-}
-window.save=()=>{
- let t=document.getElementById('title').value; let pr=document.getElementById('price').value;
- if(!t||!pr) return alert('Title Price likho Boss');
- const obj={id:Date.now(),title:t,type:document.getElementById('type').value,price:pr+' '+document.getElementById('priceUnit').value,area:document.getElementById('area').value+' '+document.getElementById('areaUnit').value,deposit:document.getElementById('diposit').value,loc:document.getElementById('loc').value,img:document.getElementById('img').value,bname:document.getElementById('bname').value,bphone:document.getElementById('bphone').value};
- allData.push(obj); saveLS(); closeM(); render();
- document.getElementById('title').value=''; document.getElementById('price').value=''; document.getElementById('area').value=''; document.getElementById('loc').value=''; document.getElementById('img').value=''; document.getElementById('diposit').value='';
- alert('✅ Save Ho Gayi! Ab click karke khulegi!');
-}
-window.del=(id)=>{ if(confirm('Delete pakka?')){ allData=allData.filter(x=>x.id!==id); saveLS(); render(); closeDetail(); } }
-render();
+(() => {
+  const _0xsec = "UmFtZWVuQDIwMjRTZWN1cmVQcmltZTIwMjY=";
+  const _0xsec2 = "cmFtZWVuX3ByaW1lXzIwMjY=";
+  let isAdmin = false;
+  let clickCount = 0;
+  let lastClick = 0;
+  const DEFAULT_DATA = [
+    {id:1001,title:"Rental Property - As Club Tisgaon - 10 per sqft",type:"RENTAL",price:"10 per sqft",area:"100000 Sqft",deposit:"4 Lakh Deposit",loc:"As Club Tisgaon",img:"",bname:"Rameen Property",bphone:"9545247374"},
+    {id:1,title:"3BHK Luxury Banglo",type:"BANGLO",price:"85 Lakh",area:"2500 Sqft",deposit:"",loc:"Nanded",img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9",bname:"Demo",bphone:"000"}
+  ];
+  let allData = JSON.parse(localStorage.getItem('rameen_secure_v1')||'null');
+  if(!allData || allData.length===0){ allData = DEFAULT_DATA; localStorage.setItem('rameen_secure_v1', JSON.stringify(allData)); }
+  let curFilter='ALL';
+  function saveLS(){localStorage.setItem('rameen_secure_v1', JSON.stringify(allData));}
+  function getFallbackImg(type){
+    if(type==='RENTAL' || type==='COMM. PLOT') return 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600';
+    if(type==='PLOT') return 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600';
+    return 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600';
+  }
+  function render(){
+   let data=curFilter==='ALL'?allData:allData.filter(x=>x.type===curFilter);
+   document.querySelectorAll('[id^="btn-"]').forEach(b=>{b.className="px-4 py-2 bg-gray-100 rounded-full text-xs whitespace-nowrap"} );
+   let ab=document.getElementById('btn-'+curFilter); if(ab) ab.className="px-4 py-2 bg-[#0a192f] text-white rounded-full text-xs whitespace-nowrap";
+   if(data.length===0){ document.getElementById('list').innerHTML='<p class="col-span-3 text-center py-20 text-gray-400">No property in '+curFilter+'</p>'; return; }
+   let html = [...data].reverse().map(p=>{
+     let imgSrc = p.img && p.img.trim().length>5? p.img : getFallbackImg(p.type);
+     let depositHtml = p.deposit? `<div class="text-[10px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full inline-block mt-1">Deposit: ${p.deposit}</div>` : '';
+     return `<div onclick="openDetail(${p.id})" class="bg-white rounded-2xl shadow-sm overflow-hidden border cursor-pointer active:scale-[0.98] transition">
+       <img src="${imgSrc}" onerror="this.src='${getFallbackImg(p.type)}'" class="h-48 w-full object-cover pointer-events-none">
+       <div class="p-3">
+         <div class="flex justify-between items-center"><div class="font-bold text-[#0a192f]">₹ ${p.price}</div><span class="bg-[#c9a86a] text-black text-[9px] px-2 py-1 rounded-full font-bold">${p.type}</span></div>
+         <div class="font-semibold text-sm mt-1">${p.title}</div>
+         ${depositHtml}
+         <div class="text-[11px] text-gray-500 mt-1">📍 ${p.loc} | 📐 ${p.area}</div>
+         <div class="text-[10px] text-blue-600 mt-2 font-bold">👆 CLICK TO OPEN</div>
+         ${isAdmin?`<div class="mt-2 bg-red-50 border border-red-200 p-2 rounded-xl text-[10px]"><button onclick="event.stopPropagation();del(${p.id})" class="w-full bg-red-600 text-white py-1.5 rounded-lg font-bold">DELETE - SECURE</button></div>`:''}
+       </div></div>`
+   }).join('');
+   document.getElementById('list').innerHTML=html;
+  }
+  document.getElementById('logoTrigger').addEventListener('click', () => {
+    const now = Date.now();
+    if(now - lastClick > 3000) clickCount = 0;
+    lastClick = now;
+    clickCount++;
+    if(clickCount >= 5){
+      clickCount = 0;
+      document.getElementById('adminBtn').classList.remove('hidden');
+      adminLogin();
+    }
+  });
+  function adminLogin(){
+   if(isAdmin){isAdmin=false; document.getElementById('adminBtn').innerText='ADMIN'; document.getElementById('adminBtn').classList.add('hidden'); render(); return;}
+   let pw=prompt('🔐 Secure Prime Password:');
+   if(!pw) return;
+   try{
+     const decoded1 = atob(_0xsec);
+     const decoded2 = atob(_0xsec2);
+     if(pw === decoded1 || pw === decoded2){
+       isAdmin=true;
+       document.getElementById('adminBtn').innerText='ADMIN ✓ SECURE';
+       document.getElementById('adminBtn').classList.remove('hidden');
+       alert('✅ Secure Admin ON Boss!');
+       render();
+     } else {
+       alert('❌ Wrong Secure Password!');
+     }
+   }catch(e){ alert('Error'); }
+  }
+  window.filter=(t)=>{curFilter=t; render();}
+  window.openAdd=()=>document.getElementById('modal').classList.remove('hidden');
+  window.closeM=()=>document.getElementById('modal').classList.add('hidden');
+  window.openDetail=(id)=>{
+    let p = allData.find(x=>x.id===id); if(!p) return;
+    let imgSrc = p.img && p.img.trim().length>5? p.img : getFallbackImg(p.type);
+    document.getElementById('dImg').src=imgSrc;
+    document.getElementById('dImg').onerror=function(){this.src=getFallbackImg(p.type)};
+    document.getElementById('dPrice').innerText='₹ '+p.price;
+    document.getElementById('dType').innerText=p.type;
+    document.getElementById('dTitle').innerText=p.title;
+    document.getElementById('dLoc').innerText=p.loc||'-';
+    document.getElementById('dArea').innerText=p.area||'-';
+    document.getElementById('dDeposit').innerHTML= p.deposit? `<span class="bg-orange-100 text-orange-700 text-xs px-3 py-1 rounded-full">Deposit: ${p.deposit}</span>` : '';
+    document.getElementById('dBroker').innerHTML=`<b>Broker:</b> ${p.bname||'Rameen Property'} | <b>Phone:</b> ${p.bphone||'9545247374'}`;
+    let phone = (p.bphone||'9545247374').replace(/[^0-9]/g,'').slice(-10);
+    document.getElementById('dCall').href='tel:'+phone;
+    document.getElementById('dWA').href=`https://wa.me/91${phone}?text=Hi, interested in ${encodeURIComponent(p.title)}`;
+    document.getElementById('detailModal').classList.remove('hidden');
+  }
+  window.closeDetail=()=>document.getElementById('detailModal').classList.add('hidden');
+  window.save=()=>{
+   let t=document.getElementById('title').value; let pr=document.getElementById('price').value;
+   if(!t||!pr) return alert('Title Price likho Boss');
+   const obj={id:Date.now(),title:t,type:document.getElementById('type').value,price:pr+' '+document.getElementById('priceUnit').value,area:document.getElementById('area').value+' '+document.getElementById('areaUnit').value,deposit:document.getElementById('diposit').value,loc:document.getElementById('loc').value,img:document.getElementById('img').value,bname:document.getElementById('bname').value,bphone:document.getElementById('bphone').value};
+   allData.push(obj); saveLS(); closeM(); render();
+   document.getElementById('title').value=''; document.getElementById('price').value=''; document.getElementById('area').value=''; document.getElementById('loc').value=''; document.getElementById('img').value=''; document.getElementById('diposit').value='';
+   alert('✅ Save Ho Gayi Secure!');
+  }
+  window.del=(id)=>{
+    let pw2 = prompt('Delete ke liye Secure Password dubara dalo:');
+    if(!pw2) return;
+    try{
+      if(pw2 === atob(_0xsec) || pw2 === atob(_0xsec2)){
+        if(confirm('Pakka Delete karna hai Boss?')){
+          allData=allData.filter(x=>x.id!==id); saveLS(); render(); closeDetail();
+        }
+      } else alert('Wrong Password!');
+    }catch(e){}
+  }
+  window.adminLogin = adminLogin;
+  render();
+})();
 </script>
 </body>
 </html>
