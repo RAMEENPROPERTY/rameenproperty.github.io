@@ -3,76 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rameen Property - Sambhajinagar | Owner Shaikh Akil</title>
+<title>RAMEEN PROPERTY - Owner Shaikh Akil - Sabko Dikhega</title>
 <style>
 body{font-family:Arial,sans-serif;margin:0;background:#f5f5f5}
 .header{background:#0d2a54;color:#fff;padding:25px;text-align:center}
-.header h1{margin:0;font-size:28px;letter-spacing:1px}
+.header h1{margin:0;font-size:28px}
 .btn{background:#ff6b00;color:#fff;padding:12px 20px;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
-.card{background:#fff;margin:12px;padding:15px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.card{background:#fff;margin:12px;padding:15px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
-input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ccc;border-radius:6px;box-sizing:border-box}
-#addForm{display:none;background:#fff;padding:15px;border-radius:10px;margin:12px}
 .top-bar{padding:15px;display:flex;gap:10px;flex-wrap:wrap}
-.badge{background:#0d2a54;color:#fff;padding:3px 8px;border-radius:12px;font-size:12px}
-.owner-badge{background:#ff6b00;color:#fff;padding:5px 14px;border-radius:20px;font-weight:bold;margin:10px 0;display:inline-block}
+.badge{background:#0d2a54;color:#fff;padding:4px 10px;border-radius:12px;font-size:12px}
+.owner-badge{background:#ff6b00;color:#fff;padding:6px 14px;border-radius:20px;font-weight:bold;margin:10px 0;display:inline-block}
+input{width:70%;padding:12px;border:1px solid #ccc;border-radius:6px}
 </style>
 </head>
 <body>
 <div class="header">
 <h1>RAMEEN PROPERTY</h1>
-<p>A Trusted Property Firm in Sambhajinagar</p>
+<p>A Trusted Property Firm</p>
 <div class="owner-badge">Owner: Shaikh Akil</div>
 <p>📞 9545247374 | Chhatrapati Sambhajinagar</p>
+<p style="font-size:12px;background:#fff;color:#0d2a54;display:inline-block;padding:4px 10px;border-radius:10px;margin-top:8px">✅ Sab Listings Sabko Dikhengi</p>
 </div>
+
 <div class="top-bar">
-<input type="text" id="searchBox" placeholder="Search: 1BHK, Nakshtrawadi, 50 Lakh..." onkeyup="filterProps()" style="flex:1">
-<select id="filterType" onchange="filterProps()" style="width:130px">
-<option value="">All Type</option>
-<option value="Plot">Plot</option>
-<option value="Flat">Flat</option>
-<option value="Bungalow">Bungalow</option>
-<option value="Shop">Shop</option>
+<input type="text" id="searchBox" placeholder="Search: Nakshtrawadi, 1BHK, 50 Lakh..." onkeyup="filterProps()" style="flex:1">
+<select id="filterType" onchange="filterProps()" style="padding:10px;border-radius:6px">
+<option value="">All Type</option><option value="Plot">Plot</option><option value="Flat">Flat</option><option value="Bungalow">Bungalow</option><option value="Shop">Shop</option>
 </select>
-<button class="btn" onclick="document.getElementById('addForm').style.display='block'">+ Add Property</button>
 </div>
-<div id="addForm">
-<h3>Add New Property</h3>
-<input id="pTitle" placeholder="Title">
-<select id="pType"><option>Plot</option><option>Flat</option><option>Bungalow</option><option>Shop</option><option>Row House</option></select>
-<input id="pLocation" placeholder="Location">
-<input id="pPrice" placeholder="Price">
-<input id="pSize" placeholder="Size">
-<textarea id="pDesc" placeholder="Description"></textarea>
-<button class="btn" onclick="addProperty()">Save</button>
-<button class="btn" style="background:#777" onclick="document.getElementById('addForm').style.display='none'">Close</button>
-</div>
+
 <div id="propertyList" class="grid"></div>
+
 <script>
-let properties = JSON.parse(localStorage.getItem('rameenProps') || '[]');
-if(properties.length==0){
-properties=[
-{title:"2BHK Flat for Sale - Nakshtrawadi",type:"Flat",location:"Nakshtrawadi",price:"38 Lakh",size:"950 Sqft",desc:"Ready to move"},
-{title:"Plot for Sale - Beed Bypass",type:"Plot",location:"Beed Bypass Road",price:"25 Lakh",size:"2000 Sqft",desc:"Clear title"},
-{title:"1BHK Flat - CIDCO",type:"Flat",location:"CIDCO N6",price:"22 Lakh",size:"600 Sqft",desc:"Budget flat"}
+// ===== YAHAN PE AAPKI SAB LISTINGS HAIN - YE SABKO DIKHEGI =====
+let properties = [
+{title:"2BHK Flat for Sale - Nakshtrawadi",type:"Flat",location:"Nakshtrawadi, Sambhajinagar",price:"38 Lakh",size:"950 Sqft",desc:"Ready to move, 2nd floor"},
+{title:"Plot for Sale - Beed Bypass",type:"Plot",location:"Beed Bypass Road",price:"25 Lakh",size:"2000 Sqft",desc:"Clear title, investment"},
+{title:"1BHK Flat - CIDCO N6",type:"Flat",location:"CIDCO N6",price:"22 Lakh",size:"600 Sqft",desc:"Budget flat for family"},
+{title:"Shop for Sale - Aurangpura",type:"Shop",location:"Aurangpura",price:"45 Lakh",size:"300 Sqft",desc:"Main road shop, good for business"}
 ];
-}
+// ===== NAYI LISTING ADD KARNE KE LIYE UPAR IS LIST ME EK LINE ADD KARO =====
+
 function showProps(list){
 let html="";
-list.forEach((p,i)=>{
-html+=`<div class="card"><span class="badge">${p.type}</span> <span class="badge" style="background:#ff6b00">${p.price}</span><h3>${p.title}</h3><p>📍 ${p.location}</p><p>📐 ${p.size}</p><p>${p.desc}</p><button class="btn" onclick="window.open('https://wa.me/919545247374?text=Hi Shaikh Akil Bhai, I am interested in ${encodeURIComponent(p.title)}')">WhatsApp: 9545247374</button> <button style="background:#ff4444;color:#fff;border:none;padding:6px 10px;border-radius:5px;margin-left:5px" onclick="deleteProp(${i})">Delete</button></div>`;
+list.forEach((p)=>{
+html+=`<div class="card"><span class="badge">${p.type}</span> <span class="badge" style="background:#ff6b00">${p.price}</span><h3>${p.title}</h3><p>📍 ${p.location}</p><p>📐 ${p.size}</p><p>${p.desc}</p><button class="btn" onclick="window.open('https://wa.me/919545247374?text=Hi Shaikh Akil Bhai, Mujhe ye property chahiye: ${encodeURIComponent(p.title)} - ${p.location} - ${p.price}')">WhatsApp - 9545247374</button></div>`;
 });
 document.getElementById('propertyList').innerHTML=html;
 }
-function addProperty(){
-let p={title:document.getElementById('pTitle').value,type:document.getElementById('pType').value,location:document.getElementById('pLocation').value,price:document.getElementById('pPrice').value,size:document.getElementById('pSize').value,desc:document.getElementById('pDesc').value};
-if(!p.title || !p.price){alert("Title and Price required");return;}
-properties.unshift(p);
-localStorage.setItem('rameenProps',JSON.stringify(properties));
-showProps(properties);
-document.getElementById('addForm').style.display='none';
-}
-function deleteProp(i){if(confirm("Delete?")){properties.splice(i,1);localStorage.setItem('rameenProps',JSON.stringify(properties));showProps(properties);}}
 function filterProps(){
 let s=document.getElementById('searchBox').value.toLowerCase();
 let t=document.getElementById('filterType').value;
