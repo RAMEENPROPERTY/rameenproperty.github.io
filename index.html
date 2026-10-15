@@ -2,63 +2,66 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAMEEN PROPERTY - Buy Sell Rent</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add Property - RAMEEN</title>
 <style>
-body{font-family:Arial;margin:0;background:#f0f4f8}
-.header{background:white;padding:15px;text-align:center;border-bottom:3px solid #1565c0}
-.logo{font-size:26px;font-weight:900;color:#0d47a1}
-.tabs{display:flex;gap:10px;padding:12px;justify-content:center;background:white}
-.tab{padding:12px 28px;border-radius:25px;text-decoration:none;font-weight:bold;border:2px solid #1565c0;display:inline-block}
-.buy{background:#1565c0;color:white} .sell{background:white;color:#1565c0}
-.filter{display:flex;gap:8px;padding:12px;background:#e3f2fd}
-.f{padding:8px 16px;background:white;border-radius:20px;border:1px solid #90caf9;font-weight:bold;cursor:pointer}
-.f.active{background:#1565c0;color:white}
-.card{background:white;margin:12px;border-radius:12px;padding:15px;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
-.badge{float:right;padding:4px 10px;border-radius:12px;color:white;font-size:11px}
-.sale{background:#1565c0} .rented{background:#00897b}
-.wa{position:fixed;bottom:15px;right:15px;background:#25D366;color:white;padding:14px 20px;border-radius:50px;text-decoration:none;font-weight:bold}
+body{font-family:Arial;margin:0;background:#f2f6fb;padding:15px}
+.box{background:white;padding:20px;border-radius:12px;max-width:400px;margin:auto;box-shadow:0 2px 10px #ccc}
+input,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+button{background:#1565c0;color:white;padding:12px;border:none;border-radius:8px;width:100%;font-weight:bold;font-size:16px;cursor:pointer}
+h2{color:#0d47a1;text-align:center}
+label{font-weight:bold;font-size:14px}
 </style>
 </head>
 <body>
+<div class="box">
+<h2>Add Your Property</h2>
+<p style="text-align:center;font-size:13px">Rameen Property - Owner: Shaikh Akil</p>
 
-<div class="header">
-<div class="logo">RAMEEN PROPERTY</div>
-Owner: Shaikh Akil - 9545247374 - Chhatrapati Sambhajinagar
+<label>Property For</label>
+<select id="for">
+<option>FOR SALE</option>
+<option>FOR RENT</option>
+</select>
+
+<label>Property Type</label>
+<select id="type" onchange="checkType()">
+<option value="FLAT">FLAT</option>
+<option value="PLOT">PLOT</option>
+<option value="COMMERCIAL SHOP">COMMERCIAL SHOP</option>
+<option value="COMMERCIAL OFFICE">COMMERCIAL OFFICE</option>
+<option value="COMMERCIAL PLOT">COMMERCIAL PLOT</option>
+</select>
+
+<label>Title (ex: 2BHK Flat)</label>
+<input id="title" placeholder="Ex: 2BHK Flat for Sale">
+
+<label>Price</label>
+<input id="price" placeholder="Ex: 38 Lakh / 15000 per month">
+
+<label>Area (sq.ft)</label>
+<input id="area" placeholder="Ex: 950 sq.ft">
+
+<label>Location</label>
+<input id="loc" placeholder="Ex: CIDCO, Nanded">
+
+<label>Your Name & Number</label>
+<input id="contact" placeholder="Ex: Akil - 9545247374">
+
+<button onclick="send()">Submit Property on WhatsApp</button>
+<br><br>
+<a href="index.html" style="text-align:center;display:block">← Back to Home</a>
 </div>
-
-<div class="tabs">
-<a class="tab buy" href="#all">BUY</a>
-<a class="tab sell" href="https://wa.me/919545247374?text=Salam%20Bhai%20property%20sell%20karni%20hai">SELL</a>
-<a class="tab sell" href="#rent">RENT</a>
-</div>
-
-<div class="filter">
-<div class="f active" onclick="show('all',this)">ALL</div>
-<div class="f" onclick="show('flat',this)">FLAT</div>
-<div class="f" onclick="show('plot',this)">PLOT</div>
-<div class="f" onclick="show('commercial',this)">COMMERCIAL</div>
-</div>
-
-<div id="allcards">
-<div class="card flat"><span class="badge sale">FOR SALE</span><b>Flat for Sale - 38 Lakh</b><br>📍 2BHK, 950 sq.ft, Samarth Nagar</div>
-<div class="card plot"><span class="badge sale">FOR SALE</span><b>Plot for Sale - 18 Lakh</b><br>📍 1200 sq.ft, Nakshatrawadi</div>
-<div class="card commercial"><span class="badge rented">FOR RENT</span><b>Shop for Rent - 15k</b><br>📍 300 sq.ft, CIDCO</div>
-</div>
-
-<a class="wa" href="https://wa.me/919545247374">+ Add Property</a>
 
 <script>
-function show(type, btn){
-  document.querySelectorAll('.f').forEach(x=>x.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.card').forEach(c=>{
-    if(type=='all'){c.style.display='block';}
-    else if(c.classList.contains(type)){c.style.display='block';}
-    else{c.style.display='none';}
-  });
+function checkType(){
+ // Commercial Plot option will now work 100%
+ alert("You selected: " + document.getElementById('type').value);
+}
+function send(){
+ let msg = "NEW PROPERTY FOR RAMEEN WEBSITE:%0A%0AType: " + document.getElementById('type').value + "%0AFor: " + document.getElementById('for').value + "%0ATitle: " + document.getElementById('title').value + "%0APrice: " + document.getElementById('price').value + "%0AArea: " + document.getElementById('area').value + "%0ALocation: " + document.getElementById('loc').value + "%0AContact: " + document.getElementById('contact').value;
+ window.open("https://wa.me/919545247374?text=" + msg, "_blank");
 }
 </script>
-
 </body>
 </html>
