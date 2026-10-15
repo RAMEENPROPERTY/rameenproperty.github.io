@@ -262,4 +262,112 @@ renderProperties(properties);
 </script>
 
 </body>
+<!-- RAMEEN PROPERTY: ADD LISTINGS -->
+<section id="add-listings" style="max-width:600px;margin:20px auto;padding:18px;border:1px solid #ddd;border-radius:12px;font-family:Arial,sans-serif">
+  <h2>🏠 RAMEEN PROPERTY</h2>
+  <h3>Add Property Listing</h3>
+
+  <form id="propertyForm">
+    <label>Property Type</label>
+    <select id="propertyType" required style="width:100%;padding:12px;margin:8px 0">
+      <option value="">Select Property</option>
+      <option>JV Plot</option>
+      <option>Agriculture Land</option>
+      <option>Residential Plot</option>
+      <option>Flat / Apartment</option>
+      <option>Commercial Property</option>
+    </select>
+
+    <div id="jvFields" hidden>
+      <h3>JV Plot Details</h3>
+      <label>Deposit Type</label>
+      <select id="depositType" style="width:100%;padding:12px;margin:8px 0">
+        <option value="">Select Deposit Type</option>
+        <option>Refundable Deposit</option>
+        <option>Non-refundable Deposit</option>
+        <option>No Deposit</option>
+        <option>Deposit Negotiable</option>
+      </select>
+      <label>Deposit Amount (₹)</label>
+      <input id="depositAmount" type="number" min="0" placeholder="Enter deposit amount" style="width:100%;padding:12px;margin:8px 0">
+    </div>
+
+    <label>Land Area Unit</label>
+    <select id="areaUnit" style="width:100%;padding:12px;margin:8px 0">
+      <option value="acre">Acre</option>
+      <option value="guntha">Guntha</option>
+    </select>
+
+    <label>Land Area</label>
+    <input id="area" type="number" min="1" max="2000" step="0.01" required placeholder="1–2000 Acre" style="width:100%;padding:12px;margin:8px 0">
+
+    <label>Property Location</label>
+    <input id="location" required placeholder="City, area, district" style="width:100%;padding:12px;margin:8px 0">
+
+    <label>Expected Price (₹)</label>
+    <input id="price" type="number" min="0" placeholder="Enter expected price" style="width:100%;padding:12px;margin:8px 0">
+
+    <label>Property Description</label>
+    <textarea id="description" rows="4" placeholder="Road touch, title status, JV terms, etc." style="width:100%;padding:12px;margin:8px 0"></textarea>
+
+    <label>Owner / Broker Contact (Private)</label>
+    <input id="contact" type="tel" placeholder="Contact number" style="width:100%;padding:12px;margin:8px 0">
+
+    <button type="submit" style="width:100%;padding:14px;background:#123b30;color:white;border:0;border-radius:8px;font-size:16px">
+      Add Listing
+    </button>
+    <p id="formMessage"></p>
+  </form>
+</section>
+
+<script>
+const typeField = document.getElementById("propertyType");
+const jvFields = document.getElementById("jvFields");
+const unitField = document.getElementById("areaUnit");
+const areaField = document.getElementById("area");
+
+typeField.addEventListener("change", () => {
+  jvFields.hidden = typeField.value !== "JV Plot";
+  document.getElementById("depositType").required =
+    typeField.value === "JV Plot";
+});
+
+unitField.addEventListener("change", () => {
+  const acre = unitField.value === "acre";
+  areaField.max = acre ? 2000 : 40;
+  areaField.step = acre ? "0.01" : "1";
+  areaField.placeholder = acre ? "1–2000 Acre" : "1–40 Guntha";
+  areaField.value = "";
+});
+
+document.getElementById("propertyForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  if (!e.target.reportValidity()) return;
+
+  const listing = {
+    type: typeField.value,
+    depositType: document.getElementById("depositType").value,
+    depositAmount: document.getElementById("depositAmount").value,
+    area: areaField.value,
+    areaUnit: unitField.value,
+    location: document.getElementById("location").value,
+    price: document.getElementById("price").value,
+    description: document.getElementById("description").value
+  };
+
+  // Demo only: public listing details, excluding private contact.
+  const saved = JSON.parse(localStorage.getItem("rpListings") || "[]");
+  saved.push(listing);
+  localStorage.setItem("rpListings", JSON.stringify(saved));
+
+  document.getElementById("formMessage").textContent =
+    "Listing demo mein save ho gayi. Online publish abhi nahi hui.";
+
+  e.target.reset();
+  jvFields.hidden = true;
+  unitField.dispatchEvent(new Event("change"));
+});
+</script>
+
 </html.>
