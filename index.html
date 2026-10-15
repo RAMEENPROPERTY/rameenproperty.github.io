@@ -1,8 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAMEEN PROPERTY TRUST</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f5f5f0] font-sans">
+<header class="bg-[#0a192f] text-white p-3 sticky top-0 z-50 flex justify-between items-center">
+<div><div class="font-black text-lg leading-none">RAMEEN</div><div class="text-[10px] text-[#c9a86a] tracking-widest">PROPERTY TRUST</div></div>
+<div class="flex gap-2"><button onclick="openAdd()" class="bg-[#c9a86a] text-black px-4 py-2 rounded-full text-xs font-bold">+ ADD</button><button id="adminBtn" onclick="adminLogin()" class="bg-white/10 px-4 py-2 rounded-full text-xs">ADMIN</button></div>
+</header>
+
+<div class="bg-white p-2 flex gap-2 overflow-x-auto sticky top-[52px] z-40 shadow-sm">
+<button onclick="filter('ALL')" class="px-4 py-2 bg-[#0a192f] text-white rounded-full text-xs whitespace-nowrap">All</button>
+<button onclick="filter('FLAT')" class="px-4 py-2 bg-gray-100 rounded-full text-xs whitespace-nowrap">Flat</button>
+<button onclick="filter('ROW HOUSE')" class="px-4 py-2 bg-gray-100 rounded-full text-xs whitespace-nowrap">Row House</button>
+<button onclick="filter('BANGLO')" class="px-4 py-2 bg-gray-100 rounded-full text-xs whitespace-nowrap">Banglo</button>
+<button onclick="filter('PLOT')" class="px-4 py-2 bg-gray-100 rounded-full text-xs whitespace-nowrap">Plot</button>
+<button onclick="filter('COMM. PLOT')" class="px-4 py-2 bg-gray-100 rounded-full text-xs whitespace-nowrap">Comm. Plot</button>
+</div>
+
+<div id="list" class="p-3 grid grid-cols-1 md:grid-cols-3 gap-3"></div>
+
+<div id="modal" class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-3">
+<div class="bg-white rounded-2xl w-full max-w-md p-4 max-h-[90vh] overflow-y-auto">
+<h2 class="font-bold mb-3">Add Property</h2>
+<input id="title" placeholder="Title e.g. 2BHK Flat" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
+<select id="type" class="w-full border p-2.5 rounded-xl mb-2 text-sm"><option>FLAT</option><option>ROW HOUSE</option><option>BANGLO</option><option>PLOT</option><option>COMM. PLOT</option><option>R ZONE</option><option>R+C</option></select>
+<div class="flex gap-2 mb-2"><input id="price" placeholder="Price" class="flex-1 border p-2.5 rounded-xl text-sm"><select id="priceUnit" class="border p-2.5 rounded-xl text-sm"><option>Lakh</option><option>Cr</option></select></div>
+<div class="flex gap-2 mb-2"><input id="area" placeholder="Area" class="flex-1 border p-2.5 rounded-xl text-sm"><select id="areaUnit" class="border p-2.5 rounded-xl text-sm"><option>Sqft</option><option>Guntha</option><option>Acre</option></select></div>
+<input id="loc" placeholder="Location e.g. Nanded" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
+<input id="img" placeholder="Image Link (optional)" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
+<input id="bname" placeholder="Broker Name" class="w-full border p-2.5 rounded-xl mb-2 text-sm">
+<input id="bphone" placeholder="Broker Phone" class="w-full border p-2.5 rounded-xl mb-3 text-sm">
+<div class="flex gap-2"><button onclick="closeM()" class="flex-1 bg-gray-100 py-3 rounded-xl font-bold text-sm">Cancel</button><button onclick="save()" class="flex-1 bg-[#0a192f] text-white py-3 rounded-xl font-bold text-sm">SAVE</button></div>
+</div>
+</div>
+
+<a href="https://wa.me/919545247374" class="fixed bottom-5 right-5 bg-green-500 w-14 h-14 rounded-full flex items-center justify-center text-white font-bold shadow-lg">WA</a>
 
 <script>
-let isAdmin=false; let allData=JSON.parse(localStorage.getItem('rameen_final')||'[]'); let curFilter='ALL';
-if(allData.length===0){ allData=[{id:1,title:"3BHK Luxury Banglo",type:"BANGLO",price:"85 Lakh",area:"2500 Sqft",loc:"Nanded",img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9",bname:"Demo",bphone:"000"}]; localStorage.setItem('rameen_final', JSON.stringify(allData)); }
-function saveLS(){localStorage.setItem('rameen_final', JSON.stringify(allData));}
+let isAdmin=false; let allData=JSON.parse(localStorage.getItem('rameen_final_v5')||'[]'); let curFilter='ALL';
+if(allData.length===0){ allData=[{id:1,title:"3BHK Luxury Banglo",type:"BANGLO",price:"85 Lakh",area:"2500 Sqft",loc:"Nanded",img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9",bname:"Demo",bphone:"000"}]; localStorage.setItem('rameen_final_v5', JSON.stringify(allData)); }
+function saveLS(){localStorage.setItem('rameen_final_v5', JSON.stringify(allData));}
 function render(){
  let data=curFilter==='ALL'?allData:allData.filter(x=>x.type===curFilter);
  document.getElementById('list').innerHTML=data.map(p=>`<div class="bg-white rounded-2xl shadow-sm overflow-hidden border"><img src="${p.img||'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9'}" class="h-48 w-full object-cover"><div class="p-3"><div class="flex justify-between"><div class="font-bold text-[#0a192f]">₹ ${p.price}</div><span class="bg-[#c9a86a] text-black text-[9px] px-2 py-1 rounded-full font-bold">${p.type}</span></div><div class="font-semibold text-sm mt-1">${p.title}</div><div class="text-[11px] text-gray-500 mt-1">📍 ${p.loc} | 📐 ${p.area}</div><div class="flex gap-2 mt-3"><a href="tel:9545247374" class="flex-1 bg-[#0a192f] text-white text-center py-2.5 rounded-xl text-[11px] font-bold">CALL ADMIN</a><a href="https://wa.me/919545247374" class="flex-1 bg-green-500 text-white text-center py-2.5 rounded-xl text-[11px] font-bold">WHATSAPP</a></div>${isAdmin?`<div class="mt-2 bg-yellow-50 border p-2 rounded-xl text-[10px]">Broker: ${p.bname} - ${p.bphone}<br><button onclick="del(${p.id})" class="mt-1 w-full bg-red-500 text-white py-1.5 rounded-lg font-bold">DELETE</button></div>`:''}</div></div>`).reverse().join('')||'<p class="col-span-3 text-center py-20 text-gray-400">No property in '+curFilter+'</p>';
@@ -13,11 +53,14 @@ window.closeM=()=>document.getElementById('modal').classList.add('hidden');
 window.adminLogin=()=>{
  if(isAdmin){isAdmin=false; document.getElementById('adminBtn').innerText='ADMIN'; render(); return;}
  let pw=prompt('Password:');
- let clean = pw ? pw.trim().toLowerCase() : '';
- if(clean==='rameen' || clean==='rameen@2024' || clean==='Rameen@2024' || pw==='Rameen@2024'){isAdmin=true; document.getElementById('adminBtn').innerText='ADMIN ✓'; alert('Admin ON Boss!'); render();}
- else if(pw) alert('Wrong! rameen likho');
+ if(!pw) return;
+ let c=pw.trim().toLowerCase();
+ if(c==='rameen' || c==='rameen@2024' || pw==='Rameen@2024'){isAdmin=true; document.getElementById('adminBtn').innerText='ADMIN ✓'; alert('Admin ON Boss!'); render();}
+ else alert('Wrong! rameen likho');
 }
 window.save=()=>{ if(!title.value||!price.value) return alert('Title Price likho'); const obj={id:Date.now(), title:title.value, type:type.value, price:price.value+' '+priceUnit.value, area:area.value+' '+areaUnit.value, loc:loc.value, img:img.value, bname:bname.value, bphone:bphone.value}; allData.push(obj); saveLS(); closeM(); render(); title.value=''; price.value=''; area.value=''; loc.value=''; img.value=''; alert('✅ Save Ho Gayi!');}
 window.del=(id)=>{ if(confirm('Delete?')){ allData=allData.filter(x=>x.id!==id); saveLS(); render(); } }
 render();
 </script>
+</body>
+</html>
