@@ -3,112 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rameen Property - Sambhajinagar</title>
+<title>Rameen Property - Sambhajinagar | Owner Shaikh Akil</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f2f4f8}
-.header{background:#0d2a54;color:#fff;padding:15px 20px;display:flex;justify-content:space-between;align-items:center}
-.btn{background:#ff6b00;color:#fff;padding:10px 16px;border:none;border-radius:6px;cursor:pointer;font-weight:bold}
-.card{background:#fff;margin:12px;padding:15px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;padding:15px}
+body{font-family:Arial,sans-serif;margin:0;background:#f5f5f5}
+.header{background:#0d2a54;color:#fff;padding:25px;text-align:center}
+.header h1{margin:0;font-size:28px;letter-spacing:1px}
+.btn{background:#ff6b00;color:#fff;padding:12px 20px;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
+.card{background:#fff;margin:12px;padding:15px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
 input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ccc;border-radius:6px;box-sizing:border-box}
-#addForm{display:none}
+#addForm{display:none;background:#fff;padding:15px;border-radius:10px;margin:12px}
 .top-bar{padding:15px;display:flex;gap:10px;flex-wrap:wrap}
+.badge{background:#0d2a54;color:#fff;padding:3px 8px;border-radius:12px;font-size:12px}
+.owner-badge{background:#ff6b00;color:#fff;padding:5px 14px;border-radius:20px;font-weight:bold;margin:10px 0;display:inline-block}
 </style>
 </head>
 <body>
 <div class="header">
-<div><b>RAMEEN PROPERTY</b><br><small>Aurangabad / Sambhajinagar</small></div>
-<button class="btn" onclick="brokerLogin()">Broker / Admin Login</button>
+<h1>RAMEEN PROPERTY</h1>
+<p>A Trusted Property Firm in Sambhajinagar</p>
+<div class="owner-badge">Owner: Shaikh Akil</div>
+<p>📞 9545247374 | Chhatrapati Sambhajinagar</p>
 </div>
-
 <div class="top-bar">
-<button class="btn" onclick="showAddForm()">+ Add Listing</button>
-<button class="btn" style="background:#555" onclick="logout()">Logout</button>
+<input type="text" id="searchBox" placeholder="Search: 1BHK, Nakshtrawadi, 50 Lakh..." onkeyup="filterProps()" style="flex:1">
+<select id="filterType" onchange="filterProps()" style="width:130px">
+<option value="">All Type</option>
+<option value="Plot">Plot</option>
+<option value="Flat">Flat</option>
+<option value="Bungalow">Bungalow</option>
+<option value="Shop">Shop</option>
+</select>
+<button class="btn" onclick="document.getElementById('addForm').style.display='block'">+ Add Property</button>
 </div>
-
-<div id="addForm" class="card">
+<div id="addForm">
 <h3>Add New Property</h3>
-<input id="title" placeholder="Title - ex: 4BHK Flat MGM Ke Paas">
-<input id="location" placeholder="Location - ex: CIDCO N5 / Waluj">
-<input id="price" placeholder="Price - ex: 75 Lakh / JV 50-50">
-<select id="type"><option>Flat</option><option>Plot</option><option>JV Plot</option><option>Row House</option><option>Shop</option></select>
-<textarea id="desc" placeholder="Description - ex: 1200 sqft, road touch"></textarea>
-<button class="btn" onclick="saveProperty()">Save Property</button>
+<input id="pTitle" placeholder="Title">
+<select id="pType"><option>Plot</option><option>Flat</option><option>Bungalow</option><option>Shop</option><option>Row House</option></select>
+<input id="pLocation" placeholder="Location">
+<input id="pPrice" placeholder="Price">
+<input id="pSize" placeholder="Size">
+<textarea id="pDesc" placeholder="Description"></textarea>
+<button class="btn" onclick="addProperty()">Save</button>
+<button class="btn" style="background:#777" onclick="document.getElementById('addForm').style.display='none'">Close</button>
 </div>
-
-<div id="list" class="grid"></div>
-
+<div id="propertyList" class="grid"></div>
 <script>
-let properties = JSON.parse(localStorage.getItem('rameen_properties') || '[]');
-let isBroker = localStorage.getItem('isBroker') === 'true';
-let isAdmin = localStorage.getItem('isAdmin') === 'true';
-
-function brokerLogin(){
- let pass = prompt("Password daalo:");
- if(pass === "admin123"){
-   localStorage.setItem('isAdmin','true');
-   localStorage.setItem('isBroker','true');
-   isAdmin=true; isBroker=true;
-   alert("ADMIN LOGIN SUCCESS BOSS! Aap Add + Delete dono kar sakte ho!");
-   render();
- } else if(pass === "broker123"){
-   localStorage.setItem('isBroker','true');
-   isBroker=true;
-   alert("BROKER LOGIN - Aap sirf Add kar sakte ho, Delete nahi!");
-   render();
- } else { alert("Galat Password!"); }
+let properties = JSON.parse(localStorage.getItem('rameenProps') || '[]');
+if(properties.length==0){
+properties=[
+{title:"2BHK Flat for Sale - Nakshtrawadi",type:"Flat",location:"Nakshtrawadi",price:"38 Lakh",size:"950 Sqft",desc:"Ready to move"},
+{title:"Plot for Sale - Beed Bypass",type:"Plot",location:"Beed Bypass Road",price:"25 Lakh",size:"2000 Sqft",desc:"Clear title"},
+{title:"1BHK Flat - CIDCO",type:"Flat",location:"CIDCO N6",price:"22 Lakh",size:"600 Sqft",desc:"Budget flat"}
+];
 }
-
-function logout(){
- localStorage.removeItem('isBroker');
- localStorage.removeItem('isAdmin');
- isBroker=false; isAdmin=false;
- alert("Logout ho gaya!");
- render();
+function showProps(list){
+let html="";
+list.forEach((p,i)=>{
+html+=`<div class="card"><span class="badge">${p.type}</span> <span class="badge" style="background:#ff6b00">${p.price}</span><h3>${p.title}</h3><p>📍 ${p.location}</p><p>📐 ${p.size}</p><p>${p.desc}</p><button class="btn" onclick="window.open('https://wa.me/919545247374?text=Hi Shaikh Akil Bhai, I am interested in ${encodeURIComponent(p.title)}')">WhatsApp: 9545247374</button> <button style="background:#ff4444;color:#fff;border:none;padding:6px 10px;border-radius:5px;margin-left:5px" onclick="deleteProp(${i})">Delete</button></div>`;
+});
+document.getElementById('propertyList').innerHTML=html;
 }
-
-function showAddForm(){
- if(!isBroker && !isAdmin){ return alert("Pehle Broker/Admin Login karo BOSS!"); }
- document.getElementById('addForm').style.display='block';
+function addProperty(){
+let p={title:document.getElementById('pTitle').value,type:document.getElementById('pType').value,location:document.getElementById('pLocation').value,price:document.getElementById('pPrice').value,size:document.getElementById('pSize').value,desc:document.getElementById('pDesc').value};
+if(!p.title || !p.price){alert("Title and Price required");return;}
+properties.unshift(p);
+localStorage.setItem('rameenProps',JSON.stringify(properties));
+showProps(properties);
+document.getElementById('addForm').style.display='none';
 }
-
-function saveProperty(){
- if(!isBroker && !isAdmin) return alert("Pehle Login karo!");
- let p = {
-  title: document.getElementById('title').value.trim(),
-  location: document.getElementById('location').value.trim(),
-  price: document.getElementById('price').value.trim(),
-  type: document.getElementById('type').value,
-  desc: document.getElementById('desc').value.trim()
- };
- if(!p.title){ return alert("Title bharo BOSS!"); }
- properties.push(p);
- localStorage.setItem('rameen_properties', JSON.stringify(properties));
- document.getElementById('title').value=""; document.getElementById('location').value=""; document.getElementById('price').value=""; document.getElementById('desc').value="";
- document.getElementById('addForm').style.display='none';
- render();
- alert("Property Add Ho Gayi!");
+function deleteProp(i){if(confirm("Delete?")){properties.splice(i,1);localStorage.setItem('rameenProps',JSON.stringify(properties));showProps(properties);}}
+function filterProps(){
+let s=document.getElementById('searchBox').value.toLowerCase();
+let t=document.getElementById('filterType').value;
+let f=properties.filter(p=>(p.title.toLowerCase().includes(s) || p.location.toLowerCase().includes(s) || p.price.toLowerCase().includes(s)) && (t=="" || p.type==t));
+showProps(f);
 }
-
-function render(){
- let html = "";
- properties.forEach((p,i)=>{
-   let delBtn = isAdmin ? `<br><button onclick="deleteProp(${i})" style="background:red;color:white;border:none;padding:8px 12px;border-radius:5px;margin-top:10px;cursor:pointer">🗑️ DELETE (Only Admin)</button>` : "";
-   html += `<div class="card"><h3>${p.title}</h3><p>📍 ${p.location} | <b>${p.type}</b></p><p>💰 <b>${p.price}</b></p><p>${p.desc}</p>${delBtn}</div>`;
- });
- if(properties.length===0) html = "<p style='padding:20px'>Koi property nahi hai BOSS! Broker Login karke + Add Listing dabao.</p>";
- document.getElementById('list').innerHTML = html;
-}
-
-function deleteProp(i){
- if(!isAdmin) return alert("Sirf ADMIN delete kar sakta hai BOSS!");
- if(confirm("ADMIN: Pakka DELETE karna hai?")){
-   properties.splice(i,1);
-   localStorage.setItem('rameen_properties', JSON.stringify(properties));
-   render();
- }
-}
-render();
+showProps(properties);
 </script>
 </body>
 </html>
