@@ -2,65 +2,77 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Add Property - RAMEEN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Property - Rameen Property</title>
 <style>
-body{font-family:Arial;margin:0;background:#f2f6fb;padding:15px}
-.box{background:white;padding:20px;border-radius:12px;max-width:400px;margin:auto;box-shadow:0 2px 10px #ccc}
+body{font-family:Arial;background:#f5f5f5;padding:10px}
+.card{background:white;max-width:500px;margin:auto;padding:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
 input,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
-button{background:#1565c0;color:white;padding:12px;border:none;border-radius:8px;width:100%;font-weight:bold;font-size:16px;cursor:pointer}
-h2{color:#0d47a1;text-align:center}
+button{width:100%;padding:14px;background:#0d47a1;color:white;border:none;border-radius:8px;font-size:18px;font-weight:bold}
+h2{text-align:center;color:#0d47a1}
 label{font-weight:bold;font-size:14px}
 </style>
 </head>
 <body>
-<div class="box">
-<h2>Add Your Property</h2>
-<p style="text-align:center;font-size:13px">Rameen Property - Owner: Shaikh Akil</p>
+<div class="card">
+<h2>🏠 Add Property - Rameen Property</h2>
 
-<label>Property For</label>
+<label>For *</label>
 <select id="for">
-<option>FOR SALE</option>
-<option>FOR RENT</option>
+<option value="FOR SALE">FOR SALE</option>
+<option value="FOR RENT">FOR RENT</option>
 </select>
 
-<label>Property Type</label>
-<select id="type" onchange="checkType()">
+<label>Type * (Commercial Plot Available)</label>
+<select id="type">
+<option value="HOUSE">HOUSE</option>
 <option value="FLAT">FLAT</option>
 <option value="PLOT">PLOT</option>
-<option value="COMMERCIAL SHOP">COMMERCIAL SHOP</option>
-<option value="COMMERCIAL OFFICE">COMMERCIAL OFFICE</option>
 <option value="COMMERCIAL PLOT">COMMERCIAL PLOT</option>
+<option value="SHOP">SHOP</option>
+<option value="LAND">LAND</option>
 </select>
 
-<label>Title (ex: 2BHK Flat)</label>
-<input id="title" placeholder="Ex: 2BHK Flat for Sale">
+<label>Title *</label>
+<input id="title" placeholder="Ex: 1000sqft Commercial Plot Degloor Naka">
 
-<label>Price</label>
-<input id="price" placeholder="Ex: 38 Lakh / 15000 per month">
+<label>Price *</label>
+<input id="price" placeholder="Ex: 15 Lakh">
 
-<label>Area (sq.ft)</label>
-<input id="area" placeholder="Ex: 950 sq.ft">
+<label>Area</label>
+<input id="area" placeholder="Ex: 1000 sqft">
 
 <label>Location</label>
-<input id="loc" placeholder="Ex: CIDCO, Nanded">
+<input id="location" value="Nanded">
 
-<label>Your Name & Number</label>
-<input id="contact" placeholder="Ex: Akil - 9545247374">
+<label>Contact</label>
+<input id="contact" value="9545247374">
 
-<button onclick="send()">Submit Property on WhatsApp</button>
-<br><br>
-<a href="index.html" style="text-align:center;display:block">← Back to Home</a>
+<button onclick="save()">💾 SAVE PROPERTY</button>
+<p id="msg" style="text-align:center;color:green;font-weight:bold"></p>
 </div>
 
 <script>
-function checkType(){
- // Commercial Plot option will now work 100%
- alert("You selected: " + document.getElementById('type').value);
-}
-function send(){
- let msg = "NEW PROPERTY FOR RAMEEN WEBSITE:%0A%0AType: " + document.getElementById('type').value + "%0AFor: " + document.getElementById('for').value + "%0ATitle: " + document.getElementById('title').value + "%0APrice: " + document.getElementById('price').value + "%0AArea: " + document.getElementById('area').value + "%0ALocation: " + document.getElementById('loc').value + "%0AContact: " + document.getElementById('contact').value;
- window.open("https://wa.me/919545247374?text=" + msg, "_blank");
+function save(){
+  var data={
+    for:document.getElementById('for').value,
+    type:document.getElementById('type').value,
+    title:document.getElementById('title').value,
+    price:document.getElementById('price').value,
+    area:document.getElementById('area').value,
+    location:document.getElementById('location').value,
+    contact:document.getElementById('contact').value,
+    date:new Date().toLocaleDateString()
+  };
+  if(!data.title||!data.price){alert('Title aur Price bharo');return;}
+  
+  var all=JSON.parse(localStorage.getItem('rameen_props')||'[]');
+  all.unshift(data);
+  localStorage.setItem('rameen_props',JSON.stringify(all));
+  
+  document.getElementById('msg').innerHTML='✅ Saved! Commercial Plot add ho gaya!<br>Ab index.html pe dikhega!';
+  document.getElementById('title').value='';
+  document.getElementById('price').value='';
 }
 </script>
 </body>
