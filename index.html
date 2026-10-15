@@ -3,81 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rameen Property - Nanded</title>
+<title>Add Property - Rameen</title>
 <style>
-body{font-family:Arial;margin:0;background:#f0f2f5}
-header{background:#0d47a1;color:white;padding:15px;text-align:center}
-.filters{background:white;padding:10px;display:flex;gap:6px;overflow:auto;position:sticky;top:0;z-index:10}
-.filters button{padding:8px 14px;border:1px solid #0d47a1;border-radius:20px;background:white;white-space:nowrap}
-.filters button.active{background:#0d47a1;color:white}
-.priceFilter{background:#fff3e0;padding:10px;display:flex;gap:6px;overflow:auto;border-top:1px solid #eee}
-.priceFilter button{padding:6px 12px;border:1px solid #ff9800;border-radius:20px;background:white;font-size:13px;white-space:nowrap}
-.priceFilter button.active{background:#ff9800;color:white}
-#list{padding:10px}
-.card{background:white;padding:15px;margin:10px 0;border-radius:12px;box-shadow:0 1px 5px rgba(0,0,0,0.1)}
-.price{color:green;font-weight:bold;font-size:18px}
-.badge{background:#e3f2fd;color:#0d47a1;padding:3px 8px;border-radius:8px;font-size:12px;margin-right:5px}
+body{font-family:Arial;background:#f0f2f5;padding:15px}
+.box{background:white;padding:20px;border-radius:12px}
+input,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+button{background:#0d47a1;color:white;padding:14px;width:100%;border:none;border-radius:8px;font-size:16px;font-weight:bold}
+.price-row{display:flex;gap:8px}
+.price-row input{flex:2}
+.price-row select{flex:1}
 </style>
 </head>
 <body>
-
-<header>
-<h2 style="margin:0">RAMEEN PROPERTY</h2>
-<p style="margin:5px 0">Buy | Sell | Rent - Nanded</p>
-<a href="add.html" style="background:white;color:#0d47a1;padding:8px 18px;border-radius:20px;text-decoration:none;font-weight:bold;display:inline-block;margin-top:8px">+ Add Property</a>
-</header>
-
-<div class="filters">
-<button class="active" onclick="filterType('ALL',this)">All</button>
-<button onclick="filterType('HOUSE',this)">House</button>
-<button onclick="filterType('FLAT',this)">Flat</button>
-<button onclick="filterType('PLOT',this)">Plot</button>
-<button onclick="filterType('COMMERCIAL PLOT',this)">Commercial Plot</button>
-<button onclick="filterType('SHOP',this)">Shop</button>
+<div class="box">
+<h2 style="color:#0d47a1;text-align:center">Add Property</h2>
+<select id="for"><option>FOR SALE</option><option>FOR RENT</option></select>
+<select id="type">
+<option>HOUSE</option><option>FLAT</option><option>PLOT</option><option>COMMERCIAL PLOT</option><option>SHOP</option>
+</select>
+<input id="title" placeholder="Title Ex: Highway Touch Plot">
+<div class="price-row">
+<input id="priceNum" type="number" placeholder="Price Ex: 15">
+<select id="priceUnit"><option>Lakh</option><option>Cr</option><option>Thousand</option></select>
 </div>
-
-<div class="priceFilter">
-<button class="active" onclick="filterPrice('ALL',this)">All Prices</button>
-<button onclick="filterPrice('UNDER20',this)">Under 20 Lakh</button>
-<button onclick="filterPrice('20TO30',this)">20-30 Lakh</button>
-<button onclick="filterPrice('ABOVE30',this)">Above 30 Lakh</button>
+<input id="area" placeholder="Area Ex: 1000 sqft">
+<input id="location" placeholder="Location Ex: Nanded">
+<input id="contact" placeholder="Contact Number">
+<button onclick="save()">SAVE PROPERTY</button>
+<a href="index.html" style="display:block;text-align:center;margin-top:15px;color:#0d47a1">← Back to Home</a>
 </div>
-
-<div id="list"></div>
 
 <script>
-var currentType='ALL';
-var currentPrice='ALL';
-
-function filterType(type,btn){
- currentType=type;
- document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
- showProperties();
-}
-function filterPrice(price,btn){
- currentPrice=price;
- document.querySelectorAll('.priceFilter button').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
- showProperties();
-}
-function getPriceValue(priceStr){
- var num=parseFloat(priceStr.replace(/[^0-9.]/g,''));
- if(priceStr.toLowerCase().includes('cr')) num=num*100;
- return num;
-}
-function showProperties(){
+function save(){
+ var num=document.getElementById('priceNum').value;
+ var unit=document.getElementById('priceUnit').value;
+ if(!num){alert('Price likho!');return;}
+ var finalPrice=num+' '+unit;
+ var prop={
+  title:document.getElementById('title').value||'New Property',
+  for:document.getElementById('for').value,
+  type:document.getElementById('type').value,
+  price:finalPrice,
+  area:document.getElementById('area').value||'Nanded',
+  location:document.getElementById('location').value||'Nanded',
+  date:new Date().toLocaleDateString(),
+  contact:document.getElementById('contact').value||'9545247374'
+ };
  var all=JSON.parse(localStorage.getItem('rameen_props')||'[]');
- var filtered=all.filter(p=>{
-   var typeMatch=currentType==='ALL'||p.type===currentType;
-   var priceVal=getPriceValue(p.price||'0');
-   var priceMatch=true;
-   if(currentPrice==='UNDER20') priceMatch=priceVal<20;
-   else if(currentPrice==='20TO30') priceMatch=priceVal>=20&&priceVal<=30;
-   else if(currentPrice==='ABOVE30') priceMatch=priceVal>30;
-   return typeMatch&&priceMatch;
- });
- var list=document.getElementById('list');
- list.innerHTML='';
- if(filtered.length===0){
-  list.innerHTML='<p style="text-align:center;margin-top:40px;color:#666">Koi property nahi mili<br>Price filter change
+ all.push(prop);
+ localStorage.setItem('rameen_props',JSON.stringify(all));
+ alert(prop.type+' - ₹ '+finalPrice+' SAVE HO GAYA!');
+ window.location.href='index.html';
+}
+</script>
+</body>
+</html>
