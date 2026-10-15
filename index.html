@@ -4,7 +4,7 @@
 <style>
 body{margin:0;font-family:sans-serif;background:#f1f3f6}
 .h{background:#0f2a44;color:#fff;padding:12px;text-align:center}
-.logo{color:#e8b631;font-weight:800;font-size:22px}
+.logo{color:#e8b631;font-weight:800;font-size:22px;cursor:pointer}
 .sub{font-size:12px;opacity:.8}
 .menu{display:flex;gap:8px;overflow:auto;padding:10px;background:#fff;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:5}
 .menu button{white-space:nowrap;border:1px solid #0f2a44;background:#fff;color:#0f2a44;padding:8px 14px;border-radius:20px;font-weight:700}
@@ -16,6 +16,7 @@ body{margin:0;font-family:sans-serif;background:#f1f3f6}
 .card-body{padding:10px}
 .price{color:#128c4f;font-weight:700}
 .wa{background:#128c4f;color:#fff;display:block;text-align:center;padding:8px;border-radius:8px;text-decoration:none;margin-top:6px;font-weight:700}
+.del{background:#ff2a2a;color:#fff;border:0;padding:8px;border-radius:8px;width:100%;margin-top:5px;font-weight:700;cursor:pointer}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;place-items:center;padding:15px;z-index:99;overflow:auto}
 .modal.open{display:grid}
 .mbox{background:#fff;border-radius:12px;padding:16px;max-width:450px;width:100%}
@@ -29,8 +30,8 @@ body{margin:0;font-family:sans-serif;background:#f1f3f6}
 </style></head><body>
 
 <div class="h">
-<div class="logo">RAMEEN PROPERTY</div>
-<div class="sub">Aurangabad - 9545247374</div>
+<div class="logo" onclick="adminLogin()">RAMEEN PROPERTY</div>
+<div class="sub">Aurangabad - 9545247374 | Logo dabao = Admin</div>
 </div>
 
 <div class="menu" id="menu">
@@ -79,6 +80,7 @@ body{margin:0;font-family:sans-serif;background:#f1f3f6}
 </div></div>
 
 <script>
+let isAdmin=false;
 let selectedBase64="";
 let allProps=JSON.parse(localStorage.getItem("rameenV3")||"null")||[
 {deal:"SELL",type:"FLAT",img:"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600",title:"2 BHK Flat CIDCO",city:"CIDCO",price:"₹32 Lakh",phone:"9545247374",details:"Ready to move"},
@@ -93,7 +95,11 @@ function saveLocal(){localStorage.setItem("rameenV3",JSON.stringify(allProps));}
 function render(list){
 document.getElementById("contactSec").style.display="none";
 document.getElementById("list").style.display="grid";
-document.getElementById("list").innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div class="card-body"><b>${p.title}</b><br>📍 ${p.city} | ${p.deal} | ${p.type}<br><span class="price">${p.price}</span><br><span style="font-size:12px">${p.details||""}</span><br><span style="font-size:12px">📞 ${p.phone}</span><a class="wa" href="https://wa.me/919545247374?text=${encodeURIComponent(p.title+" "+p.city+" "+p.price)}">WHATSAPP 9545247374</a></div></div>`).join("");
+document.getElementById("list").innerHTML=list.map(p=>{
+let realIdx=allProps.indexOf(p);
+let delBtn=isAdmin?`<button class="del" onclick="delProp(${realIdx})">🗑️ ADMIN DELETE</button>`:"";
+return `<div class="card"><img src="${p.img}"><div class="card-body"><b>${p.title}</b><br>📍 ${p.city} | ${p.deal} | ${p.type}<br><span class="price">${p.price}</span><br><span style="font-size:12px">${p.details||""}</span><br><span style="font-size:12px">📞 ${p.phone}</span><a class="wa" href="https://wa.me/919545247374?text=${encodeURIComponent(p.title+" "+p.city+" "+p.price)}">WHATSAPP 9545247374</a>${delBtn}</div></div>`;
+}).join("");
 }
 function filterCat(cat){
 currentCat=cat;
@@ -112,6 +118,24 @@ document.getElementById("contactSec").style.display="block";
 function previewFile(){let file=document.getElementById("aFile").files[0];if(!file)return;let r=new FileReader();r.onload=function(e){selectedBase64=e.target.result;let img=document.getElementById("preview");img.src=selectedBase64;img.style.display="block";};r.readAsDataURL(file);}
 function openAdd(){document.getElementById("addModal").classList.add("open")}
 function closeAdd(){document.getElementById("addModal").classList.remove("open");selectedBase64="";document.getElementById("preview").style.display="none";}
+function adminLogin(){
+let pass=prompt("ADMIN PASSWORD DALO:");
+if(pass==="9545"){
+isAdmin=true;
+alert("✅ ADMIN LOGIN HO GAYA BOSS! Ab DELETE button ayega!");
+render(allProps);
+}else{
+alert("❌ Galat Password!");
+}
+}
+function delProp(idx){
+if(!isAdmin){alert("Admin nahi ho!");return;}
+if(!confirm("Kya ye property hatani hai?"))return;
+allProps.splice(idx,1);
+saveLocal();
+render(allProps);
+alert("✅ Delete ho gayi!");
+}
 function saveProp(){
 let deal=document.getElementById("aDeal").value;
 let type=document.getElementById("aType").value;
