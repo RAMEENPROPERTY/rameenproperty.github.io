@@ -3,62 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAMEEN PROPERTY - Owner Shaikh Akil - Sabko Dikhega</title>
+<title>RAMEEN PROPERTY - Buy, Sell, Rent</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f5f5f5}
-.header{background:#0d2a54;color:#fff;padding:25px;text-align:center}
-.header h1{margin:0;font-size:28px}
-.btn{background:#ff6b00;color:#fff;padding:12px 20px;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
-.card{background:#fff;margin:12px;padding:15px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
-.top-bar{padding:15px;display:flex;gap:10px;flex-wrap:wrap}
-.badge{background:#0d2a54;color:#fff;padding:4px 10px;border-radius:12px;font-size:12px}
-.owner-badge{background:#ff6b00;color:#fff;padding:6px 14px;border-radius:20px;font-weight:bold;margin:10px 0;display:inline-block}
-input{width:70%;padding:12px;border:1px solid #ccc;border-radius:6px}
+body{font-family:Arial;margin:0;background:#f5f7fb}
+.header{background:white;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #0d47a1}
+.logo{font-weight:900;color:#0d47a1;font-size:22px;line-height:1.1}
+.logo span{font-size:12px;color:#555;font-weight:400;display:block}
+.tabs{display:flex;gap:10px;padding:15px;background:white;justify-content:center}
+.tab{padding:10px 28px;border-radius:25px;border:1px solid #ccc;font-weight:bold;cursor:pointer}
+.tab.active{background:#1565c0;color:white;border-color:#1565c0}
+.types{display:flex;gap:10px;padding:10px 15px;flex-wrap:wrap}
+.type{padding:8px 18px;border-radius:8px;border:1px solid #ddd;background:#eee;font-weight:bold;cursor:pointer}
+.type.active{background:#1565c0;color:white}
+.search{margin:10px 15px;padding:12px;border-radius:10px;border:1px solid #1565c0;width:calc(100% - 54px)}
+.card{background:white;margin:15px;border-radius:12px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.badge{float:right;padding:5px 12px;border-radius:15px;color:white;font-size:12px;font-weight:bold}
+.sale{background:#1565c0} .rent{background:#2e7d6f}
+.btn{background:#1565c0;color:white;border:none;padding:8px 16px;border-radius:8px;float:right;cursor:pointer}
+.clear{clear:both}
+.whatsapp{position:fixed;bottom:20px;right:20px;background:#25D366;color:white;padding:14px 20px;border-radius:50px;text-decoration:none;font-weight:bold;box-shadow:0 4px 10px rgba(0,0,0,0.3)}
 </style>
 </head>
 <body>
 <div class="header">
-<h1>RAMEEN PROPERTY</h1>
-<p>A Trusted Property Firm</p>
-<div class="owner-badge">Owner: Shaikh Akil</div>
-<p>📞 9545247374 | Chhatrapati Sambhajinagar</p>
-<p style="font-size:12px;background:#fff;color:#0d2a54;display:inline-block;padding:4px 10px;border-radius:10px;margin-top:8px">✅ Sab Listings Sabko Dikhengi</p>
+<div class="logo">RAMEEN PROPERTY<span>A Trusted Property Firm</span></div>
+<div style="text-align:right;font-size:13px"><b>Owner: Shaikh Akil</b><br>📞 9545247374</div>
 </div>
 
-<div class="top-bar">
-<input type="text" id="searchBox" placeholder="Search: Nakshtrawadi, 1BHK, 50 Lakh..." onkeyup="filterProps()" style="flex:1">
-<select id="filterType" onchange="filterProps()" style="padding:10px;border-radius:6px">
-<option value="">All Type</option><option value="Plot">Plot</option><option value="Flat">Flat</option><option value="Bungalow">Bungalow</option><option value="Shop">Shop</option>
-</select>
+<div class="tabs">
+<div class="tab active" onclick="filterMain('buy')">BUY</div>
+<div class="tab" onclick="filterMain('sell')">SELL</div>
+<div class="tab" onclick="filterMain('rent')">RENT</div>
 </div>
 
-<div id="propertyList" class="grid"></div>
+<div class="types">
+<div class="type active" onclick="filterType('all')">ALL</div>
+<div class="type" onclick="filterType('flat')">FLAT</div>
+<div class="type" onclick="filterType('plot')">PLOT</div>
+<div class="type" onclick="filterType('commercial')">COMMERCIAL</div>
+</div>
+
+<input class="search" placeholder="Search Chhatrapati Sambhajinagar...">
+
+<div id="listings">
+<div class="card" data-cat="flat buy">
+<span class="badge sale">FOR SALE</span>
+<h3>Flat for Sale — 38 Lakh</h3>
+<p>📍 2BHK • 950 sq.ft • Samarth Nagar</p>
+<button class="btn">View Details</button><div class="clear"></div>
+</div>
+
+<div class="card" data-cat="plot buy">
+<span class="badge sale">FOR SALE</span>
+<h3>Plot for Sale in Nakshatrawadi — 18 Lakh</h3>
+<p>📍 1200 sq.ft • Nakshatrawadi</p>
+<button class="btn">View Details</button><div class="clear"></div>
+</div>
+
+<div class="card" data-cat="commercial rent">
+<span class="badge rent">FOR RENT</span>
+<h3>Commercial Shop — ₹15,000/month</h3>
+<p>📍 300 sq.ft • CIDCO</p>
+<button class="btn">Contact Now</button><div class="clear"></div>
+</div>
+</div>
+
+<a class="whatsapp" href="https://wa.me/919545247374?text=Hi, I want to SELL my property" target="_blank">+ Sell Your Property</a>
 
 <script>
-// ===== YAHAN PE AAPKI SAB LISTINGS HAIN - YE SABKO DIKHEGI =====
-let properties = [
-{title:"2BHK Flat for Sale - Nakshtrawadi",type:"Flat",location:"Nakshtrawadi, Sambhajinagar",price:"38 Lakh",size:"950 Sqft",desc:"Ready to move, 2nd floor"},
-{title:"Plot for Sale - Beed Bypass",type:"Plot",location:"Beed Bypass Road",price:"25 Lakh",size:"2000 Sqft",desc:"Clear title, investment"},
-{title:"1BHK Flat - CIDCO N6",type:"Flat",location:"CIDCO N6",price:"22 Lakh",size:"600 Sqft",desc:"Budget flat for family"},
-{title:"Shop for Sale - Aurangpura",type:"Shop",location:"Aurangpura",price:"45 Lakh",size:"300 Sqft",desc:"Main road shop, good for business"}
-];
-// ===== NAYI LISTING ADD KARNE KE LIYE UPAR IS LIST ME EK LINE ADD KARO =====
-
-function showProps(list){
-let html="";
-list.forEach((p)=>{
-html+=`<div class="card"><span class="badge">${p.type}</span> <span class="badge" style="background:#ff6b00">${p.price}</span><h3>${p.title}</h3><p>📍 ${p.location}</p><p>📐 ${p.size}</p><p>${p.desc}</p><button class="btn" onclick="window.open('https://wa.me/919545247374?text=Hi Shaikh Akil Bhai, Mujhe ye property chahiye: ${encodeURIComponent(p.title)} - ${p.location} - ${p.price}')">WhatsApp - 9545247374</button></div>`;
-});
-document.getElementById('propertyList').innerHTML=html;
+function filterType(t){
+ document.querySelectorAll('.type').forEach(e=>e.classList.remove('active'));
+ event.target.classList.add('active');
+ let cards=document.querySelectorAll('.card');
+ cards.forEach(c=>{
+   if(t=='all' || c.dataset.cat.includes(t)) c.style.display='block'; else c.style.display='none';
+ });
 }
-function filterProps(){
-let s=document.getElementById('searchBox').value.toLowerCase();
-let t=document.getElementById('filterType').value;
-let f=properties.filter(p=>(p.title.toLowerCase().includes(s) || p.location.toLowerCase().includes(s) || p.price.toLowerCase().includes(s)) && (t=="" || p.type==t));
-showProps(f);
+function filterMain(m){
+ document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));
+ event.target.classList.add('active');
+ if(m=='sell'){ window.open('https://wa.me/919545247374?text=Hi, I want to list my property','_blank'); }
 }
-showProps(properties);
 </script>
 </body>
 </html>
