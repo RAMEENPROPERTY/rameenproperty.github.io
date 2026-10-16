@@ -1,115 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAMEEN PROPERTY - Pore Aurangabad Prime Portal</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAMEEN PROPERTY - PRIME</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<style>
-.card:hover{transform:translateY(-5px); transition:0.3s}
-.cat-active{background:#facc15!important; color:black!important; border-color:#facc15!important}
-</style>
+<style>.hidden{display:none!important}</style>
 </head>
-<body class="bg-[#f0f4ff]">
+<body class="bg-[#eef3ff] pb-28">
 
-<header class="bg-white px-4 py-3 flex justify-between items-center shadow sticky top-0 z-50">
-<h1 class="font-black leading-none"><span class="text-blue-900 text-xl">RAMEEN</span> <span class="text-yellow-500 text-xl">PROPERTY</span><br><span class="text-[10px] text-yellow-600 tracking-[3px]">PORE • AURANGABAD</span></h1>
-<div class="flex gap-3 text-blue-900 text-xl"><i class="fa fa-search"></i><i class="fa fa-heart"></i><i class="fa fa-user-circle text-yellow-500 text-2xl"></i></div>
+<header class="bg-white p-3 flex justify-between items-center shadow sticky top-0 z-50">
+<h1 class="font-black leading-none"><span class="text-blue-900 text-xl">RAMEEN</span> <span class="text-yellow-500">PROPERTY</span><br><span class="text-[8px] text-yellow-600 tracking-[3px]">PORE • AURANGABAD • PRIME</span></h1>
+<div class="flex gap-4 text-blue-900 text-lg"><button onclick="adminLogin()"><i class="fa fa-user-shield"></i></button><i class="fa fa-search"></i></div>
 </header>
 
-<section class="mx-3 mt-3 bg-gradient-to-br from-blue-100 to-yellow-200 rounded-[25px] p-6 text-center">
-<h2 class="text-3xl font-black text-blue-900">Find Your Perfect Property</h2>
-<p class="text-sm mt-1 font-medium">Buy • Rent • Sell in Aurangabad with trusted listings</p>
-<div class="flex justify-center gap-2 mt-4">
-<button class="bg-yellow-400 font-black px-6 py-2 rounded-full">Buy</button>
-<button class="bg-white border-2 border-blue-900 font-black px-6 py-2 rounded-full text-blue-900">Rent</button>
-<button class="bg-white border-2 border-blue-900 font-black px-6 py-2 rounded-full text-blue-900">Sell</button>
-</div>
-<div class="flex gap-2 mt-5">
-<input id="searchBox" placeholder="Search location, project, or property..." class="flex-1 p-3 rounded-full border-2 border-blue-900 text-sm font-bold">
-<button class="bg-white border-2 border-blue-900 px-5 rounded-full font-bold text-blue-900"><i class="fa fa-sliders"></i> Filters</button>
-</div>
-</section>
-
-<section class="px-4 mt-6">
-<div class="flex justify-between"><h3 class="font-black text-xl text-blue-900">Categories</h3><span class="text-yellow-600 font-bold text-sm">View All →</span></div>
-<div class="flex gap-3 overflow-auto mt-3 pb-2">
-<div onclick="filterCat('flat')" class="cat-btn min-w-[90px] bg-yellow-400 p-4 rounded-2xl text-center border-2 border-yellow-400"><i class="fa fa-building text-2xl"></i><p class="font-bold text-xs mt-1">Flat</p></div>
-<div onclick="filterCat('rowhouse')" class="cat-btn min-w-[90px] bg-white p-4 rounded-2xl text-center border-2 border-blue-900"><i class="fa fa-home text-2xl text-blue-900"></i><p class="font-bold text-xs mt-1">Row House</p></div>
-<div onclick="filterCat('plot')" class="cat-btn min-w-[90px] bg-white p-4 rounded-2xl text-center border-2 border-blue-900"><i class="fa fa-map text-2xl text-yellow-600"></i><p class="font-bold text-xs mt-1">Plot</p></div>
-<div onclick="filterCat('rc')" class="cat-btn min-w-[90px] bg-white p-4 rounded-2xl text-center border-2 border-blue-900"><i class="fa fa-city text-2xl text-blue-900"></i><p class="font-bold text-xs mt-1">R+C Plot</p></div>
-<div onclick="filterCat('commercial')" class="cat-btn min-w-[90px] bg-white p-4 rounded-2xl text-center border-2 border-blue-900"><i class="fa fa-store text-2xl"></i><p class="font-bold text-xs mt-1">Commercial</p></div>
-</div>
-</section>
-
-<section class="px-3 mt-6 pb-24">
-<div class="flex justify-between items-center"><h3 class="font-black text-xl text-blue-900">Featured Properties</h3><p class="text-xs font-bold">128+ Properties Found</p></div>
-
-<div id="listingGrid" class="grid grid-cols-2 gap-3 mt-4">
-
-<!-- CARD -->
-<div data-type="flat" class="prop-card bg-white rounded-2xl p-2 shadow card">
-<span class="bg-yellow-400 text-[10px] font-black px-2 py-1 rounded">FEATURED</span>
-<img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500" class="rounded-xl h-24 w-full object-cover mt-1">
-<p class="font-black text-sm mt-2 leading-tight"><i class="fa fa-location-dot text-xs"></i> Modern 2BHK Flat</p>
-<p class="text-[11px] text-gray-500">Pore, Aurangabad • 2.5km away</p>
-<div class="flex justify-between mt-2"><div><p class="font-black text-blue-900">₹45.5L</p><p class="text-[10px]">Price</p></div><div class="text-right"><p class="font-black">950 Sqft</p><p class="text-[10px]">Sqft</p></div></div>
-<a href="tel:9545247374" class="block bg-yellow-400 text-center py-1 rounded-full text-xs font-black mt-2">Buy • Call</a>
+<div class="m-3 bg-gradient-to-br from-blue-200 to-yellow-200 rounded-[22px] p-5 text-center">
+<h2 class="text-[26px] font-black text-blue-900 leading-none">Find Your Perfect Property</h2>
+<input id="searchBox" placeholder="Search location..." class="w-full mt-4 p-3 rounded-full border-2 border-blue-900 text-sm font-bold">
 </div>
 
-<div data-type="plot" class="prop-card bg-white rounded-2xl p-2 shadow card">
-<span class="bg-yellow-400 text-[10px] font-black px-2 py-1 rounded">HOT DEAL</span>
-<img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500" class="rounded-xl h-24 w-full object-cover mt-1">
-<p class="font-black text-sm mt-2 leading-tight">Residential Plot</p>
-<p class="text-[11px] text-gray-500">Shendra, Aurangabad</p>
-<div class="flex justify-between mt-2"><div><p class="font-black text-blue-900">₹22L</p><p class="text-[10px]">Price</p></div><div class="text-right"><p class="font-black">1000 Sqft</p><p class="text-[10px]">Sqft</p></div></div>
-<a href="tel:9545247374" class="block bg-yellow-400 text-center py-1 rounded-full text-xs font-black mt-2">Buy • Call</a>
+<div class="px-3 flex gap-2 overflow-auto mt-3">
+<button onclick="filterCat('all')" class="cat bg-yellow-400 px-5 py-3 rounded-2xl font-black text-xs">All</button>
+<button onclick="filterCat('flat')" class="cat bg-white border-2 border-blue-900 px-5 py-3 rounded-2xl font-black text-xs">Flat</button>
+<button onclick="filterCat('rowhouse')" class="cat bg-white border-2 border-blue-900 px-5 py-3 rounded-2xl font-black text-xs">Row House</button>
+<button onclick="filterCat('plot')" class="cat bg-white border-2 border-blue-900 px-5 py-3 rounded-2xl font-black text-xs">Plot</button>
+<button onclick="filterCat('rc')" class="cat bg-white border-2 border-blue-900 px-5 py-3 rounded-2xl font-black text-xs">R+C</button>
+<button onclick="filterCat('commercial')" class="cat bg-white border-2 border-blue-900 px-5 py-3 rounded-2xl font-black text-xs">Commercial</button>
 </div>
 
-<div data-type="rowhouse" class="prop-card bg-white rounded-2xl p-2 shadow card">
-<span class="bg-yellow-300 text-[10px] font-black px-2 py-1 rounded">NEW</span>
-<img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=500" class="rounded-xl h-24 w-full object-cover mt-1">
-<p class="font-black text-sm mt-2">Premium Row House</p>
-<p class="text-[11px] text-gray-500">Waluj, Aurangabad • 4.2km</p>
-<div class="flex justify-between mt-2"><div><p class="font-black text-blue-900">₹72L</p><p class="text-[10px]">Price</p></div><div class="text-right"><p class="font-black">1200 Sqft</p><p class="text-[10px]">Sqft</p></div></div>
-<a href="tel:9545247374" class="block bg-yellow-400 text-center py-1 rounded-full text-xs font-black mt-2">Sell • Call</a>
+<div id="listingGrid" class="grid grid-cols-2 gap-3 p-3">
+
+<div data-type="flat" class="prop-card bg-white rounded-2xl p-2 shadow">
+<span class="bg-yellow-400 text-[9px] font-black px-2 py-1 rounded">FEATURED</span>
+<img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400" class="rounded-xl h-24 w-full object-cover mt-1">
+<p class="font-black text-[12px] mt-1">Modern 2BHK Flat</p><p class="text-[10px] text-gray-500">Pore, Aurangabad</p>
+<p class="font-black text-blue-900 text-sm">₹45.5L | 950 Sqft</p>
+<div class="public-contact"><a href="https://wa.me/919545247374?text=Hi, Flat chahiye" target="_blank" class="block bg-yellow-400 text-center py-1.5 rounded-full text-[11px] font-black mt-2">Contact Admin</a></div>
+<div class="admin-contact hidden"><a href="tel:9545247374" class="block bg-green-600 text-white text-center py-1 rounded-full text-[11px] font-black mt-2">📞 9545247374</a><button onclick="deleteCard(this)" class="w-full bg-red-600 text-white py-1 rounded-full text-[10px] font-black mt-1">🗑️ DELETE</button></div>
 </div>
 
-<div data-type="commercial" class="prop-card bg-white rounded-2xl p-2 shadow card">
-<span class="bg-blue-900 text-white text-[10px] font-black px-2 py-1 rounded">VERIFIED</span>
-<img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500" class="rounded-xl h-24 w-full object-cover mt-1">
-<p class="font-black text-sm mt-2">Commercial Plot</p>
-<p class="text-[11px] text-gray-500">MIDC, Aurangabad • 8.3km</p>
-<div class="flex justify-between mt-2"><div><p class="font-black text-blue-900">₹1.20Cr</p><p class="text-[10px]">Price</p></div><div class="text-right"><p class="font-black">2400 Sqft</p><p class="text-[10px]">Sqft</p></div></div>
-<a href="tel:9545247374" class="block bg-yellow-400 text-center py-1 rounded-full text-xs font-black mt-2">Rent • Call</a>
+<div data-type="plot" class="prop-card bg-white rounded-2xl p-2 shadow">
+<span class="bg-green-500 text-white text-[9px] font-black px-2 py-1 rounded">LIVE</span>
+<img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400" class="rounded-xl h-24 w-full object-cover mt-1">
+<p class="font-black text-[12px] mt-1">Residential Plot</p><p class="text-[10px] text-gray-500">Shendra, 1000 Sqft</p>
+<p class="font-black text-blue-900 text-sm">₹22L | 1000 Sqft</p>
+<div class="public-contact"><a href="https://wa.me/919545247374?text=Hi, Plot chahiye" target="_blank" class="block bg-yellow-400 text-center py-1.5 rounded-full text-[11px] font-black mt-2">Contact Admin</a></div>
+<div class="admin-contact hidden"><a href="tel:9545247374" class="block bg-green-600 text-white text-center py-1 rounded-full text-[11px] font-black mt-2">📞 9545247374</a><button onclick="deleteCard(this)" class="w-full bg-red-600 text-white py-1 rounded-full text-[10px] font-black mt-1">🗑️ DELETE</button></div>
 </div>
 
 </div>
-</section>
 
-<nav class="fixed bottom-2 left-3 right-3 bg-white rounded-full shadow-2xl flex justify-around py-3 px-2">
-<span class="font-black text-yellow-500 text-xs"><i class="fa fa-home"></i> Home</span>
-<span class="text-xs font-bold"><i class="fa fa-search"></i> Search</span>
-<span class="bg-yellow-400 w-10 h-10 rounded-full flex items-center justify-center -mt-2"><i class="fa fa-plus text-xl"></i></span>
-<span class="text-xs font-bold"><i class="fa fa-heart"></i> Fav</span>
-<span class="text-xs font-bold"><i class="fa fa-user"></i> Profile</span>
-</nav>
+<button onclick="openAdd()" style="position:fixed; bottom:90px; right:18px; background:#facc15; width:60px; height:60px; border-radius:50%; font-size:30px; font-weight:900; box-shadow:0 5px 15px black;">+</button>
+
+<div id="addModal" class="hidden" style="position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:999; padding:20px;">
+<div style="background:white; border-radius:20px; padding:18px; max-width:380px; margin:40px auto;">
+<h2 class="font-black text-blue-900">Add Property (No Registration)</h2>
+<select id="pType" class="w-full mt-2 p-2.5 border-2 border-blue-900 rounded-xl font-bold text-sm"><option>Flat</option><option>Row House</option><option>Plot</option><option>R+C Plot</option><option>Commercial Plot</option></select>
+<input id="pTitle" placeholder="Title" class="w-full mt-2 p-2.5 border-2 border-blue-900 rounded-xl text-sm">
+<input id="pPrice" placeholder="Price" class="w-full mt-2 p-2.5 border-2 border-blue-900 rounded-xl text-sm">
+<input id="pLoc" placeholder="Location" class="w-full mt-2 p-2.5 border-2 border-blue-900 rounded-xl text-sm">
+<input id="pPhone" placeholder="Your Phone (Only Admin will see)" class="w-full mt-2 p-2.5 border-2 border-red-500 rounded-xl text-sm">
+<button onclick="addProperty()" class="w-full bg-yellow-400 mt-3 p-3 rounded-full font-black">ADD LISTING</button>
+<button onclick="closeAdd()" class="w-full bg-white border-2 border-black mt-2 p-2 rounded-full font-black">Cancel</button>
+</div>
+</div>
 
 <script>
-function filterCat(type){
- document.querySelectorAll('.prop-card').forEach(c=>{
-  c.style.display = (type==='all' || c.dataset.type===type)? 'block' : 'none';
- });
- document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('cat-active'));
- event.currentTarget.classList.add('cat-active');
+let isAdmin=false;
+function adminLogin(){
+ let p=prompt("Admin Password: rameen123");
+ if(p==="rameen123"){
+  isAdmin=true;
+  document.querySelectorAll('.admin-contact').forEach(e=>e.classList.remove('hidden'));
+  document.querySelectorAll('.public-contact').forEach(e=>e.classList.add('hidden'));
+  alert("Admin ON Boss!");
+ } else alert("Wrong!");
 }
-document.getElementById('searchBox').addEventListener('input',function(){
- let v=this.value.toLowerCase();
- document.querySelectorAll('.prop-card').forEach(c=>{
-  c.style.display = c.innerText.toLowerCase().includes(v)? 'block' : 'none';
- });
-});
+function openAdd(){document.getElementById('addModal').classList.remove('hidden')}
+function closeAdd(){document.getElementById('addModal').classList.add('hidden')}
+function addProperty(){
+ let type=document.getElementById('pType').value.toLowerCase().replace(/[^a-z]/g,'');
+ let map={flat:'flat',rowhouse:'rowhouse',plot:'plot',rcplot:'rc',commercialplot:'commercial'};
+ let dtype=map[type]||'plot';
+ let title=document.getElementById('pTitle').value||'New Property';
+ let price=document.getElementById('pPrice').value||'₹0';
+ let loc=document.getElementById('pLoc').value||'Aurangabad';
+ let phone=document.getElementById('pPhone').value||'9545247374';
+ let html=`<div data-type="${dtype}" class="prop-card bg-white rounded-2xl p-2 shadow"><span class="bg-yellow-400 text-[9px] font-black px-2 py-1 rounded">NEW • LIVE FOR ALL</span><div class="h-24 bg-blue-100 rounded-xl flex items-center justify-center mt-1"><i class="fa fa-home text-3xl text-blue-900"></i></div><p class="font-black text-[12px] mt-1">${title}</p><p class="text-[10px] text-gray-500">${loc}</p><p class="font-black text-blue-900 text-sm">${price}</p><div class="public-contact"><a href="https://wa.me/919545247374" target="_blank" class="block bg-yellow-400 text-center py-1.5 rounded-full text-[11px] font-black mt-2">Contact Admin</a></div><div class="admin-contact hidden"><a href="tel:${phone}" class="block bg-green-600 text-white text-center py-1 rounded-full text-[11px] font-black mt-2">📞 ${phone} (Only Admin)</a><button onclick="deleteCard(this)" class="w-full bg-red-600 text-white py-1 rounded-full text-[10px] font-black mt-1">🗑️ DELETE</button></div></div>`;
+ document.getElementById('listingGrid').insertAdjacentHTML('afterbegin',html);
+ if(isAdmin){document.querySelectorAll('.admin-contact').forEach(e=>e.classList.remove('hidden'));document.querySelectorAll('.public-contact').forEach(e=>e.classList.add('hidden'));}
+ closeAdd();
+}
+function deleteCard(btn){ if(confirm("Delete?")) btn.closest('.prop-card').remove(); }
+function filterCat(t){ document.querySelectorAll('.prop-card').forEach(c=>{c.style.display=(t==='all'||c.dataset.type===t)?'block':'none'}); }
+document.getElementById('searchBox').addEventListener('input',function(){ let v=this.value.toLowerCase(); document.querySelectorAll('.prop-card').forEach(c=>{c.style.display=c.innerText.toLowerCase().includes(v)?'block':'none'}); });
 </script>
 </body>
 </html>
