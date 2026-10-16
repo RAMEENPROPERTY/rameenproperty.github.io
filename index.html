@@ -1,63 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rameen Property Trust - Flats, Plots, Banglo in Aurangabad | 9545247374</title>
-<meta name="description" content="Rameen Property Trust Aurangabad - Banglo, Flat, Row House, Plot, Shop. Best Property Dealer in Aurangabad & Shirdi. Call 9545247374">
-<meta name="keywords" content="Rameen Property, Property Aurangabad, Flat Aurangabad, Plot Shirdi, Banglo Aurangabad">
-<meta name="author" content="Rameen Property Trust">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<style>
-body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f5f5}
-.header{background:#0d2a54;color:#fff;padding:15px;text-align:center}
-.header h1{margin:0;font-size:26px}
-.header p{margin:5px 0}
-.contact-bar{background:#ffcc00;padding:10px;text-align:center;font-weight:bold}
-.container{padding:15px}
-.card{background:#fff;border-radius:10px;padding:15px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-.card h3{margin-top:0;color:#0d2a54}
-.btn{display:inline-block;padding:10px 15px;border-radius:5px;text-decoration:none;color:#fff;margin:5px 5px 0}
-.btn-call{background:#28a745}
-.btn-wa{background:#25D366}
-.footer{background:#0d2a54;color:#fff;text-align:center;padding:15px;margin-top:20px}
-</style>
+<html>
+<head><title>ADMIN - RAMEEN PROPERTY</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<meta name="robots" content="noindex, nofollow">
 </head>
-<body>
-<div class="header">
-<h1>RAMEEN PROPERTY TRUST</h1>
-<p><i class="fa fa-map-marker"></i> Aurangabad & Shirdi</p>
-<p><i class="fa fa-phone"></i> 9545247374 | 9921982979</p>
+<body class="bg-black min-h-screen flex items-center justify-center p-4">
+<div id="login" class="bg-white p-8 rounded-xl w-full max-w-sm">
+<h1 class="text-2xl font-black mb-4 text-center">🔐 ADMIN LOGIN</h1>
+<input id="pass" type="password" placeholder="Password likho" class="w-full border p-3 rounded mb-4">
+<button onclick="login()" class="w-full bg-blue-900 text-white py-3 rounded font-bold">LOGIN</button>
+<p id="err" class="text-red-500 text-sm mt-2 hidden">Galat Password!</p>
 </div>
-<div class="contact-bar">Best Property Dealer - Flats, Plots, Banglo, Row House, Shop</div>
-<div class="container">
-<div class="card">
-<h3>🏠 Flats Available in Aurangabad</h3>
-<p>1BHK, 2BHK, 3BHK Flats for Sale at Best Price</p>
-<a class="btn btn-call" href="tel:9545247374"><i class="fa fa-phone"></i> Call Now</a>
-<a class="btn btn-wa" href="https://wa.me/919545247374"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+
+<div id="panel" class="hidden bg-white p-8 rounded-xl w-full max-w-2xl">
+<h1 class="text-2xl font-black mb-6">RAMEEN PROPERTY - ADMIN ON</h1>
+<p class="bg-green-100 p-3 rounded mb-4">Welcome Boss! Yahan se aap property control karoge.</p>
+<div class="grid gap-4">
+<input id="pname" placeholder="Property Name: 2BHK Pune" class="border p-3 rounded">
+<input id="pprice" placeholder="Price: 50 Lakh" class="border p-3 rounded">
+<input id="ploc" placeholder="Location: Wagholi" class="border p-3 rounded">
+<button onclick="addProp()" class="bg-yellow-400 py-3 rounded font-black">+ PROPERTY ADD KARO</button>
 </div>
-<div class="card">
-<h3>🏡 Plots in Aurangabad & Shirdi</h3>
-<p>NA Plots, Investment Plots, Residential Plots</p>
-<a class="btn btn-call" href="tel:9545247374"><i class="fa fa-phone"></i> Call Now</a>
-<a class="btn btn-wa" href="https://wa.me/919545247374"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+<div id="list" class="mt-6"></div>
+<button onclick="logout()" class="mt-6 text-red-600 font-bold">LOGOUT</button>
 </div>
-<div class="card">
-<h3>🏘️ Banglo & Row House</h3>
-<p>Independent Banglo, Row House, Twin Banglo</p>
-<a class="btn btn-call" href="tel:9545247374"><i class="fa fa-phone"></i> Call Now</a>
-<a class="btn btn-wa" href="https://wa.me/919545247374"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-</div>
-<div class="card">
-<h3>🏪 Shops & Commercial</h3>
-<p>Shop, Office Space, Commercial Property</p>
-<a class="btn btn-call" href="tel:9545247374"><i class="fa fa-phone"></i> Call Now</a>
-<a class="btn btn-wa" href="https://wa.me/919545247374"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-</div>
-</div>
-<div class="footer">
-<p>Rameen Property Trust - Aurangabad<br>Contact: 9545247374<br>© 2026 All Rights Reserved</p>
-</div>
+
+<script>
+const ADMIN_PASS = "9545247374"; // Aapka Password
+function login(){
+ if(document.getElementById('pass').value === ADMIN_PASS){
+   document.getElementById('login').classList.add('hidden');
+   document.getElementById('panel').classList.remove('hidden');
+   load();
+ } else {
+   document.getElementById('err').classList.remove('hidden');
+ }
+}
+function addProp(){
+  let data = JSON.parse(localStorage.getItem('props')||'[]');
+  data.push({name:pname.value, price:pprice.value, loc:ploc.value});
+  localStorage.setItem('props', JSON.stringify(data));
+  alert('Property Added! Ab index.html me dikhegi');
+  load();
+}
+function load(){
+  let data = JSON.parse(localStorage.getItem('props')||'[]');
+  list.innerHTML = data.map((p,i)=>`<div class="border p-2 rounded flex justify-between"><span>${p.name} - ${p.price}</span><button onclick="del(${i})" class="text-red-500">Delete</button></div>`).join('');
+}
+function del(i){ let d=JSON.parse(localStorage.getItem('props')||'[]'); d.splice(i,1); localStorage.setItem('props', JSON.stringify(d)); load(); }
+function logout(){ location.reload(); }
+</script>
 </body>
 </html>
