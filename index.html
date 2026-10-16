@@ -1,54 +1,27 @@
 <!DOCTYPE html>
-<html>
-<head><title>ADMIN - RAMEEN PROPERTY</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAMEEN PROPERTY - Pune</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="bg-black min-h-screen flex items-center justify-center p-4">
-<div id="login" class="bg-white p-8 rounded-xl w-full max-w-sm">
-<h1 class="text-2xl font-black mb-4 text-center">🔐 ADMIN LOGIN</h1>
-<input id="pass" type="password" placeholder="Password likho" class="w-full border p-3 rounded mb-4">
-<button onclick="login()" class="w-full bg-blue-900 text-white py-3 rounded font-bold">LOGIN</button>
-<p id="err" class="text-red-500 text-sm mt-2 hidden">Galat Password!</p>
+<body class="bg-gray-50">
+<header class="bg-blue-900 text-white p-4 flex justify-between">
+<h1 class="font-black text-xl">RAMEEN PROPERTY</h1>
+<a href="tel:9545247374" class="bg-white text-blue-900 px-4 py-1 rounded-full font-bold">9545247374</a>
+</header>
+<section class="bg-blue-900 text-white py-16 text-center">
+<h2 class="text-4xl font-black">Apna Ghar Paayein</h2>
+<p class="mt-2">Pune Best Property Deals</p>
+<div class="mt-6 flex justify-center gap-4">
+<a href="tel:9545247374" class="bg-yellow-400 text-black px-6 py-2 rounded-full font-bold">CALL NOW</a>
+<a href="https://wa.me/919545247374" class="bg-green-500 text-white px-6 py-2 rounded-full font-bold">WHATSAPP</a>
 </div>
-
-<div id="panel" class="hidden bg-white p-8 rounded-xl w-full max-w-2xl">
-<h1 class="text-2xl font-black mb-6">RAMEEN PROPERTY - ADMIN ON</h1>
-<p class="bg-green-100 p-3 rounded mb-4">Welcome Boss! Yahan se aap property control karoge.</p>
-<div class="grid gap-4">
-<input id="pname" placeholder="Property Name: 2BHK Pune" class="border p-3 rounded">
-<input id="pprice" placeholder="Price: 50 Lakh" class="border p-3 rounded">
-<input id="ploc" placeholder="Location: Wagholi" class="border p-3 rounded">
-<button onclick="addProp()" class="bg-yellow-400 py-3 rounded font-black">+ PROPERTY ADD KARO</button>
-</div>
-<div id="list" class="mt-6"></div>
-<button onclick="logout()" class="mt-6 text-red-600 font-bold">LOGOUT</button>
-</div>
-
-<script>
-const ADMIN_PASS = "9545247374"; // Aapka Password
-function login(){
- if(document.getElementById('pass').value === ADMIN_PASS){
-   document.getElementById('login').classList.add('hidden');
-   document.getElementById('panel').classList.remove('hidden');
-   load();
- } else {
-   document.getElementById('err').classList.remove('hidden');
- }
-}
-function addProp(){
-  let data = JSON.parse(localStorage.getItem('props')||'[]');
-  data.push({name:pname.value, price:pprice.value, loc:ploc.value});
-  localStorage.setItem('props', JSON.stringify(data));
-  alert('Property Added! Ab index.html me dikhegi');
-  load();
-}
-function load(){
-  let data = JSON.parse(localStorage.getItem('props')||'[]');
-  list.innerHTML = data.map((p,i)=>`<div class="border p-2 rounded flex justify-between"><span>${p.name} - ${p.price}</span><button onclick="del(${i})" class="text-red-500">Delete</button></div>`).join('');
-}
-function del(i){ let d=JSON.parse(localStorage.getItem('props')||'[]'); d.splice(i,1); localStorage.setItem('props', JSON.stringify(d)); load(); }
-function logout(){ location.reload(); }
-</script>
+</section>
+<footer class="bg-black text-white text-center py-6">
+<p>© RAMEEN PROPERTY - 9545247374</p>
+</footer>
 </body>
 </html>
