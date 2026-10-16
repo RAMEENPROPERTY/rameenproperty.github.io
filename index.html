@@ -3,96 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAMEEN PROPERTY - Pore Aurangabad Portal</title>
+<title>RAMEEN PROPERTY - Pore Aurangabad Prime Portal</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+.card:hover{transform:translateY(-5px); transition:0.3s}
+.cat-active{background:#facc15!important; color:black!important; border-color:#facc15!important}
+</style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-[#f0f4ff]">
 
-<!-- HEADER -->
-<header class="bg-white shadow sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-<h1 class="font-black text-xl"><span class="text-blue-900">RAMEEN</span> <span class="text-yellow-500">PROPERTY</span><br><span class="text-xs font-bold text-gray-500">PORE AURANGABAD PORTAL</span></h1>
-<div class="flex gap-2">
-<a href="tel:9545247374" class="bg-blue-900 text-white px-4 py-2 rounded-full font-bold text-sm"><i class="fa fa-phone"></i> CALL</a>
-<a href="/admin.html" class="bg-yellow-400 text-black px-4 py-2 rounded-full font-black text-sm">+ ADD LISTING</a>
-</div>
-</div>
+<header class="bg-white px-4 py-3 flex justify-between items-center shadow sticky top-0 z-50">
+<h1 class="font-black leading-none"><span class="text-blue-900 text-xl">RAMEEN</span> <span class="text-yellow-500 text-xl">PROPERTY</span><br><span class="text-[10px] text-yellow-600 tracking-[3px]">PORE • AURANGABAD</span></h1>
+<div class="flex gap-3 text-blue-900 text-xl"><i class="fa fa-search"></i><i class="fa fa-heart"></i><i class="fa fa-user-circle text-yellow-500 text-2xl"></i></div>
 </header>
 
-<!-- SEARCH BAR - PRIME PORTAL -->
-<section class="bg-blue-900 py-8 px-4">
-<div class="max-w-7xl mx-auto">
-<h2 class="text-white text-3xl font-black text-center">PORE AURANGABAD ME PROPERTY DHUNDO</h2>
-<div class="bg-white p-4 rounded-2xl shadow-2xl mt-6 grid grid-cols-1 md:grid-cols-5 gap-3">
-<select class="border p-3 rounded-xl font-bold"><option>BUY</option><option>SELL</option><option>RENT</option></select>
-<select class="border p-3 rounded-xl font-bold"><option>All Type</option><option>Flat</option><option>Row House</option><option>Plot</option><option>R+C Plot</option><option>Commercial Plot</option></select>
-<input type="text" placeholder="Location - CIDCO, Beed Bypass..." class="border p-3 rounded-xl col-span-2">
-<button class="bg-yellow-400 text-black font-black p-3 rounded-xl"><i class="fa fa-search"></i> SEARCH</button>
+<section class="mx-3 mt-3 bg-gradient-to-br from-blue-100 to-yellow-200 rounded-[25px] p-6 text-center">
+<h2 class="text-3xl font-black text-blue-900">Find Your Perfect Property</h2>
+<p class="text-sm mt-1 font-medium">Buy • Rent • Sell in Aurangabad with trusted listings</p>
+<div class="flex justify-center gap-2 mt-4">
+<button class="bg-yellow-400 font-black px-6 py-2 rounded-full">Buy</button>
+<button class="bg-white border-2 border-blue-900 font-black px-6 py-2 rounded-full text-blue-900">Rent</button>
+<button class="bg-white border-2 border-blue-900 font-black px-6 py-2 rounded-full text-blue-900">Sell</button>
 </div>
-</div>
-</section>
-
-<!-- CATEGORY ICONS -->
-<section class="max-w-7xl mx-auto px-4 py-6">
-<div class="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
-<div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg cursor-pointer"><i class="fa fa-building text-3xl text-blue-900"></i><p class="font-black mt-2 text-sm">FLAT</p></div>
-<div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg cursor-pointer"><i class="fa fa-home text-3xl text-green-600"></i><p class="font-black mt-2 text-sm">ROW HOUSE</p></div>
-<div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg cursor-pointer"><i class="fa fa-map text-3xl text-yellow-600"></i><p class="font-black mt-2 text-sm">PLOT</p></div>
-<div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg cursor-pointer"><i class="fa fa-city text-3xl text-red-600"></i><p class="font-black mt-2 text-sm">R+C PLOT</p></div>
-<div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg cursor-pointer"><i class="fa fa-store text-3xl text-purple-600"></i><p class="font-black mt-2 text-sm">COMMERCIAL</p></div>
-<div class="bg-white p-4 rounded-2xl shadow bg-yellow-400 cursor-pointer"><i class="fa fa-list text-3xl"></i><p class="font-black mt-2 text-sm">ALL</p></div>
+<div class="flex gap-2 mt-5">
+<input id="searchBox" placeholder="Search location, project, or property..." class="flex-1 p-3 rounded-full border-2 border-blue-900 text-sm font-bold">
+<button class="bg-white border-2 border-blue-900 px-5 rounded-full font-bold text-blue-900"><i class="fa fa-sliders"></i> Filters</button>
 </div>
 </section>
 
-<!-- LISTINGS - PRIME CARD -->
-<section class="max-w-7xl mx-auto px-4 pb-10">
-<h3 class="font-black text-2xl mb-4">Latest Property in Aurangabad</h3>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<section class="px-4 mt-6">
+<div class="flex justify-between"><h3 class="font-black text-xl text-blue-900">Categories</h3><span class="text-yellow-600 font-bold text-sm">View All →</span></div>
+<div class="flex gap-3 overflow-auto mt-3 pb-2">
+<div onclick="filterCat('flat')" class="cat-btn min-w-[90px] bg-yellow-400 p-4 rounded-2xl text-center border-2 border-yellow-400"><i class="fa fa-building text-2xl"></i><p class="font-bold text-xs mt-1">Flat</p></div>
+<div onclick="filterCat('rowhouse')" class="cat-btn min-w-[90px] bg-white p-4 rounded-2xl text-center border-2 border-blue-900"><i class="fa fa-home text-2xl text-blue-900"></i><p class="font-bold text-xs mt-1">Row House</p></div>
+<div onclick="filterCat('plot')" class="cat-btn min-w-[90px] bg-white p-4 rounded-2xl text-center border-2 border-blue-900"><i class="fa fa-map text-2xl text-yellow-600"></i><p class="font-bold text-xs mt-1">Plot</p></div>
+<div onclick="filterCat('rc')" class="cat-btn min-w-[90px] bg-white p-4 rounded-2xl text-center border-2 border-blue-900"><i class="fa fa-city text-2xl text-blue-900"></i><p class="font-bold text-xs mt-1">R+C Plot</p></div>
+<div onclick="filterCat('commercial')" class="cat-btn min-w-[90px] bg-white p-4 rounded-2xl text-center border-2 border-blue-900"><i class="fa fa-store text-2xl"></i><p class="font-bold text-xs mt-1">Commercial</p></div>
+</div>
+</section>
 
-<!-- CARD 1 -->
-<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-<img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600" class="h-48 w-full object-cover">
-<div class="p-4">
-<div class="flex justify-between"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-black">FOR SELL</span><span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-black">FLAT</span></div>
-<h4 class="font-black text-lg mt-2">2BHK Flat in CIDCO N7</h4>
-<p class="text-gray-500 text-sm"><i class="fa fa-location-dot"></i> CIDCO N7, Aurangabad</p>
-<div class="flex justify-between mt-3 text-sm font-bold"><span><i class="fa fa-ruler-combined"></i> 1200 SQFT</span><span class="text-blue-900 text-lg">₹ 42 Lakh</span></div>
-<a href="tel:9545247374" class="block bg-blue-900 text-white text-center py-2 rounded-xl mt-3 font-black">VIEW DETAILS</a>
-</div>
-</div>
+<section class="px-3 mt-6 pb-24">
+<div class="flex justify-between items-center"><h3 class="font-black text-xl text-blue-900">Featured Properties</h3><p class="text-xs font-bold">128+ Properties Found</p></div>
 
-<!-- CARD 2 -->
-<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-<img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600" class="h-48 w-full object-cover">
-<div class="p-4">
-<div class="flex justify-between"><span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-black">FOR RENT</span><span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-black">ROW HOUSE</span></div>
-<h4 class="font-black text-lg mt-2">3BHK Row House Beed Bypass</h4>
-<p class="text-gray-500 text-sm"><i class="fa fa-location-dot"></i> Beed Bypass, Aurangabad</p>
-<div class="flex justify-between mt-3 text-sm font-bold"><span><i class="fa fa-ruler-combined"></i> 1800 SQFT</span><span class="text-blue-900 text-lg">₹ 18k/Month</span></div>
-<a href="tel:9545247374" class="block bg-blue-900 text-white text-center py-2 rounded-xl mt-3 font-black">VIEW DETAILS</a>
-</div>
+<div id="listingGrid" class="grid grid-cols-2 gap-3 mt-4">
+
+<!-- CARD -->
+<div data-type="flat" class="prop-card bg-white rounded-2xl p-2 shadow card">
+<span class="bg-yellow-400 text-[10px] font-black px-2 py-1 rounded">FEATURED</span>
+<img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500" class="rounded-xl h-24 w-full object-cover mt-1">
+<p class="font-black text-sm mt-2 leading-tight"><i class="fa fa-location-dot text-xs"></i> Modern 2BHK Flat</p>
+<p class="text-[11px] text-gray-500">Pore, Aurangabad • 2.5km away</p>
+<div class="flex justify-between mt-2"><div><p class="font-black text-blue-900">₹45.5L</p><p class="text-[10px]">Price</p></div><div class="text-right"><p class="font-black">950 Sqft</p><p class="text-[10px]">Sqft</p></div></div>
+<a href="tel:9545247374" class="block bg-yellow-400 text-center py-1 rounded-full text-xs font-black mt-2">Buy • Call</a>
 </div>
 
-<!-- CARD 3 -->
-<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-<img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600" class="h-48 w-full object-cover">
-<div class="p-4">
-<div class="flex justify-between"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-black">FOR SELL</span><span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-black">COMMERCIAL PLOT</span></div>
-<h4 class="font-black text-lg mt-2">R+C Plot - Jalna Road</h4>
-<p class="text-gray-500 text-sm"><i class="fa fa-location-dot"></i> Jalna Road, Aurangabad</p>
-<div class="flex justify-between mt-3 text-sm font-bold"><span><i class="fa fa-ruler-combined"></i> 2500 SQFT</span><span class="text-blue-900 text-lg">₹ 65 Lakh</span></div>
-<a href="tel:9545247374" class="block bg-blue-900 text-white text-center py-2 rounded-xl mt-3 font-black">VIEW DETAILS</a>
+<div data-type="plot" class="prop-card bg-white rounded-2xl p-2 shadow card">
+<span class="bg-yellow-400 text-[10px] font-black px-2 py-1 rounded">HOT DEAL</span>
+<img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500" class="rounded-xl h-24 w-full object-cover mt-1">
+<p class="font-black text-sm mt-2 leading-tight">Residential Plot</p>
+<p class="text-[11px] text-gray-500">Shendra, Aurangabad</p>
+<div class="flex justify-between mt-2"><div><p class="font-black text-blue-900">₹22L</p><p class="text-[10px]">Price</p></div><div class="text-right"><p class="font-black">1000 Sqft</p><p class="text-[10px]">Sqft</p></div></div>
+<a href="tel:9545247374" class="block bg-yellow-400 text-center py-1 rounded-full text-xs font-black mt-2">Buy • Call</a>
 </div>
+
+<div data-type="rowhouse" class="prop-card bg-white rounded-2xl p-2 shadow card">
+<span class="bg-yellow-300 text-[10px] font-black px-2 py-1 rounded">NEW</span>
+<img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=500" class="rounded-xl h-24 w-full object-cover mt-1">
+<p class="font-black text-sm mt-2">Premium Row House</p>
+<p class="text-[11px] text-gray-500">Waluj, Aurangabad • 4.2km</p>
+<div class="flex justify-between mt-2"><div><p class="font-black text-blue-900">₹72L</p><p class="text-[10px]">Price</p></div><div class="text-right"><p class="font-black">1200 Sqft</p><p class="text-[10px]">Sqft</p></div></div>
+<a href="tel:9545247374" class="block bg-yellow-400 text-center py-1 rounded-full text-xs font-black mt-2">Sell • Call</a>
+</div>
+
+<div data-type="commercial" class="prop-card bg-white rounded-2xl p-2 shadow card">
+<span class="bg-blue-900 text-white text-[10px] font-black px-2 py-1 rounded">VERIFIED</span>
+<img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500" class="rounded-xl h-24 w-full object-cover mt-1">
+<p class="font-black text-sm mt-2">Commercial Plot</p>
+<p class="text-[11px] text-gray-500">MIDC, Aurangabad • 8.3km</p>
+<div class="flex justify-between mt-2"><div><p class="font-black text-blue-900">₹1.20Cr</p><p class="text-[10px]">Price</p></div><div class="text-right"><p class="font-black">2400 Sqft</p><p class="text-[10px]">Sqft</p></div></div>
+<a href="tel:9545247374" class="block bg-yellow-400 text-center py-1 rounded-full text-xs font-black mt-2">Rent • Call</a>
 </div>
 
 </div>
 </section>
 
-<footer class="bg-black text-white text-center py-6">
-<p class="font-bold">© RAMEEN PROPERTY - PORE AURANGABAD PORTAL - 9545247374</p>
-<p class="text-xs opacity-60 mt-1">Flat | Row House | Plot | R+C | Commercial | Buy | Sell | Rent</p>
-</footer>
+<nav class="fixed bottom-2 left-3 right-3 bg-white rounded-full shadow-2xl flex justify-around py-3 px-2">
+<span class="font-black text-yellow-500 text-xs"><i class="fa fa-home"></i> Home</span>
+<span class="text-xs font-bold"><i class="fa fa-search"></i> Search</span>
+<span class="bg-yellow-400 w-10 h-10 rounded-full flex items-center justify-center -mt-2"><i class="fa fa-plus text-xl"></i></span>
+<span class="text-xs font-bold"><i class="fa fa-heart"></i> Fav</span>
+<span class="text-xs font-bold"><i class="fa fa-user"></i> Profile</span>
+</nav>
 
+<script>
+function filterCat(type){
+ document.querySelectorAll('.prop-card').forEach(c=>{
+  c.style.display = (type==='all' || c.dataset.type===type)? 'block' : 'none';
+ });
+ document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('cat-active'));
+ event.currentTarget.classList.add('cat-active');
+}
+document.getElementById('searchBox').addEventListener('input',function(){
+ let v=this.value.toLowerCase();
+ document.querySelectorAll('.prop-card').forEach(c=>{
+  c.style.display = c.innerText.toLowerCase().includes(v)? 'block' : 'none';
+ });
+});
+</script>
 </body>
 </html>
